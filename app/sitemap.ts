@@ -6,7 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticPages = [
     '', '/scan', '/diary', '/food-search', '/recipes', '/progress',
-    '/body-measurements', '/settings', '/profile', '/privacy', '/delete-data',
+    '/body-measurements', '/settings', '/profile', '/privacy', '/delete-data', '/onboarding',
     '/calorie-calculator', '/bmi-calculator', '/bmr-calculator', '/tdee-calculator',
     '/macro-calculator', '/protein-calculator', '/water-intake-calculator',
     '/ideal-weight-calculator', '/calories-burned-calculator',

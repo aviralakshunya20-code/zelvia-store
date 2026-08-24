@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, Suspense } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Camera, Upload, Mic, MicOff, Barcode, ChevronDown, ChevronUp, AlertCircle } from 'lucide-react';
 import { analyzePhoto, parseNaturalLanguage, transcribeVoice, lookupBarcode } from '@/lib/ai-service';
@@ -23,11 +23,12 @@ interface EditableFood {
 function ScanPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const initialMode = searchParams.get('mode') as Mode || 'text';
-  const mealType = (searchParams.get('meal') as MealType) || 'lunch';
+  const initialMode = (searchParams.get('mode') as Mode) || 'text';
+  const mealType = (searchParams.get('meal') as MealType) || 'breakfast';
+  const initialText = searchParams.get('text') || '';
 
   const [mode, setMode] = useState<Mode>(initialMode);
-  const [textInput, setTextInput] = useState('');
+  const [textInput, setTextInput] = useState(initialText);
   const [barcodeInput, setBarcodeInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<EditableFood[]>([]);
@@ -41,6 +42,15 @@ function ScanPageInner() {
     setResults(result.foods.map(f => ({ ...f, oilGhee: 0, showIngredients: false })));
     setShowResults(true);
   };
+
+  useEffect(() => {
+    if (initialText) {
+      setLoading(true);
+      parseNaturalLanguage(initialText)
+        .then(res => handleResult(res))
+        .finally(() => setLoading(false));
+    }
+  }, [initialText]);
 
   const handlePhoto = async (file: File) => {
     setLoading(true);
@@ -246,10 +256,14 @@ function ScanPageInner() {
       {/* Results */}
       {showResults && results.length > 0 && (
         <div className="animate-scaleIn">
-          <div className="flex items-center gap-2 mb-3">
-            <AlertCircle size={16} style={{ color: 'var(--orange)' }} />
-            <span className="badge badge-orange">Estimated</span>
-            <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>Review and correct values before saving</span>
+          <div className="card mb-3" style={{ padding: '10px 14px', background: 'var(--green-100)', border: '1px solid var(--green-300)' }}>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="badge badge-orange" style={{ fontSize: 11, fontWeight: 700 }}>Estimated, not exact</span>
+              <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--green-900)' }}>AI Nutrition Estimate</span>
+            </div>
+            <p style={{ fontSize: 12, color: 'var(--text-secondary)', margin: 0, lineHeight: 1.4 }}>
+              Values are approximations based on standard household recipes. Adjust serving size, oil/ghee, or macros below before saving to your diary.
+            </p>
           </div>
 
           {results.map((food, idx) => (

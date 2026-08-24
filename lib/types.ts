@@ -1,7 +1,15 @@
 export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snacks';
 export type Goal = 'fat_loss' | 'maintenance' | 'muscle_gain' | 'better_protein' | 'healthier_eating';
 export type ActivityLevel = 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active';
-export type DietPreference = 'vegetarian' | 'vegan' | 'eggitarian' | 'jain' | 'halal' | 'high_protein' | 'low_carb' | 'diabetic_friendly';
+export type DietPreference =
+  | 'vegetarian'
+  | 'vegan'
+  | 'eggitarian'
+  | 'jain'
+  | 'halal'
+  | 'high_protein'
+  | 'low_carb'
+  | 'diabetic_friendly';
 export type PortionUnit = 'g' | 'ml' | 'katori' | 'bowl' | 'glass' | 'roti' | 'piece' | 'plate' | 'tablespoon' | 'teaspoon' | 'cup' | 'serving';
 
 export interface NutritionInfo {

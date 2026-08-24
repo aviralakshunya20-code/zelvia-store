@@ -2,11 +2,12 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/components/ui/Header';
 import { BottomNav } from '@/components/ui/BottomNav';
+import { Footer } from '@/components/ui/Footer';
 import { CookieConsent } from '@/components/ui/CookieConsent';
 
 export const metadata: Metadata = {
   title: {
-    default: 'OnlineMeasurer — AI Calorie & Nutrition Tracker for Indian Food',
+    default: 'OnlineMeasurer – AI Calorie Tracker & Indian Food Nutrition Log',
     template: '%s | OnlineMeasurer',
   },
   description: 'Track calories, protein, carbs and nutrition for Indian food with AI. Photo scanning, natural language logging, and 80+ Indian foods. Free BMI, BMR, TDEE calculators.',
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'OnlineMeasurer',
-    title: 'OnlineMeasurer — AI Calorie & Nutrition Tracker',
+    title: 'OnlineMeasurer – AI Calorie Tracker & Indian Food Nutrition Log',
     description: 'Track calories, protein, and nutrition for Indian food. Free calculators and AI-powered meal logging.',
     url: 'https://onlinemeasurer.com',
   },
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <Header />
         <div className="page-content">{children}</div>
+        <Footer />
         <BottomNav />
         <CookieConsent />
       </body>
