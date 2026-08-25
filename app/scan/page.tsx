@@ -399,6 +399,18 @@ function ScanPageInner() {
                   <Upload size={14} /> Choose File
                 </button>
               </div>
+              <div
+                style={{
+                  fontSize: 11,
+                  color: 'var(--text-secondary)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                  marginTop: 4,
+                }}
+              >
+                <span>🔒 Privacy Protected: Photos are processed in real-time only to calculate nutrition estimates and never used for public model training.</span>
+              </div>
             </div>
           )}
 

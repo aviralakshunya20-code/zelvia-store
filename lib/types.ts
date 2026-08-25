@@ -39,12 +39,15 @@ export interface MealEntry {
   id: string;
   foodId?: string;
   foodName: string;
+  brand?: string;
   mealType: MealType;
   quantity: number;
   unit: PortionUnit;
   nutrition: NutritionInfo;
   isEstimated: boolean;
-  confidence?: number; // 0-100
+  source?: NutritionSource;
+  confidenceLevel?: ConfidenceRating;
+  confidence?: number;
   oilGheeAdjustment?: number; // extra calories from oil/ghee
   timestamp: number;
   notes?: string;
@@ -54,6 +57,7 @@ export interface DailyLog {
   date: string; // YYYY-MM-DD
   meals: MealEntry[];
   waterGlasses: number;
+  waterGlassSizeMl?: number;
   weight?: number;
   notes?: string;
   fastingStart?: number;
@@ -63,6 +67,8 @@ export interface DailyLog {
 export interface UserProfile {
   name?: string;
   ageRange?: string;
+  ageGroup?: '<18' | '18-64' | '65+';
+  healthConditions?: string[];
   sex?: 'male' | 'female' | 'other';
   heightCm: number;
   weightKg: number;
@@ -79,6 +85,7 @@ export interface UserProfile {
   dailyFatTarget: number;
   dailyFibreTarget: number;
   dailyWaterTarget: number;
+  waterGlassSizeMl?: number;
   onboardingComplete: boolean;
   createdAt: number;
 }
