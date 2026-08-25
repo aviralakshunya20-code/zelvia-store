@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Logo } from '@/components/ui/Logo';
 
 const TOOL_LINKS = [
   { href: '/bmi-calculator', label: 'BMI Calculator' },
@@ -28,6 +29,15 @@ export function Footer() {
   return (
     <footer className="site-footer">
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 16px' }}>
+        <div style={{ marginBottom: 20 }}>
+          <Link href="/" className="no-underline inline-block" aria-label="OnlineMeasurer Home">
+            <Logo size={28} />
+          </Link>
+          <p style={{ fontSize: 13, color: 'var(--text-secondary)', margin: '6px 0 0', maxWidth: 460 }}>
+            AI-powered calorie and nutrition tracker for Indian food. Measure meals, understand macros, and build healthy habits.
+          </p>
+        </div>
+
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 24, marginBottom: 24 }}>
           <div>
             <h3 style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Tools</h3>

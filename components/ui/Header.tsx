@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Moon, Sun, Settings } from 'lucide-react';
+import { Logo } from '@/components/ui/Logo';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -33,37 +34,45 @@ export function Header() {
   };
 
   return (
-    <header style={{
-      position: 'sticky', top: 0, zIndex: 40,
-      background: 'var(--surface)', borderBottom: '1px solid var(--border)',
-      padding: '8px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    }}>
-      <Link href="/" className="no-underline" style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
-        <div style={{
-          width: 32, height: 32, borderRadius: 8,
-          background: 'linear-gradient(135deg, var(--green-600), var(--green-800))',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 16,
-        }}>⚡</div>
-        <span style={{ fontSize: 17, fontWeight: 700, color: 'var(--text)', letterSpacing: '-0.01em' }}>
-          Online<span style={{ color: 'var(--green-600)' }}>Measurer</span>
+    <header
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 40,
+        background: 'var(--surface)',
+        borderBottom: '1px solid var(--border)',
+        padding: '8px 16px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+    >
+      <Link href="/" className="no-underline flex items-center" aria-label="OnlineMeasurer Home" style={{ display: 'inline-flex', alignItems: 'center' }}>
+        {/* Desktop: 36px icon + wordmark, Mobile: 34px icon + wordmark */}
+        <span className="hidden md:inline-flex">
+          <Logo size={36} variant={dark ? 'dark' : 'light'} />
+        </span>
+        <span className="inline-flex md:hidden">
+          <Logo size={34} variant={dark ? 'dark' : 'light'} />
         </span>
       </Link>
 
       {/* Desktop Navigation */}
       <nav className="desktop-nav">
         {NAV_LINKS.map(link => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={pathname === link.href ? 'active' : ''}
-          >
+          <Link key={link.href} href={link.href} className={pathname === link.href ? 'active' : ''}>
             {link.label}
           </Link>
         ))}
       </nav>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-        <button onClick={toggle} className="btn btn-ghost btn-icon btn-sm" aria-label="Toggle theme" style={{ padding: 8 }}>
+        <button
+          onClick={toggle}
+          className="btn btn-ghost btn-icon btn-sm"
+          aria-label="Toggle theme"
+          style={{ padding: 8 }}
+        >
           {dark ? <Sun size={18} /> : <Moon size={18} />}
         </button>
         <Link href="/settings" className="btn btn-ghost btn-icon btn-sm no-underline" style={{ padding: 8 }}>

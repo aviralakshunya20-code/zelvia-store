@@ -1,0 +1,32 @@
+{
+  "name": "OnlineMeasurer – AI Calorie & Nutrition Tracker",
+  "short_name": "OnlineMeasurer",
+  "description": "Track calories, protein, carbs and nutrition for Indian food with AI photo scanning and natural language logging.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#18251F",
+  "theme_color": "#237B5B",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

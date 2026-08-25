@@ -106,7 +106,8 @@ Respond ONLY with a valid JSON object matching this exact TypeScript structure:
 }`;
 
 async function callGeminiVision(apiKey: string, base64Images: { mimeType: string; data: string }[]): Promise<VisionResponseJSON> {
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+  const models = ['gemini-3.6-flash', 'gemini-2.5-flash', 'gemini-3.7-flash'];
+  let lastError = '';
 
   const parts: unknown[] = [
     { text: SYSTEM_INSTRUCTION },
@@ -122,30 +123,36 @@ async function callGeminiVision(apiKey: string, base64Images: { mimeType: string
     });
   }
 
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts }],
-      generationConfig: {
-        temperature: 0.1,
-        responseMimeType: 'application/json',
-      },
-    }),
-  });
+  for (const model of models) {
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts }],
+          generationConfig: {
+            temperature: 0.1,
+            responseMimeType: 'application/json',
+          },
+        }),
+      });
 
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`Gemini Vision API error (${response.status}): ${errText}`);
+      if (response.ok) {
+        const json = await response.json();
+        const textOutput = json.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (textOutput) {
+          return JSON.parse(textOutput) as VisionResponseJSON;
+        }
+      } else {
+        lastError = await response.text();
+      }
+    } catch (err: unknown) {
+      lastError = err instanceof Error ? err.message : String(err);
+    }
   }
 
-  const json = await response.json();
-  const textOutput = json.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!textOutput) {
-    throw new Error('Gemini Vision returned an empty response.');
-  }
-
-  return JSON.parse(textOutput) as VisionResponseJSON;
+  throw new Error(`Gemini Vision API call failed on all fallback models: ${lastError}`);
 }
 
 async function callOpenAIVision(apiKey: string, base64Images: { mimeType: string; data: string }[]): Promise<VisionResponseJSON> {
