@@ -107,16 +107,45 @@ export interface Recipe {
   createdAt: number;
 }
 
+export type FoodClassification =
+  | 'packaged_food'
+  | 'homemade_meal'
+  | 'restaurant_meal'
+  | 'nutrition_label'
+  | 'multiple_items'
+  | 'unclear';
+
+export type ConfidenceRating = 'high' | 'medium' | 'low';
+
+export type NutritionSource = 'package_label' | 'ai_estimate' | 'manual_entry';
+
+export interface AnalyzedFoodItem {
+  name: string;
+  brand?: string;
+  quantity: number;
+  unit: PortionUnit;
+  nutrition: NutritionInfo;
+  source: NutritionSource;
+  confidenceLevel: ConfidenceRating;
+  confidenceScore?: number;
+  alternatives?: string[];
+  notes?: string;
+}
+
 export interface AIAnalysisResult {
-  foods: {
-    name: string;
-    quantity: number;
-    unit: PortionUnit;
-    nutrition: NutritionInfo;
-    confidence: number;
-    alternatives?: string[];
-  }[];
-  isEstimated: true;
+  success: boolean;
+  classification?: FoodClassification;
+  brand?: string;
+  productName?: string;
+  variant?: string;
+  confidenceLevel?: ConfidenceRating;
+  source?: NutritionSource;
+  needsLabelVerification?: boolean;
+  message?: string;
+  error?: string;
+  errorCode?: 'API_KEY_MISSING' | 'UNREADABLE_IMAGE' | 'API_ERROR' | 'NETWORK_ERROR';
+  foods: AnalyzedFoodItem[];
+  isEstimated: boolean;
 }
 
 export interface BlogPost {
