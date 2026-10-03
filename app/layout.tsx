@@ -4,18 +4,18 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 
 export const viewport: Viewport = {
-  themeColor: '#000000',
+  themeColor: '#ffffff',
   width: 'device-width',
   initialScale: 1,
 };
 
 export const metadata: Metadata = {
   title: {
-    default: 'Online Measurer – High-Performance Web Engineering & Architecture',
+    default: 'Online Measurer – High-Performance Web Engineering & Custom Digital Platforms',
     template: '%s | Online Measurer',
   },
   description:
-    'Engineering high-impact web applications, modern e-commerce storefronts, and high-converting websites. 100/100 Core Web Vitals, sub-second TTFB, and zero fake reviews.',
+    'Custom web applications, high-converting e-commerce stores, and high-performance websites engineered with Next.js, React 19, and strict TypeScript. Sub-second speed and zero fake reviews.',
   keywords: [
     'Web developer portfolio',
     'Full-stack web engineer',
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'Online Measurer',
-    title: 'Online Measurer – High-Performance Web Engineering',
+    title: 'Online Measurer – Web & App Studio',
     description:
-      'Engineering high-impact web applications, modern e-commerce, and high-converting websites. Measured for perfection.',
+      'We build high-converting websites and modern web applications that turn visitors into paying customers.',
     url: 'https://onlinemeasurer.com',
   },
   twitter: { card: 'summary_large_image' },
@@ -53,38 +53,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="light">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Load Nunito & Quicksand which match Arial Rounded MT Bold aesthetic across all OS */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@600;700&display=swap"
           rel="stylesheet"
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'ProfessionalService',
-              name: 'Online Measurer',
-              url: 'https://onlinemeasurer.com',
-              description:
-                'High-performance web engineering studio specializing in Next.js web applications, e-commerce storefronts, and conversion-driven websites.',
-              founder: {
-                '@type': 'Person',
-                name: 'Aviral',
-                email: 'aviralakshunya20@gmail.com',
-              },
-              areaServed: 'Worldwide',
-              priceRange: '$$$',
-            }),
-          }}
-        />
       </head>
-      <body className="bg-black text-white antialiased selection:bg-white selection:text-black">
+      <body className="bg-white text-slate-900 antialiased selection:bg-rose-100 selection:text-rose-700">
         <Navbar />
-        <main className="min-h-screen">{children}</main>
+        <main className="min-h-screen pt-20">{children}</main>
         <Footer />
       </body>
     </html>

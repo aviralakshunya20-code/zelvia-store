@@ -2,16 +2,18 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { FOUNDER_INFO } from '@/lib/projects';
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 15);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -23,116 +25,93 @@ export function Navbar() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const navLinks = [
+    { label: 'Home', href: '/' },
+    { label: 'Selected Work', href: '/work' },
+    { label: 'Services', href: '/services' },
+    { label: 'Why No Fake Reviews', href: '/about' },
+    { label: 'Playground Lab', href: '/playground' },
+    { label: 'Get Quote', href: '/contact' },
+  ];
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         scrolled
-          ? 'bg-black/85 backdrop-blur-md border-b border-white/10 py-3.5'
-          : 'bg-transparent py-5'
+          ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100 py-3'
+          : 'bg-white/80 backdrop-blur-sm py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand */}
+        
+        {/* Brand Logo with Pink Rounded Squircle */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-8 h-8 rounded border border-white/20 bg-white/5 flex items-center justify-center font-mono text-xs font-bold text-white group-hover:border-white transition-colors">
+          <div className="w-10 h-10 rounded-2xl border-2 border-rose-500 bg-rose-50 flex items-center justify-center font-black text-rose-600 text-sm shadow-sm group-hover:scale-105 group-hover:bg-rose-500 group-hover:text-white transition-all">
             OM
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold text-sm tracking-tight text-white group-hover:text-zinc-300 transition-colors uppercase">
+            <span className="font-extrabold text-base tracking-tight text-slate-900 group-hover:text-rose-600 transition-colors uppercase">
               Online Measurer
             </span>
-            <span className="text-[10px] font-mono text-zinc-400 tracking-wider">
-              STUDIO & ARCHITECTURE
+            <span className="text-[11px] font-bold text-rose-500 tracking-wider">
+              Web &amp; App Studio
             </span>
           </div>
         </Link>
 
-        {/* Live Status indicator */}
-        <div className="hidden lg:flex items-center gap-2.5 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03]">
-          <span className="pulse-indicator" />
-          <span className="text-xs font-mono text-zinc-300 uppercase tracking-wider">
-            Available for Q2/Q3 Projects
+        {/* Live Availability Badge */}
+        <div className="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-xs font-bold text-emerald-700">
+            Accepting New Client Builds
           </span>
         </div>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-7">
-          <a
-            href="#work"
-            className="text-xs font-medium text-zinc-400 hover:text-white transition-colors tracking-wide uppercase font-mono"
-          >
-            [ Work ]
-          </a>
-          <a
-            href="#services"
-            className="text-xs font-medium text-zinc-400 hover:text-white transition-colors tracking-wide uppercase font-mono"
-          >
-            [ Services ]
-          </a>
-          <a
-            href="#philosophy"
-            className="text-xs font-medium text-zinc-400 hover:text-white transition-colors tracking-wide uppercase font-mono"
-          >
-            [ Manifesto ]
-          </a>
-          <a
-            href="#process"
-            className="text-xs font-medium text-zinc-400 hover:text-white transition-colors tracking-wide uppercase font-mono"
-          >
-            [ Process ]
-          </a>
-          <a
-            href="#estimator"
-            className="text-xs font-medium text-zinc-400 hover:text-white transition-colors tracking-wide uppercase font-mono"
-          >
-            [ Scope Tool ]
-          </a>
-          <a
-            href="#contact"
-            className="text-xs font-medium text-zinc-400 hover:text-white transition-colors tracking-wide uppercase font-mono"
-          >
-            [ Contact ]
-          </a>
+        {/* Multipage Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-1 sm:gap-2">
+          {navLinks.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all ${
+                  isActive
+                    ? 'bg-rose-50 text-rose-600 border border-rose-200 shadow-xs'
+                    : 'text-slate-600 hover:text-rose-600 hover:bg-slate-50'
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
-        {/* CTAs */}
-        <div className="hidden md:flex items-center gap-3">
+        {/* Actions */}
+        <div className="hidden md:flex items-center gap-2.5">
           <button
             onClick={handleCopyEmail}
-            className="px-3 py-1.5 rounded border border-white/15 bg-white/5 hover:bg-white/10 text-xs font-mono text-zinc-300 hover:text-white transition-all flex items-center gap-1.5"
+            className="btn-fun-outline !py-2 !px-3.5 !text-xs"
             title="Copy email to clipboard"
           >
-            <svg
-              className="w-3.5 h-3.5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.75}
-                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-              />
-            </svg>
-            {copied ? 'Copied Email!' : 'Copy Email'}
+            {copied ? '✓ Copied!' : '✉ Copy Email'}
           </button>
-          <a href="#contact" className="btn-primary text-xs !py-1.5 !px-3.5">
-            Start a Build →
-          </a>
+          <Link href="/contact" className="btn-fun-pink !py-2 !px-4 !text-xs">
+            Start Project →
+          </Link>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile menu hamburger */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 text-zinc-400 hover:text-white"
-          aria-label="Toggle Navigation Menu"
+          className="md:hidden p-2 rounded-xl text-slate-700 hover:text-rose-600 hover:bg-rose-50"
+          aria-label="Toggle Navigation"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {mobileMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
             ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16m-7 6h7" />
             )}
           </svg>
         </button>
@@ -140,74 +119,41 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-zinc-950/95 border-b border-white/10 px-6 py-6 space-y-4">
-          <div className="flex items-center gap-2 pb-3 border-b border-white/10">
-            <span className="pulse-indicator" />
-            <span className="text-xs font-mono text-zinc-300">
-              AVAILABLE FOR NEW BUILDS
-            </span>
+        <div className="md:hidden bg-white border-b-2 border-rose-100 px-6 py-5 space-y-3 shadow-lg animate-fade-in">
+          <div className="flex flex-col space-y-2">
+            {navLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`px-3 py-2 rounded-xl text-sm font-extrabold ${
+                  pathname === item.href
+                    ? 'bg-rose-50 text-rose-600 border border-rose-200'
+                    : 'text-slate-700 hover:text-rose-600'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
-          <div className="flex flex-col space-y-3 font-mono text-sm">
-            <a
-              href="#work"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-zinc-300 hover:text-white"
-            >
-              [ 01 ] Selected Projects
-            </a>
-            <a
-              href="#services"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-zinc-300 hover:text-white"
-            >
-              [ 02 ] Services & Capabilities
-            </a>
-            <a
-              href="#philosophy"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-zinc-300 hover:text-white"
-            >
-              [ 03 ] Why No Fake Reviews
-            </a>
-            <a
-              href="#process"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-zinc-300 hover:text-white"
-            >
-              [ 04 ] 4-Step Process
-            </a>
-            <a
-              href="#estimator"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-zinc-300 hover:text-white"
-            >
-              [ 05 ] Scope & Cost Tool
-            </a>
-            <a
-              href="#contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-zinc-300 hover:text-white"
-            >
-              [ 06 ] Contact / Hire
-            </a>
-          </div>
-          <div className="pt-3 border-t border-white/10 flex flex-col gap-2">
+
+          <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
             <button
               onClick={() => {
                 handleCopyEmail();
                 setMobileMenuOpen(false);
               }}
-              className="btn-secondary w-full text-xs justify-center"
+              className="btn-fun-outline w-full text-xs justify-center"
             >
               {copied ? 'Copied aviralakshunya20@gmail.com' : 'Copy Email Address'}
             </button>
-            <a
-              href="#contact"
+            <Link
+              href="/contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="btn-primary w-full text-xs justify-center"
+              className="btn-fun-pink w-full text-xs justify-center"
             >
               Start Project Inquiry →
-            </a>
+            </Link>
           </div>
         </div>
       )}
