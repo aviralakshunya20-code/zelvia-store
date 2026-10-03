@@ -6,7 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/delete-data', '/privacy'],
       },
     ],
     sitemap: 'https://onlinemeasurer.com/sitemap.xml',

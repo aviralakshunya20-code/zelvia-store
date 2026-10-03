@@ -1,46 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
-  <defs>
-    <linearGradient id="om-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#237B5B" />
-      <stop offset="100%" stop-color="#54BE8A" />
-    </linearGradient>
-    <linearGradient id="om-leaf" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#EAF8F1" />
-      <stop offset="100%" stop-color="#FFFFFF" />
-    </linearGradient>
-  </defs>
+  <!-- Minimalist Black Squircle -->
+  <rect width="48" height="48" rx="10" fill="#000000" stroke="#333333" stroke-width="1.5" />
+  
+  <!-- Precision Measurement Grid Marks -->
+  <line x1="8" y1="8" x2="14" y2="8" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" />
+  <line x1="8" y1="8" x2="8" y2="14" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" />
+  <line x1="40" y1="40" x2="34" y2="40" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" />
+  <line x1="40" y1="40" x2="40" y2="34" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" />
 
-  <!-- App Icon Squircle Background (22.9% radius) -->
-  <rect width="48" height="48" rx="11" fill="url(#om-bg)" />
-
-  <!-- Subtle Scan / Measurement Reticle Marks (Calibrated Cues) -->
-  <path d="M 10.5 15.5 L 10.5 10.5 L 15.5 10.5" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.4" />
-  <path d="M 37.5 32.5 L 37.5 37.5 L 32.5 37.5" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.4" />
-
-  <!-- Calibration Measurement Ticks -->
-  <line x1="12" y1="24" x2="14.5" y2="24" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-opacity="0.55" />
-  <line x1="24" y1="36" x2="24" y2="33.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-opacity="0.55" />
-
-  <!-- Circular Nutrition / Progress Ring with Deliberate Top-Right Gap -->
-  <path
-    d="M 28.5 13.5 A 11.5 11.5 0 1 0 35.5 22.5"
-    stroke="#FFFFFF"
-    stroke-width="3.2"
-    stroke-linecap="round"
-  />
-
-  <!-- Natural Leaf Shape Integrated at Upper-Right Arc Endpoint -->
-  <path
-    d="M 28.5 14 C 28.5 9.2, 35.5 9.2, 37.5 10.5 C 37.5 12.5, 37 18.5, 32.5 18.5 C 29.8 18.5, 28.5 16.2, 28.5 14 Z"
-    fill="url(#om-leaf)"
-  />
-
-  <!-- Subtle Leaf Central Vein -->
-  <path
-    d="M 30 15.2 C 32 14.2, 34.5 12.8, 36.5 11.5"
-    stroke="#237B5B"
-    stroke-width="1.1"
-    stroke-linecap="round"
-    stroke-opacity="0.8"
-  />
+  <!-- OM Monogram -->
+  <text x="24" y="29" fill="#FFFFFF" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" font-weight="800" text-anchor="middle" letter-spacing="1">OM</text>
 </svg>
