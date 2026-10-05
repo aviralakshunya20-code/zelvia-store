@@ -1,46 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
-  <defs>
-    <linearGradient id="om-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#237B5B" />
-      <stop offset="100%" stop-color="#54BE8A" />
-    </linearGradient>
-    <linearGradient id="om-leaf" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#EAF8F1" />
-      <stop offset="100%" stop-color="#FFFFFF" />
-    </linearGradient>
-  </defs>
-
-  <!-- App Icon Squircle Background (22.9% radius) -->
-  <rect width="48" height="48" rx="11" fill="url(#om-bg)" />
-
-  <!-- Subtle Scan / Measurement Reticle Marks (Calibrated Cues) -->
-  <path d="M 10.5 15.5 L 10.5 10.5 L 15.5 10.5" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.4" />
-  <path d="M 37.5 32.5 L 37.5 37.5 L 32.5 37.5" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.4" />
-
-  <!-- Calibration Measurement Ticks -->
-  <line x1="12" y1="24" x2="14.5" y2="24" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-opacity="0.55" />
-  <line x1="24" y1="36" x2="24" y2="33.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-opacity="0.55" />
-
-  <!-- Circular Nutrition / Progress Ring with Deliberate Top-Right Gap -->
-  <path
-    d="M 28.5 13.5 A 11.5 11.5 0 1 0 35.5 22.5"
-    stroke="#FFFFFF"
-    stroke-width="3.2"
-    stroke-linecap="round"
-  />
-
-  <!-- Natural Leaf Shape Integrated at Upper-Right Arc Endpoint -->
-  <path
-    d="M 28.5 14 C 28.5 9.2, 35.5 9.2, 37.5 10.5 C 37.5 12.5, 37 18.5, 32.5 18.5 C 29.8 18.5, 28.5 16.2, 28.5 14 Z"
-    fill="url(#om-leaf)"
-  />
-
-  <!-- Subtle Leaf Central Vein -->
-  <path
-    d="M 30 15.2 C 32 14.2, 34.5 12.8, 36.5 11.5"
-    stroke="#237B5B"
-    stroke-width="1.1"
-    stroke-linecap="round"
-    stroke-opacity="0.8"
-  />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <!-- White rounded square badge with black border -->
+  <rect x="4" y="4" width="92" height="92" rx="18" fill="#FFFFFF" stroke="#000000" stroke-width="6" />
+  <!-- O Glyph -->
+  <path d="M 26 26 L 47 26 L 31.4 74 L 10.4 74 Z M 32.5 35 L 40.5 35 L 33.5 65 L 25.5 65 Z" fill="#000000" fill-rule="evenodd" />
+  <!-- M Left Stem -->
+  <polygon points="52,26 59.5,26 43.9,74 36.4,74" fill="#000000" />
+  <!-- M Right Stem -->
+  <polygon points="82.5,26 90,26 74.4,74 66.9,74" fill="#000000" />
+  <!-- M Center Chevron -->
+  <polygon points="59.5,26 67,26 60.2,54 75,26 82.5,26 62,74 54.5,74" fill="#000000" />
 </svg>

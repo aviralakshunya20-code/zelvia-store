@@ -1,13 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
-  <!-- Minimalist Black Squircle -->
-  <rect width="48" height="48" rx="10" fill="#000000" stroke="#333333" stroke-width="1.5" />
-  
-  <!-- Precision Measurement Grid Marks -->
-  <line x1="8" y1="8" x2="14" y2="8" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" />
-  <line x1="8" y1="8" x2="8" y2="14" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" />
-  <line x1="40" y1="40" x2="34" y2="40" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" />
-  <line x1="40" y1="40" x2="40" y2="34" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" />
-
-  <!-- OM Monogram -->
-  <text x="24" y="29" fill="#FFFFFF" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" font-weight="800" text-anchor="middle" letter-spacing="1">OM</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <!-- White rounded square badge with black border -->
+  <rect x="4" y="4" width="92" height="92" rx="18" fill="#FFFFFF" stroke="#000000" stroke-width="6" />
+  <!-- O Glyph -->
+  <path d="M 26 26 L 47 26 L 31.4 74 L 10.4 74 Z M 32.5 35 L 40.5 35 L 33.5 65 L 25.5 65 Z" fill="#000000" fill-rule="evenodd" />
+  <!-- M Left Stem -->
+  <polygon points="52,26 59.5,26 43.9,74 36.4,74" fill="#000000" />
+  <!-- M Right Stem -->
+  <polygon points="82.5,26 90,26 74.4,74 66.9,74" fill="#000000" />
+  <!-- M Center Chevron -->
+  <polygon points="59.5,26 67,26 60.2,54 75,26 82.5,26 62,74 54.5,74" fill="#000000" />
 </svg>
