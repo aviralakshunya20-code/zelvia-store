@@ -1402,3 +1402,48 @@ body {
   color: #000000 !important;
   line-height: 1 !important;
 }
+
+/* ONLINE MEASURER High-Impact Typography & Square OM Logo Badge */
+.brand-wrap {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  text-decoration: none !important;
+  color: #000000 !important;
+  transition: transform 0.15s ease !important;
+}
+
+.brand-wrap:hover {
+  transform: translateY(-1px) !important;
+}
+
+.brand-logo {
+  width: 38px !important;
+  height: 38px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  filter: drop-shadow(2px 2px 0px #000000) !important;
+  transition: transform 0.15s ease !important;
+}
+
+.brand-wrap:hover .brand-logo {
+  transform: rotate(-3deg) scale(1.06) !important;
+}
+
+.brand-logo svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}
+
+.brand-title {
+  font-family: 'Montserrat', 'Outfit', sans-serif !important;
+  font-size: 1.35rem !important;
+  font-weight: 900 !important;
+  font-style: italic !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.03em !important;
+  color: #000000 !important;
+  line-height: 1 !important;
+}
