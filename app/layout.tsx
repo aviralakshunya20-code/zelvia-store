@@ -2,25 +2,26 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const viewport: Viewport = {
-  themeColor: '#ffffff',
+  themeColor: '#09090b',
   width: 'device-width',
   initialScale: 1,
 };
 
 export const metadata: Metadata = {
-  title: 'ONLINE MEASURER | Curated Builder & Hardware Catalog',
+  title: 'ONLINE MEASURER | Curated Hardware & Robotics Engineering Catalog',
   description:
-    'Curated components, hardware kits, dev gear, and textbooks featured in Mera Pehla Humanoid Robot and The Coding Interview Blueprint.',
+    'The definitive curated hardware catalog for robotics builders, embedded engineers, and makers. Verified microcontrollers, precision sensors, actuators, and companion textbooks.',
   keywords: [
     'OnlineMeasurer',
     'ONLINE MEASURER',
-    'Curated Hardware Catalog',
+    'Robotics Catalog',
+    'ESP32',
+    'Hardware Engineering',
     'Mera Pehla Humanoid Robot',
     'The Coding Interview Blueprint',
-    'ESP32 Robotics',
-    'PCA9685 servo driver',
-    'B.Tech hardware kit',
-    'Amazon Curated Store',
+    'Sensors',
+    'PCA9685',
+    'MG996R',
   ],
   metadataBase: new URL('https://onlinemeasurer.com'),
   icons: {
@@ -33,12 +34,26 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'ONLINE MEASURER',
-    title: 'ONLINE MEASURER | Curated Builder & Hardware Catalog',
+    title: 'ONLINE MEASURER | Curated Hardware & Robotics Engineering Catalog',
     description:
-      'Interactive animated catalog of verified hardware components, robotics kits, dev gear, and books.',
+      'Verified robotics components, ESP32 microcontrollers, PCA9685 drivers & author masterclasses.',
     url: 'https://onlinemeasurer.com',
+    images: [
+      {
+        url: 'https://onlinemeasurer.com/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'ONLINE MEASURER Curated Catalog',
+      },
+    ],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ONLINE MEASURER | Curated Hardware & Robotics Engineering Catalog',
+    description:
+      'Verified robotics components, ESP32 microcontrollers, PCA9685 drivers & author masterclasses.',
+    images: ['https://onlinemeasurer.com/og-image.png'],
+  },
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://onlinemeasurer.com' },
 };
@@ -49,21 +64,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="light">
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
-        <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-icon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:ital,wght@1,900&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="bg-white text-black antialiased selection:bg-black selection:text-white">
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
