@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
 
 export const viewport: Viewport = {
   themeColor: '#ffffff',
@@ -10,36 +8,29 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Online Measurer – High-Performance Web Engineering & Custom Digital Platforms',
-    template: '%s | Online Measurer',
-  },
+  title: 'RoboCraft Studio & Curated Catalog | Amazon Associates Hub',
   description:
-    'Custom web applications, high-converting e-commerce stores, and high-performance websites engineered with Next.js, React 19, and strict TypeScript. Sub-second speed and zero fake reviews.',
+    'Interactive animated catalog of verified hardware components, robotics kits, dev gear, and books featured in Mera Pehla Humanoid Robot and The Coding Interview Blueprint.',
   keywords: [
-    'Web developer portfolio',
-    'Full-stack web engineer',
-    'Next.js 16 web applications',
-    'Custom e-commerce developer',
-    'High performance websites',
+    'RoboCraft Studio',
+    'Amazon Associates',
+    'Mera Pehla Humanoid Robot',
+    'The Coding Interview Blueprint',
+    'ESP32 Robotics',
+    'PCA9685 servo driver',
+    'B.Tech hardware kit',
     'Online Measurer',
-    'Aviral web architect',
-    'React 19 development',
-    'TypeScript web applications',
-    'Fast web apps for business',
   ],
   metadataBase: new URL('https://onlinemeasurer.com'),
   icons: {
-    icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-    ],
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
   },
   openGraph: {
     type: 'website',
-    siteName: 'Online Measurer',
-    title: 'Online Measurer – Web & App Studio',
+    siteName: 'RoboCraft Studio - Amazon Associates Hub',
+    title: 'RoboCraft Studio & Curated Catalog | Amazon Associates Hub',
     description:
-      'We build high-converting websites and modern web applications that turn visitors into paying customers.',
+      'Curated components, hardware kits, dev gear, and textbooks with interactive animated previews.',
     url: 'https://onlinemeasurer.com',
   },
   twitter: { card: 'summary_large_image' },
@@ -57,16 +48,13 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Load Nunito & Quicksand which match Arial Rounded MT Bold aesthetic across all OS */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="bg-white text-slate-900 antialiased selection:bg-rose-100 selection:text-rose-700">
-        <Navbar />
-        <main className="min-h-screen pt-20">{children}</main>
-        <Footer />
+      <body className="bg-white text-black antialiased selection:bg-black selection:text-white">
+        {children}
       </body>
     </html>
   );
