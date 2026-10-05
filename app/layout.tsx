@@ -8,18 +8,18 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'RoboCraft Studio & Curated Catalog | Amazon Associates Hub',
+  title: 'OnlineMeasurer | Curated Builder & Hardware Catalog',
   description:
-    'Interactive animated catalog of verified hardware components, robotics kits, dev gear, and books featured in Mera Pehla Humanoid Robot and The Coding Interview Blueprint.',
+    'Curated components, hardware kits, dev gear, and textbooks featured in Mera Pehla Humanoid Robot and The Coding Interview Blueprint.',
   keywords: [
-    'RoboCraft Studio',
-    'Amazon Associates',
+    'OnlineMeasurer',
+    'Curated Hardware Catalog',
     'Mera Pehla Humanoid Robot',
     'The Coding Interview Blueprint',
     'ESP32 Robotics',
     'PCA9685 servo driver',
     'B.Tech hardware kit',
-    'Online Measurer',
+    'Amazon Curated Store',
   ],
   metadataBase: new URL('https://onlinemeasurer.com'),
   icons: {
@@ -27,10 +27,10 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    siteName: 'RoboCraft Studio - Amazon Associates Hub',
-    title: 'RoboCraft Studio & Curated Catalog | Amazon Associates Hub',
+    siteName: 'OnlineMeasurer',
+    title: 'OnlineMeasurer | Curated Builder & Hardware Catalog',
     description:
-      'Curated components, hardware kits, dev gear, and textbooks with interactive animated previews.',
+      'Interactive animated catalog of verified hardware components, robotics kits, dev gear, and books.',
     url: 'https://onlinemeasurer.com',
   },
   twitter: { card: 'summary_large_image' },

@@ -1273,3 +1273,42 @@ body {
       font-weight: 600;
     }
   
+/* Navigation Pills */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-pill {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #000000;
+  text-decoration: none;
+  background: #ffffff;
+  border: 1.5px solid #000000;
+  padding: 6px 14px;
+  border-radius: 6px;
+  box-shadow: 2px 2px 0px #000000;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-pill:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px #000000;
+  background: #f4f4f5;
+}
+
+.nav-pill-black {
+  background: #000000;
+  color: #ffffff;
+}
+
+.nav-pill-black:hover {
+  background: #ffffff;
+  color: #000000;
+}
