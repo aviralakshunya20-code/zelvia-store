@@ -3,151 +3,490 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 
+interface FormState {
+  name: string;
+  org: string;
+  email: string;
+  topic: string;
+  msg: string;
+}
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  msg?: string;
+}
+
 export default function ContactPage() {
+  const [formData, setFormData] = useState<FormState>({
+    name: '',
+    org: '',
+    email: '',
+    topic: 'errata',
+    msg: '',
+  });
+
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: '', org: '', email: '', topic: 'errata', msg: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionId, setSubmissionId] = useState('');
+
+  const validate = (data: FormState): FormErrors => {
+    const errs: FormErrors = {};
+    if (!data.name.trim()) {
+      errs.name = 'Please provide your name.';
+    } else if (data.name.trim().length < 2) {
+      errs.name = 'Name should be at least 2 characters long.';
+    }
+
+    if (!data.email.trim()) {
+      errs.email = 'Please provide an email address for correspondence.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) {
+      errs.email = 'Please enter a valid email format (e.g., alex@example.com).';
+    }
+
+    if (!data.msg.trim()) {
+      errs.msg = 'Please describe your inquiry or data feedback.';
+    } else if (data.msg.trim().length < 15) {
+      errs.msg = 'Please enter at least 15 characters so we can understand your request.';
+    }
+
+    return errs;
+  };
+
+  const handleBlur = (field: keyof FormState) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    const validationErrors = validate(formData);
+    setErrors(validationErrors);
+  };
+
+  const handleChange = (field: keyof FormState, value: string) => {
+    const updated = { ...formData, [field]: value };
+    setFormData(updated);
+    if (touched[field]) {
+      const validationErrors = validate(updated);
+      setErrors(validationErrors);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setTouched({ name: true, org: true, email: true, topic: true, msg: true });
+    const validationErrors = validate(formData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitting(true);
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setSubmissionId(`INQ-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`);
+        setSubmitted(true);
+      }, 400);
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({ name: '', org: '', email: '', topic: 'errata', msg: '' });
+    setErrors({});
+    setTouched({});
+    setSubmitted(false);
   };
 
   return (
-    <div style={{ maxWidth: '960px', margin: '0 auto', padding: '40px 24px' }}>
-      {/* Breadcrumb */}
-      <div className="meta-code" style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>
-        <Link href="/">HOME</Link> / INQUIRIES / CONTACT & SUBMISSIONS
-      </div>
+    <div style={{ maxWidth: '1040px', margin: '0 auto', padding: '40px 24px', fontSize: '1rem', lineHeight: 1.6 }}>
+      {/* Breadcrumb Navigation */}
+      <nav aria-label="Breadcrumb" style={{ marginBottom: '16px' }}>
+        <ol style={{ listStyle: 'none', display: 'flex', gap: '8px', fontSize: '0.85rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
+          <li>
+            <Link href="/" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>
+              HOME
+            </Link>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li>INQUIRIES</li>
+          <li aria-hidden="true">/</li>
+          <li style={{ color: 'var(--text-primary)' }} aria-current="page">
+            CONTACT & SUBMISSIONS
+          </li>
+        </ol>
+      </nav>
 
-      <div style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '24px', marginBottom: '40px' }}>
-        <div className="meta-code" style={{ color: 'var(--accent-institution)', fontWeight: 600, marginBottom: '6px' }}>
+      {/* Page Header */}
+      <header style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '24px', marginBottom: '40px' }}>
+        <div
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.82rem',
+            fontWeight: 600,
+            color: 'var(--accent-institution)',
+            letterSpacing: '0.04em',
+            marginBottom: '8px',
+          }}
+        >
           COMMUNICATIONS // METROLOGY SECTION
         </div>
-        <h1 style={{ fontSize: '2.6rem', fontWeight: 700, letterSpacing: '-0.02em', marginBottom: '16px' }}>
-          Technical Inquiries & Errata Submissions
+        <h1
+          style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'clamp(2.2rem, 4.5vw, 2.9rem)',
+            fontWeight: 700,
+            letterSpacing: '-0.02em',
+            lineHeight: 1.2,
+            marginBottom: '16px',
+            color: 'var(--text-primary)',
+          }}
+        >
+          Contact & Technical Inquiries
         </h1>
-        <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-          Contact the OnlineMeasurer laboratory desk for technical inquiries, data corrections, or metrological repeatability inquiries.
+        <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '780px' }}>
+          Have a question about our measurement methodologies, want to suggest an instrument for laboratory testing, or spotted a data discrepancy? Contact our team below.
         </p>
-      </div>
+      </header>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
-        {/* Form Column */}
-        <div style={{ border: '1px solid var(--border-hairline)', padding: '28px', backgroundColor: 'var(--bg-canvas)' }}>
+      {/* Main Responsive Layout Grid (Transforms to single column under 768px) */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: '36px',
+          alignItems: 'start',
+        }}
+      >
+        {/* Form Container Card */}
+        <section
+          aria-labelledby="form-heading"
+          style={{
+            border: '1px solid var(--border-hairline)',
+            backgroundColor: 'var(--bg-canvas)',
+            padding: '32px 28px',
+          }}
+        >
+          <h2 id="form-heading" style={{ fontSize: '1.3rem', fontWeight: 600, marginBottom: '20px', color: 'var(--text-primary)' }}>
+            Send an Inquiry
+          </h2>
+
           {submitted ? (
-            <div style={{ padding: '20px', backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-hairline)' }}>
-              <div className="meta-code" style={{ color: 'var(--accent-institution)', fontWeight: 700, marginBottom: '8px' }}>
-                ACKNOWLEDGMENT: TRANSMISSION RECORDED
+            /* Explicit Success State */
+            <div
+              role="alert"
+              style={{
+                backgroundColor: 'var(--bg-surface)',
+                border: '1px solid var(--accent-institution)',
+                padding: '28px',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                <span style={{ fontSize: '1.4rem', color: 'var(--accent-institution)' }}>✓</span>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-institution)' }}>
+                  TRANSMISSION CONFIRMED // {submissionId}
+                </div>
               </div>
-              <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                Your submission has been catalogued in our laboratory dispatch queue. For verified technical errata or data discrepancies, our team will review the measurement logs within 5 business days.
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '10px', color: 'var(--text-primary)' }}>
+                Thank you, {formData.name}!
+              </h3>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '20px' }}>
+                Your dispatch regarding <strong>{formData.topic === 'errata' ? 'Metrology Data Errata' : formData.topic === 'equipment' ? 'Equipment Benchmark Suggestion' : 'General Correspondence'}</strong> has been recorded. Our metrology team reviews verified errata and submissions within 3 to 5 business days.
               </p>
+              <button
+                type="button"
+                onClick={resetForm}
+                className="btn-outline"
+                style={{ padding: '10px 20px', fontSize: '0.9rem' }}
+              >
+                ← Submit Another Inquiry
+              </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div>
-                <label className="meta-code" style={{ display: 'block', marginBottom: '6px', color: 'var(--text-muted)' }}>
-                  FULL NAME / RESEARCHER
+            /* Accessible Form with Inline Validation and High-Contrast Accessibility */
+            <form onSubmit={handleSubmit} noValidate>
+              {/* Full Name */}
+              <div style={{ marginBottom: '20px' }}>
+                <label
+                  htmlFor="contact-name"
+                  style={{
+                    display: 'block',
+                    marginBottom: '8px',
+                    fontWeight: 600,
+                    fontSize: '0.92rem',
+                    color: 'var(--text-primary)',
+                  }}
+                >
+                  Full Name / Name <span style={{ color: 'var(--accent-highlight)' }}>*</span>
                 </label>
                 <input
+                  id="contact-name"
                   type="text"
                   required
-                  placeholder="e.g. Dr. A. Sharma"
+                  autoComplete="name"
+                  placeholder="e.g., Alex Sharma"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  style={{ width: '100%', padding: '10px 12px', border: '1px solid var(--border-medium)', background: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '0.88rem' }}
+                  onChange={(e) => handleChange('name', e.target.value)}
+                  onBlur={() => handleBlur('name')}
+                  aria-invalid={touched.name && !!errors.name}
+                  aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
+                  style={{
+                    width: '100%',
+                    minHeight: '44px',
+                    padding: '10px 14px',
+                    border: touched.name && errors.name ? '1px solid #ef4444' : '1px solid var(--border-medium)',
+                    backgroundColor: 'var(--bg-surface)',
+                    color: 'var(--text-primary)',
+                    fontSize: '0.95rem',
+                    outlineColor: 'var(--accent-institution)',
+                  }}
                 />
+                {touched.name && errors.name && (
+                  <p id="name-error" style={{ color: '#ef4444', fontSize: '0.82rem', marginTop: '6px', fontWeight: 500 }}>
+                    ⚠ {errors.name}
+                  </p>
+                )}
               </div>
 
-              <div>
-                <label className="meta-code" style={{ display: 'block', marginBottom: '6px', color: 'var(--text-muted)' }}>
-                  INSTITUTION / COMPANY (OPTIONAL)
+              {/* Institution / Company (Optional) */}
+              <div style={{ marginBottom: '20px' }}>
+                <label
+                  htmlFor="contact-org"
+                  style={{
+                    display: 'block',
+                    marginBottom: '8px',
+                    fontWeight: 600,
+                    fontSize: '0.92rem',
+                    color: 'var(--text-primary)',
+                  }}
+                >
+                  Institution / Company <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(Optional)</span>
                 </label>
                 <input
+                  id="contact-org"
                   type="text"
-                  placeholder="e.g. National Physical Laboratory, Maker Workshop"
+                  autoComplete="organization"
+                  placeholder="e.g., Workshop, Studio, or Company (Optional)"
                   value={formData.org}
-                  onChange={(e) => setFormData({ ...formData, org: e.target.value })}
-                  style={{ width: '100%', padding: '10px 12px', border: '1px solid var(--border-medium)', background: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '0.88rem' }}
+                  onChange={(e) => handleChange('org', e.target.value)}
+                  style={{
+                    width: '100%',
+                    minHeight: '44px',
+                    padding: '10px 14px',
+                    border: '1px solid var(--border-medium)',
+                    backgroundColor: 'var(--bg-surface)',
+                    color: 'var(--text-primary)',
+                    fontSize: '0.95rem',
+                    outlineColor: 'var(--accent-institution)',
+                  }}
                 />
               </div>
 
-              <div>
-                <label className="meta-code" style={{ display: 'block', marginBottom: '6px', color: 'var(--text-muted)' }}>
-                  EMAIL ADDRESS
+              {/* Email Address */}
+              <div style={{ marginBottom: '20px' }}>
+                <label
+                  htmlFor="contact-email"
+                  style={{
+                    display: 'block',
+                    marginBottom: '8px',
+                    fontWeight: 600,
+                    fontSize: '0.92rem',
+                    color: 'var(--text-primary)',
+                  }}
+                >
+                  Email Address <span style={{ color: 'var(--accent-highlight)' }}>*</span>
                 </label>
                 <input
+                  id="contact-email"
                   type="email"
                   required
-                  placeholder="name@institution.org"
+                  autoComplete="email"
+                  placeholder="e.g., alex@example.com"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  style={{ width: '100%', padding: '10px 12px', border: '1px solid var(--border-medium)', background: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '0.88rem' }}
+                  onChange={(e) => handleChange('email', e.target.value)}
+                  onBlur={() => handleBlur('email')}
+                  aria-invalid={touched.email && !!errors.email}
+                  aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
+                  style={{
+                    width: '100%',
+                    minHeight: '44px',
+                    padding: '10px 14px',
+                    border: touched.email && errors.email ? '1px solid #ef4444' : '1px solid var(--border-medium)',
+                    backgroundColor: 'var(--bg-surface)',
+                    color: 'var(--text-primary)',
+                    fontSize: '0.95rem',
+                    outlineColor: 'var(--accent-institution)',
+                  }}
                 />
+                {touched.email && errors.email && (
+                  <p id="email-error" style={{ color: '#ef4444', fontSize: '0.82rem', marginTop: '6px', fontWeight: 500 }}>
+                    ⚠ {errors.email}
+                  </p>
+                )}
               </div>
 
-              <div>
-                <label className="meta-code" style={{ display: 'block', marginBottom: '6px', color: 'var(--text-muted)' }}>
-                  INQUIRY CLASSIFICATION
+              {/* Inquiry Topic */}
+              <div style={{ marginBottom: '20px' }}>
+                <label
+                  htmlFor="contact-topic"
+                  style={{
+                    display: 'block',
+                    marginBottom: '8px',
+                    fontWeight: 600,
+                    fontSize: '0.92rem',
+                    color: 'var(--text-primary)',
+                  }}
+                >
+                  Inquiry Topic
                 </label>
                 <select
+                  id="contact-topic"
                   value={formData.topic}
-                  onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
-                  style={{ width: '100%', padding: '10px 12px', border: '1px solid var(--border-medium)', background: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '0.88rem' }}
+                  onChange={(e) => handleChange('topic', e.target.value)}
+                  style={{
+                    width: '100%',
+                    minHeight: '44px',
+                    padding: '10px 14px',
+                    border: '1px solid var(--border-medium)',
+                    backgroundColor: 'var(--bg-surface)',
+                    color: 'var(--text-primary)',
+                    fontSize: '0.95rem',
+                    outlineColor: 'var(--accent-institution)',
+                  }}
                 >
                   <option value="errata">Metrology Data Errata or Correction</option>
-                  <option value="equipment">Hardware Recommendation / Submission</option>
-                  <option value="press">Editorial Independence Inquiry</option>
-                  <option value="general">General Laboratory Correspondence</option>
+                  <option value="equipment">Hardware Benchmark Recommendation</option>
+                  <option value="press">Editorial Independence & Methodology Inquiry</option>
+                  <option value="general">General Correspondence</option>
                 </select>
               </div>
 
-              <div>
-                <label className="meta-code" style={{ display: 'block', marginBottom: '6px', color: 'var(--text-muted)' }}>
-                  STATEMENT / TECHNICAL DESCRIPTION
+              {/* Message Details */}
+              <div style={{ marginBottom: '24px' }}>
+                <label
+                  htmlFor="contact-msg"
+                  style={{
+                    display: 'block',
+                    marginBottom: '8px',
+                    fontWeight: 600,
+                    fontSize: '0.92rem',
+                    color: 'var(--text-primary)',
+                  }}
+                >
+                  Message / Inquiry Details <span style={{ color: 'var(--accent-highlight)' }}>*</span>
                 </label>
                 <textarea
+                  id="contact-msg"
                   rows={5}
                   required
-                  placeholder="Provide precise details, citing instrument ID or report reference if applicable."
+                  placeholder="Describe your inquiry, specimen data, or technical question..."
                   value={formData.msg}
-                  onChange={(e) => setFormData({ ...formData, msg: e.target.value })}
-                  style={{ width: '100%', padding: '10px 12px', border: '1px solid var(--border-medium)', background: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '0.88rem' }}
+                  onChange={(e) => handleChange('msg', e.target.value)}
+                  onBlur={() => handleBlur('msg')}
+                  aria-invalid={touched.msg && !!errors.msg}
+                  aria-describedby={touched.msg && errors.msg ? 'msg-error' : undefined}
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px',
+                    border: touched.msg && errors.msg ? '1px solid #ef4444' : '1px solid var(--border-medium)',
+                    backgroundColor: 'var(--bg-surface)',
+                    color: 'var(--text-primary)',
+                    fontSize: '0.95rem',
+                    lineHeight: 1.6,
+                    outlineColor: 'var(--accent-institution)',
+                  }}
                 />
+                {touched.msg && errors.msg && (
+                  <p id="msg-error" style={{ color: '#ef4444', fontSize: '0.82rem', marginTop: '6px', fontWeight: 500 }}>
+                    ⚠ {errors.msg}
+                  </p>
+                )}
               </div>
 
-              <button type="submit" className="btn-institutional" style={{ padding: '12px 24px', marginTop: '8px' }}>
-                Submit to Dispatch Queue →
+              {/* High-Contrast Standout Action Button */}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="btn-institutional"
+                style={{
+                  width: '100%',
+                  minHeight: '48px',
+                  fontSize: '0.95rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.02em',
+                }}
+              >
+                {isSubmitting ? 'Transmitting Dispatch...' : 'Submit to Dispatch Queue →'}
               </button>
             </form>
           )}
-        </div>
+        </section>
 
-        {/* Institutional Desk Info Column */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <div style={{ border: '1px solid var(--border-hairline)', padding: '24px', backgroundColor: 'var(--bg-surface)' }}>
-            <div className="meta-code" style={{ color: 'var(--accent-institution)', fontWeight: 600, marginBottom: '6px' }}>
+        {/* Institutional Desk Info & Submission Guidelines */}
+        <aside style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          {/* Desk Info */}
+          <div
+            style={{
+              border: '1px solid var(--border-hairline)',
+              backgroundColor: 'var(--bg-surface)',
+              padding: '24px',
+            }}
+          >
+            <div
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.78rem',
+                fontWeight: 600,
+                color: 'var(--accent-institution)',
+                marginBottom: '8px',
+                textTransform: 'uppercase',
+              }}
+            >
               OFFICIAL LABORATORY DESK
             </div>
-            <h3 style={{ fontSize: '1.2rem', marginBottom: '8px' }}>Editorial & Metrology Section</h3>
-            <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '12px' }}>
+            <h3 style={{ fontSize: '1.25rem', marginBottom: '10px', color: 'var(--text-primary)' }}>
+              Editorial & Metrology Section
+            </h3>
+            <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '16px' }}>
               OnlineMeasurer operates autonomously. We review reader-submitted hardware suggestions and prioritize instruments with high retail sales volume and reported dimensional variance.
             </p>
-            <div className="meta-code" style={{ color: 'var(--text-muted)' }}>
+            <div
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.85rem',
+                padding: '8px 12px',
+                backgroundColor: 'var(--bg-canvas)',
+                border: '1px solid var(--border-hairline)',
+                color: 'var(--text-primary)',
+              }}
+            >
               EMAIL: editorial@onlinemeasurer.com
             </div>
           </div>
 
-          <div style={{ border: '1px solid var(--border-hairline)', padding: '24px', backgroundColor: 'var(--bg-surface)' }}>
-            <div className="meta-code" style={{ color: 'var(--accent-institution)', fontWeight: 600, marginBottom: '6px' }}>
-              SUBMISSION GUIDELINES
+          {/* Submission Guidelines */}
+          <div
+            style={{
+              border: '1px solid var(--border-hairline)',
+              backgroundColor: 'var(--bg-surface)',
+              padding: '24px',
+            }}
+          >
+            <div
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.78rem',
+                fontWeight: 600,
+                color: 'var(--accent-highlight)',
+                marginBottom: '8px',
+                textTransform: 'uppercase',
+              }}
+            >
+              EVALUATION POLICY
             </div>
-            <h3 style={{ fontSize: '1.2rem', marginBottom: '8px' }}>Manufacturers & Vendors</h3>
-            <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-              Do NOT send unsolicited evaluation units. We strictly benchmark hardware acquired anonymously through consumer retail channels (Amazon.in / Amazon.com) to prevent cherry-picked golden sample distortion.
+            <h3 style={{ fontSize: '1.25rem', marginBottom: '10px', color: 'var(--text-primary)' }}>
+              Manufacturers & Vendors
+            </h3>
+            <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+              Please do <strong>not</strong> ship unsolicited evaluation hardware. To prevent cherry-picked golden sample distortion, we strictly test instruments acquired anonymously via standard retail channels (Amazon.in / Amazon.com).
             </p>
           </div>
-        </div>
+        </aside>
       </div>
     </div>
   );
