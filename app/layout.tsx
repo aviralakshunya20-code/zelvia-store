@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import Link from 'next/link';
 import './globals.css';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
 
 export const viewport: Viewport = {
   themeColor: '#ffffff',
@@ -71,7 +72,7 @@ export default function RootLayout({
         </div>
 
         {/* Global Persistent Header */}
-        <header style={{ backgroundColor: 'rgba(9, 13, 22, 0.8)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', position: 'sticky', top: 0, zIndex: 100 }}>
+        <header style={{ backgroundColor: 'rgba(15, 23, 42, 0.85)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', position: 'sticky', top: 0, zIndex: 100 }}>
           <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
             <div>
               <Link href="/" style={{ textDecoration: 'none' }}>
@@ -84,8 +85,8 @@ export default function RootLayout({
               </Link>
             </div>
 
-            {/* Distinct Navigation Routes */}
-            <nav style={{ display: 'flex', alignItems: 'center', gap: '22px', flexWrap: 'wrap' }}>
+            {/* Distinct Navigation Routes & Theme Switcher */}
+            <nav style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
               <Link href="/" style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
                 Home
               </Link>
@@ -104,6 +105,7 @@ export default function RootLayout({
               <Link href="/contact" style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
                 Inquiries
               </Link>
+              <ThemeSwitcher />
             </nav>
           </div>
         </header>
