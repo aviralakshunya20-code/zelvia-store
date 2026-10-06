@@ -3,22 +3,22 @@
 @tailwind utilities;
 
 :root {
-  /* Institutional Light Theme */
-  --bg-canvas: #ffffff;
-  --bg-surface: #f9fafb;
-  --bg-subtle: #f3f4f6;
-  --border-hairline: #e5e7eb;
-  --border-medium: #d1d5db;
-  --border-strong: #111827;
-  --text-primary: #111827;
-  --text-secondary: #4b5563;
+  /* Institutional Metrology Theme - Base Blueprint Canvas #090D16 */
+  --bg-canvas: #090D16;
+  --bg-surface: #14171d;
+  --bg-subtle: #1c2028;
+  --border-hairline: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-strong: #f3f4f6;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
   --text-muted: #6b7280;
   
-  /* ONE Muted Institutional Accent Color */
-  --accent-institution: #1e3a5f; /* Deep Institutional Navy */
-  --accent-institution-hover: #13253d;
+  /* Precision Metrology Accent (Sky Cyan 400 & Warning Amber) */
+  --accent-institution: #38bdf8;
+  --accent-institution-hover: #7dd3fc;
   --accent-tag: #0f3b60;
-  --accent-highlight: #b45309; /* Functional Warning/Alert Amber */
+  --accent-highlight: #f59e0b;
 
   --font-serif: 'Source Serif 4', Georgia, serif;
   --font-sans: 'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -28,37 +28,81 @@
 }
 
 [data-theme="dark"] {
-  /* Institutional Dark Theme */
-  --bg-canvas: #0c0e12;
+  --bg-canvas: #090D16;
   --bg-surface: #14171d;
   --bg-subtle: #1c2028;
-  --border-hairline: #272c36;
-  --border-medium: #3b4250;
+  --border-hairline: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
   --border-strong: #f3f4f6;
   --text-primary: #f3f4f6;
   --text-secondary: #9ca3af;
   --text-muted: #6b7280;
   
-  --accent-institution: #60a5fa; /* Crisp Slate Blue */
-  --accent-institution-hover: #93c5fd;
+  --accent-institution: #38bdf8;
+  --accent-institution-hover: #7dd3fc;
   --accent-tag: #1e3a5f;
   --accent-highlight: #f59e0b;
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  border-radius: 0 !important; /* STRICTLY FLAT per directive: corners <= 2px */
-  box-shadow: none !important; /* STRICTLY NO SHADOWS per directive */
 }
 
+/* Global Metrology Blueprint Canvas & Precision Measurement Grid Overlay */
 body {
   font-family: var(--font-sans);
-  background-color: var(--bg-canvas);
+  background-color: #090D16;
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* GPU-Accelerated Fixed Background Layer
+ * - Base background color: #090D16
+ * - Grid line color: rgba(56, 189, 248, 0.04) (1px grid lines spaced at 24px intervals)
+ * - Accent major grid line every 120px with rgba(56, 189, 248, 0.08)
+ * - Top header ambient radial glow: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 70%)
+ * - Uses transform: translateZ(0) to promote to dedicated compositor layer for zero layout jank on scrolling
+ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #090D16;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 70%),
+    linear-gradient(to right, rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+    linear-gradient(to right, rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+  background-size: 
+    100% 100%,
+    120px 120px,
+    120px 120px,
+    24px 24px,
+    24px 24px;
+  background-position: 
+    center top,
+    0 0,
+    0 0,
+    0 0,
+    0 0;
+  background-repeat: 
+    no-repeat,
+    repeat,
+    repeat,
+    repeat,
+    repeat;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 h1, h2, h3, h4, .serif-heading {
@@ -75,6 +119,49 @@ p {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Elevated Card Surfaces & Spatial Depth */
+.elevated-card {
+  background: rgba(22, 27, 34, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.elevated-card:hover {
+  border-color: rgba(56, 189, 248, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.65), 0 0 20px -4px rgba(56, 189, 248, 0.12);
+}
+
+/* Form Controls with Modern Depth */
+.metrology-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background-color: rgba(15, 20, 28, 0.7);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-family: var(--font-sans);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.metrology-input:focus {
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+.metrology-input::placeholder {
+  color: #6b7280;
 }
 
 /* Hairline utility classes */
@@ -109,18 +196,22 @@ a {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background-color: var(--accent-institution);
-  color: #ffffff !important;
-  font-weight: 600;
-  font-size: 0.88rem;
-  padding: 10px 18px;
-  border: 1px solid var(--accent-institution);
+  background-color: #38bdf8;
+  color: #090D16 !important;
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 12px 22px;
+  border: 1px solid #38bdf8;
+  border-radius: 8px;
   cursor: pointer;
-  transition: opacity 0.15s ease;
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
+  transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-institutional:hover {
-  opacity: 0.9;
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.35);
 }
 
 .btn-outline {
@@ -128,18 +219,20 @@ a {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background-color: transparent;
+  background-color: rgba(22, 27, 34, 0.5);
   color: var(--text-primary) !important;
   font-weight: 600;
   font-size: 0.88rem;
   padding: 10px 18px;
-  border: 1px solid var(--border-medium);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .btn-outline:hover {
-  background-color: var(--bg-subtle);
+  background-color: rgba(30, 41, 59, 0.7);
+  border-color: rgba(56, 189, 248, 0.3);
 }
 
 .btn-amazon-verified {
@@ -147,20 +240,16 @@ a {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background-color: #111827;
-  color: #ffffff !important;
-  border: 1px solid #111827;
+  background-color: #f3f4f6;
+  color: #111827 !important;
+  border: 1px solid #f3f4f6;
+  border-radius: 6px;
   font-size: 0.82rem;
   font-weight: 600;
   padding: 8px 14px;
   text-decoration: none;
   cursor: pointer;
-}
-
-[data-theme="dark"] .btn-amazon-verified {
-  background-color: #f3f4f6;
-  color: #111827 !important;
-  border-color: #f3f4f6;
+  transition: opacity 0.2s ease;
 }
 
 .btn-amazon-verified:hover {

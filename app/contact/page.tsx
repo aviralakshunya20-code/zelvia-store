@@ -61,8 +61,8 @@ export default function ContactPage() {
     setErrors(validationErrors);
   };
 
-  const handleChange = (field: keyof FormState, value: string) => {
-    const updated = { ...formData, [field]: value };
+  const handleChange = (field: keyof FormState, val: string) => {
+    const updated = { ...formData, [field]: val };
     setFormData(updated);
     if (touched[field]) {
       const validationErrors = validate(updated);
@@ -72,52 +72,57 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setTouched({ name: true, org: true, email: true, topic: true, msg: true });
+    setTouched({ name: true, email: true, msg: true });
     const validationErrors = validate(formData);
     setErrors(validationErrors);
 
-    if (Object.keys(validationErrors).length === 0) {
-      setIsSubmitting(true);
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setSubmissionId(`INQ-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`);
-        setSubmitted(true);
-      }, 400);
+    if (Object.keys(validationErrors).length > 0) {
+      return;
     }
+
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitted(true);
+      setSubmissionId(`OM-${Date.now().toString(36).toUpperCase()}`);
+    }, 600);
   };
 
   const resetForm = () => {
-    setFormData({ name: '', org: '', email: '', topic: 'errata', msg: '' });
+    setFormData({
+      name: '',
+      org: '',
+      email: '',
+      topic: 'errata',
+      msg: '',
+    });
     setErrors({});
     setTouched({});
     setSubmitted(false);
   };
 
   return (
-    <div style={{ maxWidth: '1040px', margin: '0 auto', padding: '40px 24px', fontSize: '1rem', lineHeight: 1.6 }}>
+    <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '48px 24px 80px' }}>
       {/* Breadcrumb Navigation */}
-      <nav aria-label="Breadcrumb" style={{ marginBottom: '16px' }}>
-        <ol style={{ listStyle: 'none', display: 'flex', gap: '8px', fontSize: '0.85rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
+      <nav aria-label="Breadcrumb" style={{ marginBottom: '24px', fontSize: '0.85rem' }}>
+        <ol style={{ display: 'flex', listStyle: 'none', gap: '8px', alignItems: 'center' }}>
           <li>
-            <Link href="/" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>
-              HOME
+            <Link href="/" style={{ color: 'var(--text-secondary)' }}>
+              Home
             </Link>
           </li>
-          <li aria-hidden="true">/</li>
-          <li>INQUIRIES</li>
-          <li aria-hidden="true">/</li>
-          <li style={{ color: 'var(--text-primary)' }} aria-current="page">
-            CONTACT & SUBMISSIONS
+          <li style={{ color: 'var(--text-muted)' }}>/</li>
+          <li aria-current="page" style={{ color: 'var(--text-primary)', fontWeight: 600 }}>
+            Contact & Technical Inquiries
           </li>
         </ol>
       </nav>
 
-      {/* Page Header */}
-      <header style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '24px', marginBottom: '40px' }}>
+      {/* Accessible Header Section */}
+      <header style={{ marginBottom: '40px', maxWidth: '840px' }}>
         <div
+          className="meta-code"
           style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.82rem',
             fontWeight: 600,
             color: 'var(--accent-institution)',
             letterSpacing: '0.04em',
@@ -153,16 +158,21 @@ export default function ContactPage() {
           alignItems: 'start',
         }}
       >
-        {/* Form Container Card */}
+        {/* Form Container Card - Elevated Card with Spatial Depth */}
         <section
           aria-labelledby="form-heading"
+          className="elevated-card"
           style={{
-            border: '1px solid var(--border-hairline)',
-            backgroundColor: 'var(--bg-canvas)',
-            padding: '32px 28px',
+            backgroundColor: 'rgba(22, 27, 34, 0.75)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '12px',
+            boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)',
+            padding: '36px 32px',
           }}
         >
-          <h2 id="form-heading" style={{ fontSize: '1.3rem', fontWeight: 600, marginBottom: '20px', color: 'var(--text-primary)' }}>
+          <h2 id="form-heading" style={{ fontSize: '1.35rem', fontWeight: 600, marginBottom: '20px', color: 'var(--text-primary)' }}>
             Send an Inquiry
           </h2>
 
@@ -171,9 +181,11 @@ export default function ContactPage() {
             <div
               role="alert"
               style={{
-                backgroundColor: 'var(--bg-surface)',
-                border: '1px solid var(--accent-institution)',
+                backgroundColor: 'rgba(15, 20, 28, 0.7)',
+                border: '1px solid rgba(56, 189, 248, 0.4)',
+                borderRadius: '8px',
                 padding: '28px',
+                boxShadow: '0 8px 24px -6px rgba(0, 0, 0, 0.4)',
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
@@ -225,15 +237,9 @@ export default function ContactPage() {
                   onBlur={() => handleBlur('name')}
                   aria-invalid={touched.name && !!errors.name}
                   aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
+                  className="metrology-input"
                   style={{
-                    width: '100%',
-                    minHeight: '44px',
-                    padding: '10px 14px',
-                    border: touched.name && errors.name ? '1px solid #ef4444' : '1px solid var(--border-medium)',
-                    backgroundColor: 'var(--bg-surface)',
-                    color: 'var(--text-primary)',
-                    fontSize: '0.95rem',
-                    outlineColor: 'var(--accent-institution)',
+                    borderColor: touched.name && errors.name ? '#ef4444' : undefined,
                   }}
                 />
                 {touched.name && errors.name && (
@@ -264,16 +270,7 @@ export default function ContactPage() {
                   placeholder="e.g., Workshop, Studio, or Company (Optional)"
                   value={formData.org}
                   onChange={(e) => handleChange('org', e.target.value)}
-                  style={{
-                    width: '100%',
-                    minHeight: '44px',
-                    padding: '10px 14px',
-                    border: '1px solid var(--border-medium)',
-                    backgroundColor: 'var(--bg-surface)',
-                    color: 'var(--text-primary)',
-                    fontSize: '0.95rem',
-                    outlineColor: 'var(--accent-institution)',
-                  }}
+                  className="metrology-input"
                 />
               </div>
 
@@ -302,15 +299,9 @@ export default function ContactPage() {
                   onBlur={() => handleBlur('email')}
                   aria-invalid={touched.email && !!errors.email}
                   aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
+                  className="metrology-input"
                   style={{
-                    width: '100%',
-                    minHeight: '44px',
-                    padding: '10px 14px',
-                    border: touched.email && errors.email ? '1px solid #ef4444' : '1px solid var(--border-medium)',
-                    backgroundColor: 'var(--bg-surface)',
-                    color: 'var(--text-primary)',
-                    fontSize: '0.95rem',
-                    outlineColor: 'var(--accent-institution)',
+                    borderColor: touched.email && errors.email ? '#ef4444' : undefined,
                   }}
                 />
                 {touched.email && errors.email && (
@@ -338,16 +329,7 @@ export default function ContactPage() {
                   id="contact-topic"
                   value={formData.topic}
                   onChange={(e) => handleChange('topic', e.target.value)}
-                  style={{
-                    width: '100%',
-                    minHeight: '44px',
-                    padding: '10px 14px',
-                    border: '1px solid var(--border-medium)',
-                    backgroundColor: 'var(--bg-surface)',
-                    color: 'var(--text-primary)',
-                    fontSize: '0.95rem',
-                    outlineColor: 'var(--accent-institution)',
-                  }}
+                  className="metrology-input"
                 >
                   <option value="errata">Metrology Data Errata or Correction</option>
                   <option value="equipment">Hardware Benchmark Recommendation</option>
@@ -380,15 +362,12 @@ export default function ContactPage() {
                   onBlur={() => handleBlur('msg')}
                   aria-invalid={touched.msg && !!errors.msg}
                   aria-describedby={touched.msg && errors.msg ? 'msg-error' : undefined}
+                  className="metrology-input"
                   style={{
-                    width: '100%',
-                    padding: '12px 14px',
-                    border: touched.msg && errors.msg ? '1px solid #ef4444' : '1px solid var(--border-medium)',
-                    backgroundColor: 'var(--bg-surface)',
-                    color: 'var(--text-primary)',
-                    fontSize: '0.95rem',
+                    minHeight: '120px',
                     lineHeight: 1.6,
-                    outlineColor: 'var(--accent-institution)',
+                    resize: 'vertical',
+                    borderColor: touched.msg && errors.msg ? '#ef4444' : undefined,
                   }}
                 />
                 {touched.msg && errors.msg && (
@@ -406,8 +385,6 @@ export default function ContactPage() {
                 style={{
                   width: '100%',
                   minHeight: '48px',
-                  fontSize: '0.95rem',
-                  fontWeight: 700,
                   letterSpacing: '0.02em',
                 }}
               >
@@ -419,12 +396,17 @@ export default function ContactPage() {
 
         {/* Institutional Desk Info & Submission Guidelines */}
         <aside style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          {/* Desk Info */}
+          {/* Official Laboratory Desk Card - Elevated Card with Spatial Depth */}
           <div
+            className="elevated-card"
             style={{
-              border: '1px solid var(--border-hairline)',
-              backgroundColor: 'var(--bg-surface)',
-              padding: '24px',
+              backgroundColor: 'rgba(22, 27, 34, 0.75)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)',
+              padding: '28px',
             }}
           >
             <div
@@ -435,6 +417,7 @@ export default function ContactPage() {
                 color: 'var(--accent-institution)',
                 marginBottom: '8px',
                 textTransform: 'uppercase',
+                letterSpacing: '0.04em',
               }}
             >
               OFFICIAL LABORATORY DESK
@@ -449,9 +432,10 @@ export default function ContactPage() {
               style={{
                 fontFamily: 'var(--font-mono)',
                 fontSize: '0.85rem',
-                padding: '8px 12px',
-                backgroundColor: 'var(--bg-canvas)',
-                border: '1px solid var(--border-hairline)',
+                padding: '10px 14px',
+                backgroundColor: 'rgba(15, 20, 28, 0.85)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                borderRadius: '6px',
                 color: 'var(--text-primary)',
               }}
             >
@@ -459,12 +443,17 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Submission Guidelines */}
+          {/* Submission Guidelines Card - Elevated Card with Spatial Depth */}
           <div
+            className="elevated-card"
             style={{
-              border: '1px solid var(--border-hairline)',
-              backgroundColor: 'var(--bg-surface)',
-              padding: '24px',
+              backgroundColor: 'rgba(22, 27, 34, 0.75)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)',
+              padding: '28px',
             }}
           >
             <div
@@ -475,6 +464,7 @@ export default function ContactPage() {
                 color: 'var(--accent-highlight)',
                 marginBottom: '8px',
                 textTransform: 'uppercase',
+                letterSpacing: '0.04em',
               }}
             >
               EVALUATION POLICY
