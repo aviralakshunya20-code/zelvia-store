@@ -62,7 +62,7 @@ const PRODUCTS: ProductItem[] = [
     claimedSpec: "6000 Counts / CAT III 600V",
     testedSpec: "±0.48% DC Voltage Variance",
     searchQuery: "Digital Multimeter Auto Ranging True RMS 6000 Counts",
-    img: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80",
+    img: "https://images.unsplash.com/photo-1581092335878-2d9ff86ca2bf?auto=format&fit=crop&w=600&q=80",
     desc: "Evaluates AC/DC voltage, current, resistance, capacitance, diode drop, and continuity buzzer. Non-contact voltage (NCV) probe embedded in top jaw.",
     specs: {
       "Display Count": "6000 Counts (Dual LCD)",
