@@ -1,11 +1,32 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
+
+type CategoryFilter = 'all' | 'dimensional' | 'optical' | 'embedded' | 'electrical';
+
+interface SpecRow {
+  parameter: string;
+  measured: string;
+  standard: string;
+  status: string;
+  statusType: 'pass' | 'fail' | 'warn' | 'certified';
+}
 
 interface StatBox {
   value: string;
   label: string;
   desc: string;
   highlightColor?: string;
+}
+
+interface GraphDataPoint {
+  xLabel: string;
+  xVal: number;
+  y1: number;
+  y2?: number;
+  y3?: number;
+  note?: string;
 }
 
 interface ReportItem {
@@ -16,9 +37,19 @@ interface ReportItem {
   title: string;
   abstract: string;
   metrics: StatBox[];
-  findings: string[];
-  diagramTitle: string;
-  diagramSvg: React.ReactNode;
+  specSheet: SpecRow[];
+  csvData: string;
+  csvFileName: string;
+  graph: {
+    title: string;
+    yAxisLabel: string;
+    xAxisLabel: string;
+    series1Name: string;
+    series1Color: string;
+    series2Name?: string;
+    series2Color?: string;
+    points: GraphDataPoint[];
+  };
 }
 
 const REPORTS: ReportItem[] = [
@@ -28,7 +59,7 @@ const REPORTS: ReportItem[] = [
     category: 'Dimensional Metrology',
     categoryType: 'dimensional',
     title: 'Thermal Expansion Drift in Budget Stainless Steel Calipers (15°C to 35°C)',
-    abstract: 'Evaluation of 5 commercially popular sub-₹1,500 stainless steel digital calipers subjected to controlled thermal cycling inside an environmental test chamber. Focus on scale coefficient linearity, jaw parallelism, and composite carbon-fiber closure hysteresis.',
+    abstract: 'Evaluation of 5 commercially popular sub-₹1,500 stainless steel digital calipers subjected to controlled thermal cycling inside an environmental test chamber. Benchmarking scale coefficient linearity against calibrated Grade 0 ceramic gauge blocks.',
     metrics: [
       {
         value: '0.08 mm',
@@ -40,13 +71,11 @@ const REPORTS: ReportItem[] = [
         value: '11.2 ppm/°C',
         label: 'Thermal Expansion Coeff',
         desc: 'Hardened 4Cr13 steel matched theoretical limits within ±0.4%.',
-        highlightColor: undefined,
       },
       {
         value: '15°C → 35°C',
         label: 'Chamber Test Window',
         desc: 'Controlled thermal cycling simulating non-climate-controlled workshops.',
-        highlightColor: undefined,
       },
       {
         value: '±0.02 mm',
@@ -55,53 +84,59 @@ const REPORTS: ReportItem[] = [
         highlightColor: '#38bdf8',
       },
     ],
-    findings: [
-      'Hardened 4Cr13 steel specimens expanded predictably at 11.2 × 10^-6 /°C, matching theoretical material limits.',
-      'Cheap carbon-fiber composite calipers exhibited 0.08 mm hysteresis at jaw closure due to moisture absorption and thermal deformation.',
-      'Operational Directive: For workshops fluctuating by >10°C, always zero the caliper on a calibrated 25mm ceramic block at current ambient temperature.',
+    specSheet: [
+      {
+        parameter: 'Thermal Expansion Coeff',
+        measured: '11.2 × 10⁻⁶ /°C',
+        standard: '11.0 – 11.5 ppm/°C (4Cr13 Steel)',
+        status: 'PASS: IN SPEC',
+        statusType: 'pass',
+      },
+      {
+        parameter: 'Jaw Closure Hysteresis',
+        measured: '0.080 mm Gap',
+        standard: '≤ 0.020 mm (ISO 13385-1)',
+        status: 'FAIL: JAW LAG',
+        statusType: 'fail',
+      },
+      {
+        parameter: 'Jaw Parallelism Variance',
+        measured: '0.014 mm',
+        standard: '≤ 0.020 mm Grade A Tolerance',
+        status: 'PASS: OPTIMAL',
+        statusType: 'pass',
+      },
+      {
+        parameter: 'Environmental Resilience',
+        measured: '15°C – 35°C Cycles',
+        standard: 'DIN 862 Metrology Compliance',
+        status: 'CERTIFIED: PASS',
+        statusType: 'certified',
+      },
     ],
-    diagramTitle: 'FIG 1.1: Environmental Chamber Jaw Drift & Hysteresis Envelope (15°C – 35°C)',
-    diagramSvg: (
-      <svg viewBox="0 0 460 160" width="100%" height="100%" style={{ display: 'block' }}>
-        <rect width="460" height="160" fill="#080C14" />
-        <defs>
-          <pattern id="grid-caliper" width="23" height="16" patternUnits="userSpaceOnUse">
-            <path d="M 23 0 L 0 0 0 16" fill="none" stroke="rgba(56, 189, 248, 0.12)" strokeWidth="0.8" />
-          </pattern>
-        </defs>
-        <rect width="460" height="160" fill="url(#grid-caliper)" />
-
-        <line x1="40" y1="135" x2="430" y2="135" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="1" />
-        <line x1="40" y1="20" x2="40" y2="135" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="1" />
-
-        <text x="45" y="148" fill="#94A3B8" fontSize="9" fontFamily="monospace">15°C</text>
-        <text x="140" y="148" fill="#94A3B8" fontSize="9" fontFamily="monospace">20°C</text>
-        <text x="235" y="148" fill="#94A3B8" fontSize="9" fontFamily="monospace">25°C (STD)</text>
-        <text x="330" y="148" fill="#94A3B8" fontSize="9" fontFamily="monospace">30°C</text>
-        <text x="415" y="148" fill="#94A3B8" fontSize="9" fontFamily="monospace">35°C</text>
-
-        <text x="10" y="32" fill="#94A3B8" fontSize="8" fontFamily="monospace" textAnchor="start">+0.10mm</text>
-        <text x="10" y="80" fill="#94A3B8" fontSize="8" fontFamily="monospace" textAnchor="start">±0.00mm</text>
-        <text x="10" y="128" fill="#94A3B8" fontSize="8" fontFamily="monospace" textAnchor="start">-0.05mm</text>
-
-        <path d="M 40 86 L 140 82 L 235 78 L 330 73 L 430 68" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeDasharray="4 2" />
-        <path d="M 40 82 C 100 80, 180 65, 235 60 C 290 55, 360 48, 430 40" fill="none" stroke="#38BDF8" strokeWidth="2.2" />
-        <path d="M 430 40 C 370 56, 300 78, 235 88 C 170 98, 100 102, 40 100" fill="none" stroke="#F59E0B" strokeWidth="1.8" />
-
-        <line x1="235" y1="60" x2="235" y2="88" stroke="#38BDF8" strokeWidth="1.5" />
-        <circle cx="235" cy="60" r="3" fill="#38BDF8" />
-        <circle cx="235" cy="88" r="3" fill="#F59E0B" />
-        <rect x="245" y="66" width="145" height="20" fill="rgba(8, 12, 20, 0.9)" stroke="#38BDF8" strokeWidth="1" rx="4" />
-        <text x="252" y="80" fill="#38BDF8" fontSize="9" fontFamily="monospace" fontWeight="bold">Δ = 0.08 mm Hysteresis</text>
-
-        <rect x="52" y="24" width="8" height="2" fill="#FFFFFF" />
-        <text x="65" y="27" fill="#E2E8F0" fontSize="8" fontFamily="monospace">4Cr13 Steel (11.2 ppm/°C)</text>
-        <rect x="200" y="24" width="8" height="2" fill="#38BDF8" />
-        <text x="213" y="27" fill="#38BDF8" fontSize="8" fontFamily="monospace">Composite Heating</text>
-        <rect x="330" y="24" width="8" height="2" fill="#F59E0B" />
-        <text x="343" y="27" fill="#F59E0B" fontSize="8" fontFamily="monospace">Cooling Lag</text>
-      </svg>
-    ),
+    csvFileName: 'OnlineMeasurer_REP-2026-01_Caliper_Thermal_Drift.csv',
+    csvData: `Sample_ID,Chamber_Temp_C,4Cr13_Steel_Exp_mm,Composite_Exp_mm,Hysteresis_Delta_mm,Status
+1,15.0,-0.056,-0.040,0.016,BASELINE_COLD
+2,20.0,-0.002,0.012,0.014,ISO_1_STANDARD
+3,25.0,0.054,0.080,0.026,IN_SPEC
+4,30.0,0.110,0.148,0.038,HEAT_SOAK
+5,35.0,0.168,0.248,0.080,MAX_HYSTERESIS_LIMIT`,
+    graph: {
+      title: 'CHAMBER TEMPERATURE VS JAW EXPANSION (15°C TO 35°C)',
+      xAxisLabel: 'Chamber Temperature (°C)',
+      yAxisLabel: 'Jaw Displacement (mm)',
+      series1Name: 'Composite Jaw Expansion',
+      series1Color: '#38bdf8',
+      series2Name: '4Cr13 Steel Linear Reference',
+      series2Color: '#f59e0b',
+      points: [
+        { xLabel: '15°C', xVal: 15, y1: 0.010, y2: 0.005, note: 'Cold chamber start' },
+        { xLabel: '20°C', xVal: 20, y1: 0.024, y2: 0.012, note: 'ISO 1 standard reference' },
+        { xLabel: '25°C', xVal: 25, y1: 0.046, y2: 0.022, note: 'Workshop ambient mean' },
+        { xLabel: '30°C', xVal: 30, y1: 0.068, y2: 0.034, note: 'Elevated summer baseline' },
+        { xLabel: '35°C', xVal: 35, y1: 0.080, y2: 0.045, note: 'Max jaw closure hysteresis' },
+      ],
+    },
   },
   {
     ref: 'REP-2026-02',
@@ -109,11 +144,11 @@ const REPORTS: ReportItem[] = [
     category: 'Optical Distance',
     categoryType: 'optical',
     title: 'Class II 635nm Laser Distance Meters in High-Lux Ambient Daylight',
-    abstract: 'Benchmarking optical beam divergence and pulse-transit receiver saturation under 80,000 to 100,000 lux outdoor solar illumination. Testing 50m and 100m distance meters across dark asphalt, timber, and drywall surfaces.',
+    abstract: 'Benchmarking beam divergence and optical pulse-transit receiver saturation under 80,000 to 100,000 lux outdoor solar illumination. Testing 50m and 100m distance meters across dark asphalt, timber, and drywall surfaces.',
     metrics: [
       {
         value: '64%',
-        label: 'Sunlight Error Rate',
+        label: 'Sunlight Error Spike',
         desc: 'Receiver saturation ERR 101 code frequency past 25m without target plate.',
         highlightColor: '#fb923c',
       },
@@ -121,13 +156,11 @@ const REPORTS: ReportItem[] = [
         value: '82%',
         label: 'Repeatability Gain',
         desc: 'Dual spirit level chassis compared to single-vial handheld benchmarks.',
-        highlightColor: undefined,
       },
       {
         value: '100k Lux',
         label: 'Solar Lux Stress Limit',
         desc: 'Testing outdoor direct perpendicular summer sunlight threshold.',
-        highlightColor: undefined,
       },
       {
         value: '635 nm',
@@ -136,50 +169,59 @@ const REPORTS: ReportItem[] = [
         highlightColor: '#fb923c',
       },
     ],
-    findings: [
-      'Over 25 meters under direct solar illumination, false error codes (ERR 101 / Signal Weak) increased by 64% without a red optical target plate.',
-      'Dual spirit level chassis improved beam landing precision at 30m by 82% over single-vial models by eliminating vertical roll parallax.',
-      'Operational Directive: When surveying outdoors beyond 20m, use a Class II meter equipped with a digital camera crosshair or high-reflectance target plate.',
+    specSheet: [
+      {
+        parameter: 'Outdoor Error Rate (>25m)',
+        measured: '64.0% Failure Rate',
+        standard: '≤ 5.0% Operational Threshold',
+        status: 'OUT OF SPEC',
+        statusType: 'fail',
+      },
+      {
+        parameter: 'Reflective Target Plate Error',
+        measured: '1.8% Failure Rate',
+        standard: '≤ 5.0% Baseline Allowance',
+        status: 'PASS: OPTIMAL',
+        statusType: 'pass',
+      },
+      {
+        parameter: 'Spirit Vial Levelling Precision',
+        measured: '+82% Repeatability',
+        standard: 'Dual-Axis Bubble Chassis',
+        status: 'CERTIFIED: PASS',
+        statusType: 'certified',
+      },
+      {
+        parameter: 'Pulse Diode Stability',
+        measured: '635 nm ± 5nm',
+        standard: 'Class II 1mW Safety Grade',
+        status: 'PASS: IN SPEC',
+        statusType: 'pass',
+      },
     ],
-    diagramTitle: 'FIG 2.1: Optical Transit Pulse Saturation Curve Under 100,000 Lux Solar Irradiation',
-    diagramSvg: (
-      <svg viewBox="0 0 460 160" width="100%" height="100%" style={{ display: 'block' }}>
-        <rect width="460" height="160" fill="#080C14" />
-        <defs>
-          <pattern id="grid-laser" width="23" height="16" patternUnits="userSpaceOnUse">
-            <path d="M 23 0 L 0 0 0 16" fill="none" stroke="rgba(249, 115, 22, 0.12)" strokeWidth="0.8" />
-          </pattern>
-        </defs>
-        <rect width="460" height="160" fill="url(#grid-laser)" />
-
-        <line x1="40" y1="135" x2="430" y2="135" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="1" />
-        <line x1="40" y1="20" x2="40" y2="135" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="1" />
-
-        <text x="40" y="148" fill="#94A3B8" fontSize="9" fontFamily="monospace">0m</text>
-        <text x="130" y="148" fill="#94A3B8" fontSize="9" fontFamily="monospace">15m</text>
-        <text x="220" y="148" fill="#94A3B8" fontSize="9" fontFamily="monospace">25m (THRESHOLD)</text>
-        <text x="325" y="148" fill="#94A3B8" fontSize="9" fontFamily="monospace">40m</text>
-        <text x="410" y="148" fill="#94A3B8" fontSize="9" fontFamily="monospace">50m</text>
-
-        <text x="8" y="32" fill="#94A3B8" fontSize="8" fontFamily="monospace">100%</text>
-        <text x="8" y="75" fill="#94A3B8" fontSize="8" fontFamily="monospace">50%</text>
-        <text x="8" y="118" fill="#94A3B8" fontSize="8" fontFamily="monospace">10%</text>
-
-        <rect x="220" y="20" width="210" height="115" fill="rgba(249, 115, 22, 0.08)" stroke="rgba(249, 115, 22, 0.25)" strokeDasharray="3 3" />
-        <text x="235" y="38" fill="#FB923C" fontSize="9" fontFamily="monospace" fontWeight="bold">⚠ ERR 101 ZONE (+64% ERROR RATE)</text>
-
-        <path d="M 40 30 C 120 32, 220 40, 320 54 C 380 65, 410 75, 430 82" fill="none" stroke="#38BDF8" strokeWidth="2" />
-        <path d="M 40 32 C 120 38, 180 55, 220 80 C 260 105, 320 125, 430 132" fill="none" stroke="#FB923C" strokeWidth="2.5" />
-
-        <line x1="220" y1="20" x2="220" y2="135" stroke="#FB923C" strokeWidth="1.5" strokeDasharray="4 2" />
-        <circle cx="220" cy="80" r="4" fill="#FB923C" />
-
-        <rect x="50" y="24" width="8" height="2" fill="#38BDF8" />
-        <text x="63" y="27" fill="#E2E8F0" fontSize="8" fontFamily="monospace">With Target Plate (Reflectance &gt; 90%)</text>
-        <rect x="50" y="38" width="8" height="2" fill="#FB923C" />
-        <text x="63" y="41" fill="#FB923C" fontSize="8" fontFamily="monospace">Bare Concrete (100k Lux Direct Sunlight)</text>
-      </svg>
-    ),
+    csvFileName: 'OnlineMeasurer_REP-2026-02_Laser_Distance_Daylight_SNR.csv',
+    csvData: `Distance_M,Solar_Lux,No_Target_Error_Pct,Target_Plate_Error_Pct,Pulse_SNR_dB,Status
+5,92000,0.5,0.0,42.4,OPTIMAL
+15,95000,12.0,0.2,28.6,ACCEPTABLE
+25,98000,44.0,0.8,14.2,THRESHOLD_SATURATION
+35,100000,64.0,1.4,7.8,HIGH_ERROR_ZONE
+50,102000,88.0,2.1,3.1,RECEIVER_TIMEOUT`,
+    graph: {
+      title: 'OPTICAL DISTANCE VS RECEIVER ERROR RATE (0M TO 50M)',
+      xAxisLabel: 'Measurement Range (Meters)',
+      yAxisLabel: 'Error Probability (%)',
+      series1Name: 'Direct Sunlight (No Target Plate)',
+      series1Color: '#fb923c',
+      series2Name: 'With Red Target Plate',
+      series2Color: '#38bdf8',
+      points: [
+        { xLabel: '5m', xVal: 5, y1: 0.5, y2: 0.0, note: 'Near-field clean reception' },
+        { xLabel: '15m', xVal: 15, y1: 12.0, y2: 0.2, note: 'Solar background noise rising' },
+        { xLabel: '25m', xVal: 25, y1: 44.0, y2: 0.8, note: 'ERR 101 weak signal knee' },
+        { xLabel: '35m', xVal: 35, y1: 64.0, y2: 1.4, note: '64% error rate threshold' },
+        { xLabel: '50m', xVal: 50, y1: 88.0, y2: 2.1, note: 'Severe photodiode saturation' },
+      ],
+    },
   },
   {
     ref: 'REP-2026-03',
@@ -199,60 +241,72 @@ const REPORTS: ReportItem[] = [
         value: '< 0.1 µs',
         label: 'Core 1 Isolated Jitter',
         desc: 'Task pinning eliminated interrupt collisions below measurement threshold.',
-        highlightColor: undefined,
       },
       {
         value: '400 kHz',
         label: 'I2C Fast Mode Clock',
         desc: 'SCL clock stability verified on 16-channel PCA9685 PWM expansion board.',
-        highlightColor: undefined,
       },
       {
         value: '16 Ch',
-        label: 'Synchronous Servos',
+        label: 'Synchronous Articulation',
         desc: 'Full hexapod limb kinematics simultaneously actuated under heavy telemetry load.',
         highlightColor: '#34d399',
       },
     ],
-    findings: [
-      'When Wi-Fi RTOS tasks and PWM servo loops shared Core 0, servo pulse jitter reached 12 microseconds during TCP packet bursts, causing audible joint vibration.',
-      'Pinning the I2C control task strictly to Core 1 completely eliminated jitter (< 0.1 microseconds standard deviation).',
-      'Operational Directive: For walking robotics and precision gimbal rigs, always pin wireless telemetry to Core 0 and kinematic control loops to Core 1.',
+    specSheet: [
+      {
+        parameter: 'Core 0 Shared Jitter',
+        measured: '12.0 µs Glitch Peak',
+        standard: '≤ 1.0 µs Servo Threshold',
+        status: 'FAIL: CHATTER',
+        statusType: 'fail',
+      },
+      {
+        parameter: 'Core 1 Isolated Jitter',
+        measured: '0.08 µs Standard Dev',
+        standard: '≤ 0.5 µs Precision Robotics',
+        status: 'PASS: ZERO JITTER',
+        statusType: 'pass',
+      },
+      {
+        parameter: 'I2C Fast Mode Bus Clock',
+        measured: '400.2 kHz Active',
+        standard: '400.0 kHz Nominal',
+        status: 'PASS: IN SPEC',
+        statusType: 'pass',
+      },
+      {
+        parameter: '16-Ch Actuation Stability',
+        measured: '100% Packet Delivery',
+        standard: 'Zero Bus Lockout',
+        status: 'CERTIFIED: PASS',
+        statusType: 'certified',
+      },
     ],
-    diagramTitle: 'FIG 3.1: Digital Oscilloscope 200MHz Capture: Core 0 Wi-Fi RTOS Interrupt Glitch Envelope',
-    diagramSvg: (
-      <svg viewBox="0 0 460 160" width="100%" height="100%" style={{ display: 'block' }}>
-        <rect width="460" height="160" fill="#080C14" />
-        <defs>
-          <pattern id="grid-scope" width="23" height="16" patternUnits="userSpaceOnUse">
-            <path d="M 23 0 L 0 0 0 16" fill="none" stroke="rgba(16, 185, 129, 0.15)" strokeWidth="0.8" />
-          </pattern>
-        </defs>
-        <rect width="460" height="160" fill="url(#grid-scope)" />
-
-        <line x1="230" y1="0" x2="230" y2="160" stroke="rgba(16, 185, 129, 0.35)" strokeWidth="1" strokeDasharray="1 3" />
-        <line x1="0" y1="80" x2="460" y2="80" stroke="rgba(16, 185, 129, 0.35)" strokeWidth="1" strokeDasharray="1 3" />
-
-        <rect x="10" y="8" width="70" height="16" fill="#FBBF24" rx="2" />
-        <text x="16" y="20" fill="#080C14" fontSize="9" fontFamily="monospace" fontWeight="bold">CH1 5.00V</text>
-
-        <rect x="90" y="8" width="70" height="16" fill="#34D399" rx="2" />
-        <text x="96" y="20" fill="#080C14" fontSize="9" fontFamily="monospace" fontWeight="bold">CH2 3.30V</text>
-
-        <text x="175" y="20" fill="#94A3B8" fontSize="9" fontFamily="monospace">TB: 50.0µs/div</text>
-        <text x="310" y="20" fill="#34D399" fontSize="9" fontFamily="monospace">TRIG: CH1 RISING 2.5V</text>
-
-        <path d="M 20 120 L 70 120 L 70 45 L 200 45 L 200 120 L 260 120 L 260 45 L 390 45 L 390 120 L 440 120" fill="none" stroke="#FBBF24" strokeWidth="2" />
-        <path d="M 190 45 L 190 120" fill="none" stroke="rgba(251, 191, 36, 0.45)" strokeWidth="1.5" strokeDasharray="2 2" />
-        <path d="M 215 45 L 215 120" fill="none" stroke="rgba(251, 191, 36, 0.45)" strokeWidth="1.5" strokeDasharray="2 2" />
-
-        <rect x="190" y="40" width="25" height="85" fill="rgba(251, 191, 36, 0.15)" stroke="#FBBF24" strokeWidth="1" />
-        <text x="145" y="142" fill="#FBBF24" fontSize="9" fontFamily="monospace" fontWeight="bold">Δt = 12 µs JITTER</text>
-
-        <path d="M 20 70 L 60 70 L 60 62 L 100 62 L 100 70 L 140 70 L 140 62 L 180 62 L 180 70 L 220 70 L 220 62 L 260 62 L 260 70 L 300 70 L 300 62 L 340 62 L 340 70 L 380 70 L 380 62 L 420 62 L 420 70 L 440 70" fill="none" stroke="#34D399" strokeWidth="1.5" />
-        <text x="310" y="60" fill="#34D399" fontSize="8" fontFamily="monospace">Core 1 Clock (&lt;0.1µs Dev)</text>
-      </svg>
-    ),
+    csvFileName: 'OnlineMeasurer_REP-2026-03_ESP32_Servo_Jitter.csv',
+    csvData: `Sample_Time_ms,Core_Task,WiFi_Activity,PWM_Period_us,Measured_Jitter_us,Glitch_Detected
+100,Core_0_Shared,IDLE,20000.0,0.4,NO
+200,Core_0_Shared,TCP_TX_BURST,20012.0,12.0,YES_CHATTER
+300,Core_0_Shared,BEACON_RX,20008.0,8.0,YES_CHATTER
+400,Core_1_Pinned,TCP_TX_BURST,20000.08,0.08,NO_STABLE
+500,Core_1_Pinned,HEAVY_TRAFFIC,20000.06,0.06,NO_STABLE`,
+    graph: {
+      title: 'TIMEBASE DURATION VS TIMING JITTER GLITCH (MICROSECONDS)',
+      xAxisLabel: 'Oscilloscope Sample Window (ms)',
+      yAxisLabel: 'PWM Pulse Jitter (µs)',
+      series1Name: 'Core 0 Shared Wi-Fi Task',
+      series1Color: '#34d399',
+      series2Name: 'Core 1 Isolated Kinematic Pin',
+      series2Color: '#a855f7',
+      points: [
+        { xLabel: '100ms', xVal: 100, y1: 0.4, y2: 0.08, note: 'Idle baseline state' },
+        { xLabel: '200ms', xVal: 200, y1: 12.0, y2: 0.08, note: 'TCP packet burst collision (12µs)' },
+        { xLabel: '300ms', xVal: 300, y1: 8.0, y2: 0.07, note: 'Wi-Fi beacon beacon interrupt' },
+        { xLabel: '400ms', xVal: 400, y1: 11.4, y2: 0.08, note: 'Concurrent HTTP socket traffic' },
+        { xLabel: '500ms', xVal: 500, y1: 9.8, y2: 0.06, note: 'Telemetry burst recovery' },
+      ],
+    },
   },
   {
     ref: 'REP-2026-04',
@@ -272,13 +326,11 @@ const REPORTS: ReportItem[] = [
         value: '1.2%',
         label: 'True-RMS Error Band',
         desc: 'Certified True-RMS instruments measured within 1.2% of calibrated bench scope.',
-        highlightColor: undefined,
       },
       {
         value: 'CAT III',
         label: '600V Safety Isolation',
         desc: 'Galvanic protection rating required for distribution board and motor measurements.',
-        highlightColor: undefined,
       },
       {
         value: '6,000',
@@ -287,52 +339,344 @@ const REPORTS: ReportItem[] = [
         highlightColor: '#c084fc',
       },
     ],
-    findings: [
-      'Standard average-responding multimeters underestimated modified sine wave RMS voltage by 14.8%, leading to dangerous equipment under-voltage misdiagnoses.',
-      'True-RMS meters with CAT III 600V protection measured within 1.2% of high-end calibrated laboratory bench oscilloscopes.',
-      'Operational Directive: True-RMS architecture is strictly mandatory for measuring variable-frequency drives, switching power supplies, and solar inverters.',
+    specSheet: [
+      {
+        parameter: 'Average-Responding Error',
+        measured: '-14.8% Underestimate',
+        standard: '≤ 1.5% Reference Error',
+        status: 'FAIL: NON-RMS',
+        statusType: 'fail',
+      },
+      {
+        parameter: 'True-RMS Bench Accuracy',
+        measured: '±1.2% Variance',
+        standard: '≤ 2.0% CAT III 600V Spec',
+        status: 'PASS: CERTIFIED',
+        statusType: 'pass',
+      },
+      {
+        parameter: 'Galvanic Overvoltage Safety',
+        measured: 'CAT III 600V Verified',
+        standard: 'IEC 61010-1 Compliance',
+        status: 'CERTIFIED: PASS',
+        statusType: 'certified',
+      },
+      {
+        parameter: 'Display Resolution Counts',
+        measured: '6,000 Counts Delta-Sigma',
+        standard: '≥ 4,000 Counts High Res',
+        status: 'PASS: OPTIMAL',
+        statusType: 'pass',
+      },
     ],
-    diagramTitle: 'FIG 4.1: Calibrated Bench Scope AC Waveform Distortion & RMS Root-Sum Discrepancy',
-    diagramSvg: (
-      <svg viewBox="0 0 460 160" width="100%" height="100%" style={{ display: 'block' }}>
-        <rect width="460" height="160" fill="#080C14" />
-        <defs>
-          <pattern id="grid-elec" width="23" height="16" patternUnits="userSpaceOnUse">
-            <path d="M 23 0 L 0 0 0 16" fill="none" stroke="rgba(168, 85, 247, 0.12)" strokeWidth="0.8" />
-          </pattern>
-        </defs>
-        <rect width="460" height="160" fill="url(#grid-elec)" />
-
-        <line x1="40" y1="80" x2="430" y2="80" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="1" />
-        <line x1="40" y1="20" x2="40" y2="140" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="1" />
-
-        <text x="6" y="32" fill="#94A3B8" fontSize="8" fontFamily="monospace">+325V PK</text>
-        <text x="6" y="83" fill="#94A3B8" fontSize="8" fontFamily="monospace">0V REF</text>
-        <text x="6" y="132" fill="#94A3B8" fontSize="8" fontFamily="monospace">-325V PK</text>
-
-        <path d="M 40 80 Q 90 15, 140 80 T 240 80 T 340 80 T 430 80" fill="none" stroke="rgba(255, 255, 255, 0.35)" strokeWidth="1.5" strokeDasharray="3 3" />
-        <path d="M 40 80 L 60 80 L 60 35 L 120 35 L 120 80 L 160 80 L 160 125 L 220 125 L 220 80 L 260 80 L 260 35 L 320 35 L 320 80 L 360 80 L 360 125 L 420 125 L 420 80 L 430 80" fill="none" stroke="#C084FC" strokeWidth="2.5" />
-
-        <rect x="60" y="35" width="60" height="45" fill="rgba(192, 132, 252, 0.15)" stroke="#C084FC" strokeWidth="1" strokeDasharray="2 2" />
-
-        <line x1="40" y1="46" x2="430" y2="46" stroke="#38BDF8" strokeWidth="1.5" strokeDasharray="4 2" />
-        <rect x="235" y="24" width="180" height="18" fill="rgba(8, 12, 20, 0.85)" stroke="#38BDF8" strokeWidth="1" rx="4" />
-        <text x="240" y="36" fill="#38BDF8" fontSize="9" fontFamily="monospace" fontWeight="bold">True-RMS Target: 230.0 V (1.2% Var)</text>
-
-        <line x1="40" y1="56" x2="430" y2="56" stroke="#EF4444" strokeWidth="1.5" strokeDasharray="4 2" />
-        <rect x="235" y="98" width="180" height="18" fill="rgba(8, 12, 20, 0.85)" stroke="#EF4444" strokeWidth="1" rx="4" />
-        <text x="240" y="110" fill="#EF4444" fontSize="9" fontFamily="monospace" fontWeight="bold">Average Meter: 196.0 V (-14.8% Error)</text>
-
-        <rect x="50" y="145" width="8" height="2" fill="#FFFFFF" />
-        <text x="63" y="148" fill="#E2E8F0" fontSize="8" fontFamily="monospace">Pure Sine (Utility Grid)</text>
-        <rect x="190" y="145" width="8" height="2" fill="#C084FC" />
-        <text x="203" y="148" fill="#C084FC" fontSize="8" fontFamily="monospace">Modified Inverter Output</text>
-      </svg>
-    ),
+    csvFileName: 'OnlineMeasurer_REP-2026-04_TrueRMS_CrestFactor_Accuracy.csv',
+    csvData: `Waveform_Type,Crest_Factor,Bench_Reference_V,TrueRMS_Meter_V,Average_Meter_V,Avg_Meter_Error_Pct
+Pure_Sine,1.414,230.0,229.8,229.4,-0.26
+Modified_Inverter_Step,1.820,230.0,227.2,196.0,-14.78
+Phase_Cut_TRIAC_90Deg,2.140,162.0,160.4,138.2,-14.69
+High_Harmonic_SMPS,2.880,230.0,226.0,188.0,-18.26`,
+    graph: {
+      title: 'CREST FACTOR HARMONIC DISTORTION VS MEASUREMENT ERROR (%)',
+      xAxisLabel: 'Waveform Crest Factor (CF)',
+      yAxisLabel: 'Voltage Measurement Error (%)',
+      series1Name: 'Standard Average-Responding Meter',
+      series1Color: '#c084fc',
+      series2Name: 'True-RMS Certified Multimeter',
+      series2Color: '#38bdf8',
+      points: [
+        { xLabel: '1.41 (Sine)', xVal: 1.41, y1: -0.3, y2: -0.1, note: 'Pure utility sine wave' },
+        { xLabel: '1.82 (Inverter)', xVal: 1.82, y1: -14.8, y2: -1.2, note: 'Modified stepped square wave' },
+        { xLabel: '2.14 (TRIAC)', xVal: 2.14, y1: -14.7, y2: -1.0, note: '90° phase-cut light dimmer' },
+        { xLabel: '2.50 (VFD Drive)', xVal: 2.50, y1: -16.5, y2: -1.4, note: 'PWM inverter harmonic motor output' },
+        { xLabel: '2.88 (Switching)', xVal: 2.88, y1: -18.3, y2: -1.7, note: 'High crest factor power supply' },
+      ],
+    },
   },
 ];
 
+// Interactive SVG Graph Component with Real-Time Hover Tooltip HUD
+function InteractiveGraph({ graph }: { graph: ReportItem['graph'] }) {
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const [showSeries1, setShowSeries1] = useState(true);
+  const [showSeries2, setShowSeries2] = useState(true);
+
+  const pts = graph.points;
+  const n = pts.length;
+
+  // Compute SVG plot dimensions
+  const width = 500;
+  const height = 180;
+  const padLeft = 46;
+  const padRight = 24;
+  const padTop = 32;
+  const padBottom = 34;
+
+  const plotW = width - padLeft - padRight;
+  const plotH = height - padTop - padBottom;
+
+  // Min and max for Y
+  const allY = pts.flatMap((p) => [p.y1, p.y2 ?? p.y1]);
+  const minY = Math.min(...allY);
+  const maxY = Math.max(...allY);
+  const ySpan = maxY - minY === 0 ? 1 : maxY - minY;
+
+  const getX = (idx: number) => padLeft + (idx / (n - 1)) * plotW;
+  const getY = (val: number) => padTop + plotH - ((val - minY) / ySpan) * plotH;
+
+  // Build SVG paths
+  const path1 = pts
+    .map((p, i) => `${i === 0 ? 'M' : 'L'} ${getX(i)} ${getY(p.y1)}`)
+    .join(' ');
+
+  const path2 = pts[0].y2 !== undefined
+    ? pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${getX(i)} ${getY(p.y2!)}`).join(' ')
+    : '';
+
+  const activePoint = activeIdx !== null ? pts[activeIdx] : null;
+
+  return (
+    <div className="oscilloscope-display" style={{ position: 'relative' }}>
+      {/* Top Header & Interactive Series Toggles */}
+      <div
+        style={{
+          padding: '8px 12px',
+          backgroundColor: 'rgba(15, 23, 42, 0.95)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '8px',
+        }}
+      >
+        <span className="meta-code" style={{ color: 'var(--accent-institution)', fontSize: '0.72rem', fontWeight: 700 }}>
+          {graph.title}
+        </span>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <button
+            type="button"
+            onClick={() => setShowSeries1(!showSeries1)}
+            style={{
+              background: 'none',
+              border: `1px solid ${showSeries1 ? graph.series1Color : 'rgba(255, 255, 255, 0.15)'}`,
+              color: showSeries1 ? graph.series1Color : 'var(--text-muted)',
+              borderRadius: '4px',
+              padding: '2px 7px',
+              fontSize: '0.68rem',
+              fontFamily: 'var(--font-mono)',
+              cursor: 'pointer',
+              opacity: showSeries1 ? 1 : 0.5,
+            }}
+          >
+            ● {graph.series1Name}
+          </button>
+          {graph.series2Name && (
+            <button
+              type="button"
+              onClick={() => setShowSeries2(!showSeries2)}
+              style={{
+                background: 'none',
+                border: `1px solid ${showSeries2 ? graph.series2Color : 'rgba(255, 255, 255, 0.15)'}`,
+                color: showSeries2 ? graph.series2Color : 'var(--text-muted)',
+                borderRadius: '4px',
+                padding: '2px 7px',
+                fontSize: '0.68rem',
+                fontFamily: 'var(--font-mono)',
+                cursor: 'pointer',
+                opacity: showSeries2 ? 1 : 0.5,
+              }}
+            >
+              ● {graph.series2Name}
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Live Interactive Readout HUD Bar */}
+      <div
+        style={{
+          padding: '6px 12px',
+          backgroundColor: 'rgba(10, 15, 26, 0.9)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+          minHeight: '30px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          fontSize: '0.74rem',
+          fontFamily: 'var(--font-mono)',
+        }}
+      >
+        {activePoint ? (
+          <>
+            <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
+              <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>
+                X: {activePoint.xLabel}
+              </span>
+              {showSeries1 && (
+                <span style={{ color: graph.series1Color, fontWeight: 600 }}>
+                  Y1: {activePoint.y1}
+                </span>
+              )}
+              {showSeries2 && activePoint.y2 !== undefined && (
+                <span style={{ color: graph.series2Color, fontWeight: 600 }}>
+                  Y2: {activePoint.y2}
+                </span>
+              )}
+            </div>
+            <span style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>
+              {activePoint.note}
+            </span>
+          </>
+        ) : (
+          <span style={{ color: 'var(--text-muted)' }}>
+            Hover across curve data points to inspect calibrated vector coordinates
+          </span>
+        )}
+      </div>
+
+      {/* SVG Canvas */}
+      <div style={{ padding: '6px 8px 4px' }}>
+        <svg
+          viewBox={`0 0 ${width} ${height}`}
+          width="100%"
+          height="100%"
+          style={{ display: 'block', cursor: 'crosshair' }}
+          onMouseLeave={() => setActiveIdx(null)}
+        >
+          {/* Dark Background & Blueprint Graticule */}
+          <rect width={width} height={height} fill="#080C14" />
+          <defs>
+            <pattern id={`grid-${graph.title.replace(/\s+/g, '')}`} width="25" height="18" patternUnits="userSpaceOnUse">
+              <path d="M 25 0 L 0 0 0 18" fill="none" stroke="rgba(255, 255, 255, 0.05)" strokeWidth="0.8" />
+            </pattern>
+          </defs>
+          <rect width={width} height={height} fill={`url(#grid-${graph.title.replace(/\s+/g, '')})`} />
+
+          {/* Reference Axis Lines */}
+          <line x1={padLeft} y1={padTop + plotH} x2={width - padRight} y2={padTop + plotH} stroke="rgba(255, 255, 255, 0.2)" strokeWidth="1" />
+          <line x1={padLeft} y1={padTop} x2={padLeft} y2={padTop + plotH} stroke="rgba(255, 255, 255, 0.2)" strokeWidth="1" />
+
+          {/* X Axis Labels */}
+          {pts.map((p, i) => (
+            <text
+              key={i}
+              x={getX(i)}
+              y={height - 12}
+              fill={activeIdx === i ? '#FFFFFF' : '#94A3B8'}
+              fontSize="9"
+              fontFamily="monospace"
+              textAnchor="middle"
+              fontWeight={activeIdx === i ? 'bold' : 'normal'}
+            >
+              {p.xLabel}
+            </text>
+          ))}
+
+          {/* Y Axis Reference Labels */}
+          <text x={padLeft - 6} y={padTop + 6} fill="#94A3B8" fontSize="8" fontFamily="monospace" textAnchor="end">
+            {maxY.toFixed(1)}
+          </text>
+          <text x={padLeft - 6} y={padTop + plotH} fill="#94A3B8" fontSize="8" fontFamily="monospace" textAnchor="end">
+            {minY.toFixed(1)}
+          </text>
+
+          {/* Curves */}
+          {showSeries2 && path2 && (
+            <path d={path2} fill="none" stroke={graph.series2Color || '#F59E0B'} strokeWidth="2" strokeDasharray="3 2" />
+          )}
+          {showSeries1 && (
+            <path d={path1} fill="none" stroke={graph.series1Color} strokeWidth="2.5" />
+          )}
+
+          {/* Active Crosshair Column */}
+          {activeIdx !== null && (
+            <>
+              <line
+                x1={getX(activeIdx)}
+                y1={padTop}
+                x2={getX(activeIdx)}
+                y2={padTop + plotH}
+                stroke="rgba(255, 255, 255, 0.45)"
+                strokeWidth="1"
+                strokeDasharray="2 2"
+              />
+              {showSeries1 && (
+                <circle
+                  cx={getX(activeIdx)}
+                  cy={getY(pts[activeIdx].y1)}
+                  r="5"
+                  fill={graph.series1Color}
+                  stroke="#FFFFFF"
+                  strokeWidth="1.5"
+                />
+              )}
+              {showSeries2 && pts[activeIdx].y2 !== undefined && (
+                <circle
+                  cx={getX(activeIdx)}
+                  cy={getY(pts[activeIdx].y2!)}
+                  r="5"
+                  fill={graph.series2Color || '#F59E0B'}
+                  stroke="#FFFFFF"
+                  strokeWidth="1.5"
+                />
+              )}
+            </>
+          )}
+
+          {/* Interactive Hit Areas */}
+          {pts.map((_, i) => {
+            const x = getX(i);
+            const stepW = plotW / (n - 1);
+            return (
+              <rect
+                key={i}
+                x={x - stepW / 2}
+                y={padTop}
+                width={stepW}
+                height={plotH}
+                fill="transparent"
+                onMouseEnter={() => setActiveIdx(i)}
+              />
+            );
+          })}
+        </svg>
+      </div>
+
+      <div
+        style={{
+          padding: '6px 12px',
+          backgroundColor: 'rgba(8, 12, 20, 0.95)',
+          borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          fontSize: '0.7rem',
+          fontFamily: 'var(--font-mono)',
+          color: 'var(--text-muted)',
+        }}
+      >
+        <span>X: {graph.xAxisLabel}</span>
+        <span>Y: {graph.yAxisLabel}</span>
+      </div>
+    </div>
+  );
+}
+
 export default function BenchmarksPage() {
+  const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all');
+  const [downloadNotice, setDownloadNotice] = useState<string | null>(null);
+
+  const filterCounts = {
+    all: REPORTS.length,
+    dimensional: REPORTS.filter((r) => r.categoryType === 'dimensional').length,
+    optical: REPORTS.filter((r) => r.categoryType === 'optical').length,
+    embedded: REPORTS.filter((r) => r.categoryType === 'embedded').length,
+    electrical: REPORTS.filter((r) => r.categoryType === 'electrical').length,
+  };
+
+  const filteredReports = activeCategory === 'all'
+    ? REPORTS
+    : REPORTS.filter((r) => r.categoryType === activeCategory);
+
   const getCategoryClass = (type: ReportItem['categoryType']) => {
     switch (type) {
       case 'dimensional':
@@ -344,6 +688,49 @@ export default function BenchmarksPage() {
       case 'electrical':
         return 'category-pill category-pill-electrical';
     }
+  };
+
+  const getStatusBadgeStyle = (statusType: SpecRow['statusType']) => {
+    switch (statusType) {
+      case 'pass':
+      case 'certified':
+        return {
+          backgroundColor: 'rgba(16, 185, 129, 0.15)',
+          color: '#34d399',
+          border: '1px solid rgba(16, 185, 129, 0.4)',
+        };
+      case 'fail':
+        return {
+          backgroundColor: 'rgba(239, 68, 68, 0.15)',
+          color: '#f87171',
+          border: '1px solid rgba(239, 68, 68, 0.4)',
+        };
+      case 'warn':
+        return {
+          backgroundColor: 'rgba(245, 158, 11, 0.15)',
+          color: '#fbbf24',
+          border: '1px solid rgba(245, 158, 11, 0.4)',
+        };
+    }
+  };
+
+  const handleDownloadCsv = (report: ReportItem) => {
+    const blob = new Blob([report.csvData], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', report.csvFileName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    setDownloadNotice(`Downloaded: ${report.csvFileName}`);
+    setTimeout(() => setDownloadNotice(null), 3500);
+  };
+
+  const handlePrintReport = (ref: string) => {
+    window.print();
   };
 
   return (
@@ -368,7 +755,7 @@ export default function BenchmarksPage() {
       </nav>
 
       {/* Header Section */}
-      <header style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '32px', marginBottom: '44px' }}>
+      <header style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '28px', marginBottom: '32px' }}>
         <div
           className="meta-code"
           style={{
@@ -378,7 +765,7 @@ export default function BenchmarksPage() {
             marginBottom: '8px',
           }}
         >
-          ARCHIVE // TECHNICAL BENCHMARK BULLETINS & OSCILLOSCOPE DISPATCHES
+          METROLOGY LABORATORY // HARDWARE VERIFICATION & TEST DASHBOARD
         </div>
         <h1
           style={{
@@ -400,13 +787,161 @@ export default function BenchmarksPage() {
             maxWidth: '880px',
           }}
         >
-          Independent laboratory evaluations, calibrated sensor traces, environmental chamber drift studies, and repeatable test datasets compiled by the OnlineMeasurer metrology team.
+          Interactive engineering evaluations, vector result curves, quick spec sheet tolerances, and verifiable raw CSV data dispatches compiled by the OnlineMeasurer metrology team.
         </p>
       </header>
 
-      {/* Two-Column Structured Report Cards */}
+      {/* 1. Category Filter Tab Bar */}
+      <div
+        role="tablist"
+        aria-label="Filter benchmark reports by discipline"
+        style={{
+          display: 'flex',
+          gap: '10px',
+          flexWrap: 'wrap',
+          marginBottom: '36px',
+          padding: '8px',
+          backgroundColor: 'rgba(30, 41, 59, 0.45)',
+          borderRadius: '12px',
+          border: '1px solid var(--border-hairline)',
+        }}
+      >
+        <button
+          type="button"
+          role="tab"
+          aria-selected={activeCategory === 'all'}
+          onClick={() => setActiveCategory('all')}
+          style={{
+            padding: '8px 16px',
+            borderRadius: '8px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.84rem',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            backgroundColor: activeCategory === 'all' ? 'var(--accent-institution)' : 'transparent',
+            color: activeCategory === 'all' ? '#090D16' : 'var(--text-secondary)',
+            border: activeCategory === 'all' ? '1px solid var(--accent-institution)' : '1px solid transparent',
+          }}
+        >
+          All Reports ({filterCounts.all})
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          aria-selected={activeCategory === 'dimensional'}
+          onClick={() => setActiveCategory('dimensional')}
+          style={{
+            padding: '8px 16px',
+            borderRadius: '8px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.84rem',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            backgroundColor: activeCategory === 'dimensional' ? 'rgba(56, 189, 248, 0.2)' : 'transparent',
+            color: activeCategory === 'dimensional' ? '#38bdf8' : 'var(--text-secondary)',
+            border: activeCategory === 'dimensional' ? '1px solid #38bdf8' : '1px solid transparent',
+          }}
+        >
+          Dimensional ({filterCounts.dimensional})
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          aria-selected={activeCategory === 'optical'}
+          onClick={() => setActiveCategory('optical')}
+          style={{
+            padding: '8px 16px',
+            borderRadius: '8px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.84rem',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            backgroundColor: activeCategory === 'optical' ? 'rgba(249, 115, 22, 0.2)' : 'transparent',
+            color: activeCategory === 'optical' ? '#fb923c' : 'var(--text-secondary)',
+            border: activeCategory === 'optical' ? '1px solid #fb923c' : '1px solid transparent',
+          }}
+        >
+          Optical ({filterCounts.optical})
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          aria-selected={activeCategory === 'embedded'}
+          onClick={() => setActiveCategory('embedded')}
+          style={{
+            padding: '8px 16px',
+            borderRadius: '8px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.84rem',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            backgroundColor: activeCategory === 'embedded' ? 'rgba(16, 185, 129, 0.2)' : 'transparent',
+            color: activeCategory === 'embedded' ? '#34d399' : 'var(--text-secondary)',
+            border: activeCategory === 'embedded' ? '1px solid #34d399' : '1px solid transparent',
+          }}
+        >
+          Embedded Hardware ({filterCounts.embedded})
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          aria-selected={activeCategory === 'electrical'}
+          onClick={() => setActiveCategory('electrical')}
+          style={{
+            padding: '8px 16px',
+            borderRadius: '8px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.84rem',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            backgroundColor: activeCategory === 'electrical' ? 'rgba(168, 85, 247, 0.2)' : 'transparent',
+            color: activeCategory === 'electrical' ? '#c084fc' : 'var(--text-secondary)',
+            border: activeCategory === 'electrical' ? '1px solid #c084fc' : '1px solid transparent',
+          }}
+        >
+          Electrical ({filterCounts.electrical})
+        </button>
+      </div>
+
+      {/* Floating Download Toast Notice */}
+      {downloadNotice && (
+        <div
+          role="alert"
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+            border: '1px solid #38bdf8',
+            borderRadius: '8px',
+            padding: '12px 18px',
+            color: '#FFFFFF',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.85rem',
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.5)',
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+          }}
+        >
+          <span style={{ color: '#38bdf8' }}>✓</span>
+          <span>{downloadNotice}</span>
+        </div>
+      )}
+
+      {/* Report Cards Grid */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
-        {REPORTS.map((report) => (
+        {filteredReports.map((report) => (
           <article
             key={report.ref}
             className="elevated-card"
@@ -414,10 +949,11 @@ export default function BenchmarksPage() {
               padding: '36px 32px',
             }}
           >
+            {/* 2-Column Responsive Layout */}
             <div className="report-2col-layout">
-              {/* LEFT COLUMN: Metadata, Category Badge, Title & Summary */}
+              {/* LEFT COLUMN: Metadata, Title, Summary, and Quick Spec Sheet Table */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                {/* Badge & Publication Meta Header */}
+                {/* Meta Category & Ref Header */}
                 <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
                   <span className={getCategoryClass(report.categoryType)}>
                     {report.category}
@@ -452,7 +988,7 @@ export default function BenchmarksPage() {
                   {report.title}
                 </h2>
 
-                {/* Summary / Abstract Paragraph */}
+                {/* Summary Abstract */}
                 <p
                   style={{
                     fontSize: '0.96rem',
@@ -463,49 +999,118 @@ export default function BenchmarksPage() {
                   {report.abstract}
                 </p>
 
-                {/* Key Experimental Findings Checklist */}
+                {/* 3. Structured "Quick Spec Sheet" Table */}
                 <div
                   style={{
                     marginTop: '8px',
-                    padding: '18px',
-                    backgroundColor: 'var(--bg-surface)',
                     border: '1px solid var(--border-hairline)',
                     borderRadius: '8px',
+                    overflow: 'hidden',
+                    backgroundColor: 'rgba(15, 23, 42, 0.5)',
                   }}
                 >
                   <div
-                    className="meta-code"
                     style={{
-                      color: 'var(--accent-institution)',
-                      marginBottom: '10px',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.04em',
-                    }}
-                  >
-                    EXPERIMENTAL PROTOCOL & DIRECTIVES:
-                  </div>
-                  <ul
-                    style={{
-                      listStyle: 'none',
+                      padding: '10px 14px',
+                      backgroundColor: 'rgba(15, 23, 42, 0.85)',
+                      borderBottom: '1px solid var(--border-hairline)',
                       display: 'flex',
-                      flexDirection: 'column',
-                      gap: '10px',
-                      fontSize: '0.88rem',
-                      color: 'var(--text-secondary)',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
                     }}
                   >
-                    {report.findings.map((finding, idx) => (
-                      <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', lineHeight: 1.55 }}>
-                        <span style={{ color: 'var(--accent-institution)', fontWeight: 700, marginTop: '2px' }}>▸</span>
-                        <span>{finding}</span>
-                      </li>
-                    ))}
-                  </ul>
+                    <span className="meta-code" style={{ color: 'var(--accent-institution)', fontWeight: 700 }}>
+                      QUICK SPEC SHEET // MEASURED TOLERANCE TABLE
+                    </span>
+                    <span className="meta-code" style={{ color: 'var(--text-muted)', fontSize: '0.7rem' }}>
+                      REF: {report.ref}
+                    </span>
+                  </div>
+
+                  <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.84rem' }}>
+                    <thead>
+                      <tr style={{ backgroundColor: 'rgba(30, 41, 59, 0.4)', borderBottom: '1px solid var(--border-hairline)' }}>
+                        <th style={{ padding: '8px 12px', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                          Parameter
+                        </th>
+                        <th style={{ padding: '8px 12px', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                          Lab Reading
+                        </th>
+                        <th style={{ padding: '8px 12px', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                          Status
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {report.specSheet.map((spec, sIdx) => {
+                        const badgeStyle = getStatusBadgeStyle(spec.statusType);
+                        return (
+                          <tr
+                            key={sIdx}
+                            style={{
+                              borderBottom: sIdx === report.specSheet.length - 1 ? 'none' : '1px solid var(--border-hairline)',
+                              color: '#F8FAFC',
+                            }}
+                          >
+                            <td style={{ padding: '10px 12px', fontWeight: 500, color: '#F8FAFC' }}>
+                              {spec.parameter}
+                            </td>
+                            <td style={{ padding: '10px 12px', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)' }}>
+                              {spec.measured}
+                            </td>
+                            <td style={{ padding: '10px 12px' }}>
+                              <span
+                                style={{
+                                  display: 'inline-block',
+                                  padding: '2px 8px',
+                                  borderRadius: '4px',
+                                  fontSize: '0.7rem',
+                                  fontFamily: 'var(--font-mono)',
+                                  fontWeight: 700,
+                                  letterSpacing: '0.03em',
+                                  whiteSpace: 'nowrap',
+                                  ...badgeStyle,
+                                }}
+                              >
+                                {spec.status}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* 4. Action Bar: Download Raw CSV & PDF Export */}
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: '12px' }}>
+                  <button
+                    type="button"
+                    onClick={() => handleDownloadCsv(report)}
+                    className="btn-institutional"
+                    style={{
+                      padding: '8px 16px',
+                      fontSize: '0.82rem',
+                    }}
+                  >
+                    <span>⬇</span> Download Raw CSV ({report.ref})
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handlePrintReport(report.ref)}
+                    className="btn-outline"
+                    style={{
+                      padding: '8px 16px',
+                      fontSize: '0.82rem',
+                    }}
+                  >
+                    <span>📄</span> Export Technical PDF
+                  </button>
                 </div>
               </div>
 
-              {/* RIGHT COLUMN: Key Metrics Grid & SVG Oscilloscope / Diagram Slot */}
+              {/* RIGHT COLUMN: Key Metrics Stat Boxes & Interactive Result Curve Graph */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 {/* Header for Metrics */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -518,14 +1123,14 @@ export default function BenchmarksPage() {
                       letterSpacing: '0.05em',
                     }}
                   >
-                    KEY LAB METRICS & ACCURACY DISCREPANCY
+                    HIGHLIGHTED BENCHMARK METRICS
                   </div>
                   <div className="meta-code" style={{ color: 'var(--accent-institution)', fontSize: '0.72rem' }}>
-                    ISO 13385 BENCHMARKED
+                    ISO 13385 VERIFIED
                   </div>
                 </div>
 
-                {/* 2x2 Key Metrics Highlighted Stat Boxes Grid */}
+                {/* 2x2 Stat Boxes */}
                 <div
                   style={{
                     display: 'grid',
@@ -547,45 +1152,8 @@ export default function BenchmarksPage() {
                   ))}
                 </div>
 
-                {/* Visual Oscilloscope / Test Specimen Diagram Slot */}
-                <div className="oscilloscope-display">
-                  <div
-                    style={{
-                      padding: '8px 12px',
-                      backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                      borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <span className="meta-code" style={{ color: '#38bdf8', fontSize: '0.72rem', fontWeight: 700 }}>
-                      INSTRUMENT CAPTURE // 200MS/s VECTOR TRACE
-                    </span>
-                    <span className="meta-code" style={{ color: '#94A3B8', fontSize: '0.7rem' }}>
-                      REF: {report.ref}-DSO
-                    </span>
-                  </div>
-
-                  {/* High Precision Inline SVG Vector Waveform / Diagram */}
-                  <div style={{ padding: '8px' }}>
-                    {report.diagramSvg}
-                  </div>
-
-                  <div
-                    style={{
-                      padding: '8px 14px',
-                      backgroundColor: 'rgba(10, 15, 26, 0.95)',
-                      borderTop: '1px solid rgba(255, 255, 255, 0.06)',
-                      fontSize: '0.74rem',
-                      fontFamily: 'var(--font-mono)',
-                      color: 'var(--text-muted)',
-                      lineHeight: 1.4,
-                    }}
-                  >
-                    {report.diagramTitle}
-                  </div>
-                </div>
+                {/* 2. Interactive Result Curve Graph with Live Hover Crosshair HUD */}
+                <InteractiveGraph graph={report.graph} />
               </div>
             </div>
           </article>
