@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import './globals.css';
 
 export const viewport: Viewport = {
   themeColor: '#090b10',
@@ -27,6 +28,7 @@ export const metadata: Metadata = {
       { url: '/favicon.ico', sizes: 'any' },
       { url: '/icon.svg', type: 'image/svg+xml' },
     ],
+    apple: [{ url: '/apple-icon.png' }],
   },
   openGraph: {
     type: 'website',
@@ -35,6 +37,11 @@ export const metadata: Metadata = {
     description:
       'Independent accuracy benchmarks, interactive on-screen calibration tools, and verified buying guides.',
     url: 'https://onlinemeasurer.com',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'OnlineMeasurer | Precision Tools & Hardware Lab',
+    description: 'Independent accuracy benchmarks and verified buying guides.',
   },
 };
 
