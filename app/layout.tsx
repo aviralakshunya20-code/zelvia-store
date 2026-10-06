@@ -57,19 +57,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {/* Top Utility Chrome Strip */}
-        <div style={{ backgroundColor: 'var(--bg-surface)', borderBottom: '1px solid var(--border-hairline)', fontSize: '0.75rem', padding: '6px 24px' }}>
-          <div style={{ maxWidth: '1240px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-            <div className="meta-code" style={{ color: 'var(--text-muted)' }}>
-              LAB REGISTRY: OM-2026-Q1 // SPECIMENS EVALUATED: 12 // METROLOGICAL REF: ISO 13385-1
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <span className="meta-code" style={{ color: 'var(--text-muted)' }}>
-                AFFILIATE DISCLOSURE: AMAZON TAG <strong>aviraltech-20</strong>
-              </span>
-            </div>
-          </div>
-        </div>
+
 
         {/* Global Persistent Header */}
         <header style={{ backgroundColor: 'var(--header-bg, rgba(15, 23, 42, 0.85))', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', position: 'sticky', top: 0, zIndex: 100 }}>
