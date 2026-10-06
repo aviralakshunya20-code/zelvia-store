@@ -163,12 +163,6 @@ export default function ContactPage() {
           aria-labelledby="form-heading"
           className="elevated-card"
           style={{
-            backgroundColor: 'rgba(22, 27, 34, 0.75)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '12px',
-            boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)',
             padding: '36px 32px',
           }}
         >
@@ -400,12 +394,6 @@ export default function ContactPage() {
           <div
             className="elevated-card"
             style={{
-              backgroundColor: 'rgba(22, 27, 34, 0.75)',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              borderRadius: '12px',
-              boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)',
               padding: '28px',
             }}
           >
@@ -447,12 +435,6 @@ export default function ContactPage() {
           <div
             className="elevated-card"
             style={{
-              backgroundColor: 'rgba(22, 27, 34, 0.75)',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              borderRadius: '12px',
-              boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)',
               padding: '28px',
             }}
           >
