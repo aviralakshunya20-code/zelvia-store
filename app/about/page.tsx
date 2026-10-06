@@ -1,5 +1,2 @@
-import { redirect } from 'next/navigation';
-
-export default function RedirectPage() {
-  redirect('/');
-}
+import MethodologyPage from '../methodology/page';
+export default MethodologyPage;
