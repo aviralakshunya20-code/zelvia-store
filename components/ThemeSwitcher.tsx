@@ -29,6 +29,7 @@ export default function ThemeSwitcher() {
     return (
       <button
         type="button"
+        id="theme-switcher-toggle"
         aria-label="Toggle laboratory display theme"
         style={{
           display: 'inline-flex',
