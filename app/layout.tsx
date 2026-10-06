@@ -72,7 +72,7 @@ export default function RootLayout({
         </div>
 
         {/* Global Persistent Header */}
-        <header style={{ backgroundColor: 'rgba(15, 23, 42, 0.85)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', position: 'sticky', top: 0, zIndex: 100 }}>
+        <header style={{ backgroundColor: 'var(--header-bg, rgba(15, 23, 42, 0.85))', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', position: 'sticky', top: 0, zIndex: 100 }}>
           <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
             <div>
               <Link href="/" style={{ textDecoration: 'none' }}>

@@ -40,13 +40,13 @@ const REPORTS: ReportItem[] = [
         value: '11.2 ppm/°C',
         label: 'Thermal Expansion Coeff',
         desc: 'Hardened 4Cr13 steel matched theoretical limits within ±0.4%.',
-        highlightColor: '#FFFFFF',
+        highlightColor: undefined,
       },
       {
         value: '15°C → 35°C',
         label: 'Chamber Test Window',
         desc: 'Controlled thermal cycling simulating non-climate-controlled workshops.',
-        highlightColor: '#FFFFFF',
+        highlightColor: undefined,
       },
       {
         value: '±0.02 mm',
@@ -121,13 +121,13 @@ const REPORTS: ReportItem[] = [
         value: '82%',
         label: 'Repeatability Gain',
         desc: 'Dual spirit level chassis compared to single-vial handheld benchmarks.',
-        highlightColor: '#FFFFFF',
+        highlightColor: undefined,
       },
       {
         value: '100k Lux',
         label: 'Solar Lux Stress Limit',
         desc: 'Testing outdoor direct perpendicular summer sunlight threshold.',
-        highlightColor: '#FFFFFF',
+        highlightColor: undefined,
       },
       {
         value: '635 nm',
@@ -199,13 +199,13 @@ const REPORTS: ReportItem[] = [
         value: '< 0.1 µs',
         label: 'Core 1 Isolated Jitter',
         desc: 'Task pinning eliminated interrupt collisions below measurement threshold.',
-        highlightColor: '#FFFFFF',
+        highlightColor: undefined,
       },
       {
         value: '400 kHz',
         label: 'I2C Fast Mode Clock',
         desc: 'SCL clock stability verified on 16-channel PCA9685 PWM expansion board.',
-        highlightColor: '#FFFFFF',
+        highlightColor: undefined,
       },
       {
         value: '16 Ch',
@@ -272,13 +272,13 @@ const REPORTS: ReportItem[] = [
         value: '1.2%',
         label: 'True-RMS Error Band',
         desc: 'Certified True-RMS instruments measured within 1.2% of calibrated bench scope.',
-        highlightColor: '#FFFFFF',
+        highlightColor: undefined,
       },
       {
         value: 'CAT III',
         label: '600V Safety Isolation',
         desc: 'Galvanic protection rating required for distribution board and motor measurements.',
-        highlightColor: '#FFFFFF',
+        highlightColor: undefined,
       },
       {
         value: '6,000',
@@ -387,7 +387,7 @@ export default function BenchmarksPage() {
             letterSpacing: '-0.02em',
             lineHeight: 1.3,
             marginBottom: '16px',
-            color: '#FFFFFF',
+            color: 'var(--text-primary)',
           }}
         >
           Laboratory Benchmark Reports & Technical Dispatches
@@ -395,7 +395,7 @@ export default function BenchmarksPage() {
         <p
           style={{
             fontSize: '1.08rem',
-            color: '#E2E8F0',
+            color: 'var(--text-secondary)',
             lineHeight: 1.6,
             maxWidth: '880px',
           }}
@@ -426,7 +426,7 @@ export default function BenchmarksPage() {
                     className="meta-code"
                     style={{
                       color: 'var(--text-muted)',
-                      backgroundColor: 'rgba(15, 23, 42, 0.6)',
+                      backgroundColor: 'var(--bg-surface)',
                       padding: '3px 8px',
                       borderRadius: '4px',
                       border: '1px solid var(--border-hairline)',
@@ -445,7 +445,7 @@ export default function BenchmarksPage() {
                     fontSize: '1.5rem',
                     fontWeight: 700,
                     lineHeight: 1.3,
-                    color: '#FFFFFF',
+                    color: 'var(--text-primary)',
                     letterSpacing: '-0.015em',
                   }}
                 >
@@ -456,7 +456,7 @@ export default function BenchmarksPage() {
                 <p
                   style={{
                     fontSize: '0.96rem',
-                    color: '#E2E8F0',
+                    color: 'var(--text-secondary)',
                     lineHeight: 1.65,
                   }}
                 >
@@ -468,7 +468,7 @@ export default function BenchmarksPage() {
                   style={{
                     marginTop: '8px',
                     padding: '18px',
-                    backgroundColor: 'rgba(15, 23, 42, 0.65)',
+                    backgroundColor: 'var(--bg-surface)',
                     border: '1px solid var(--border-hairline)',
                     borderRadius: '8px',
                   }}
@@ -492,7 +492,7 @@ export default function BenchmarksPage() {
                       flexDirection: 'column',
                       gap: '10px',
                       fontSize: '0.88rem',
-                      color: '#E2E8F0',
+                      color: 'var(--text-secondary)',
                     }}
                   >
                     {report.findings.map((finding, idx) => (
