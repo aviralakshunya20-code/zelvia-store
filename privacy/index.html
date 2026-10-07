@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#F6EFDC">
   <title>Privacy Policy | OnlineMeasurer &amp; Naapu</title>
-  <meta name="description" content="Privacy Policy for OnlineMeasurer.com and Naapu. Detailed disclosure of our privacy-friendly analytics, browser localStorage retention, Google AdSense cookies, GDPR rights, and CCPA compliance.">
+  <meta name="description" content="Privacy Policy for OnlineMeasurer.com and Naapu. Detailed disclosure of no analytics tracking, browser localStorage retention, Google AdSense cookies, GDPR rights, and CCPA compliance.">
   <link rel="canonical" href="https://onlinemeasurer.com/privacy/">
   <meta property="og:title" content="Privacy Policy | OnlineMeasurer &amp; Naapu">
-  <meta property="og:description" content="Transparent privacy policy covering local storage retention, privacy-first analytics, GDPR &amp; CCPA rights, and advertising consent.">
+  <meta property="og:description" content="Transparent privacy policy covering local storage retention, zero analytics tracking, GDPR &amp; CCPA rights, and advertising consent.">
   <meta property="og:url" content="https://onlinemeasurer.com/privacy/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://onlinemeasurer.com/assets/og-image.png">
@@ -70,24 +70,10 @@
         <strong>Retention Period:</strong> All client data resides exclusively on your local device. <strong>Data in localStorage remains stored indefinitely until you explicitly clear your browser cookies and site data, or click "Reset All Progress" in the in-game Settings screen.</strong> This data is never transmitted to our web servers.
       </p>
 
-      <h2>3. Web Analytics Disclosures</h2>
+      <h2>3. Web Analytics</h2>
       <p>
-        Our website configuration defines the active analytics provider (<code>CONFIG.ANALYTICS_PROVIDER</code>). Here is exactly how our code behaves:
+        No web analytics service is used on this website. We do not load any analytics tracking scripts, beacons, or third-party telemetry, and no data about your visits or usage is collected, stored, or transmitted to any analytics server.
       </p>
-      <ul>
-        <li>
-          <strong>When Provider is "none" (Default Setting):</strong> Zero analytics scripts are loaded, and no analytics data is collected, recorded, or transmitted to any server. In-game action events dispatch only as local browser DOM events (<code>CustomEvent('naapu:analytics')</code>) solely for client-side debugging.
-        </li>
-        <li>
-          <strong>When Provider is "cloudflare":</strong> If enabled with a configured token, we load Cloudflare Web Analytics (provided by Cloudflare, Inc.) after page load. According to Cloudflare's official published documentation:
-          <ul>
-            <li>Cloudflare Web Analytics does not use cookies, local storage, or fingerprinting.</li>
-            <li>It does not track individual visitors across websites and does not collect or log IP addresses or personal data.</li>
-            <li>It collects only high-level aggregate traffic metrics: page views, visits, HTTP referrers, device/browser type, country of origin, and Core Web Vitals performance benchmarks.</li>
-            <li>It records page views only; it does not collect or transmit custom in-game actions, estimation guesses, or player scores.</li>
-          </ul>
-        </li>
-      </ul>
 
       <h2>4. Advertising Cookies &amp; Google AdSense</h2>
       <p>
