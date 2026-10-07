@@ -8,6 +8,7 @@ import { mountRuler } from '../ruler.js';
 import { maxMeasureMm } from '../calib.js';
 import { naapu } from '../chars.js';
 import { SFX, haptic, shake } from '../fx.js';
+import { trackFitCheckUsed } from '../analytics.js';
 
 router.on('s-fit', render);
 
@@ -86,6 +87,7 @@ function render(){
     const itemMm = [toMm(parseFloat(iL.value)||0, iU.value), toMm(parseFloat(iW.value)||0, iU.value), toMm(parseFloat(iH.value)||0, iU.value)];
     const spaceMm = [toMm(parseFloat(sL.value)||0, sU.value), toMm(parseFloat(sW.value)||0, sU.value), toMm(parseFloat(sH.value)||0, sU.value)];
     const res = fitCheck(itemMm, spaceMm, parseFloat(gapIn.value)||0);
+    trackFitCheckUsed(res.fits);
 
     resCard.hidden = false;
     let listHtml = '';

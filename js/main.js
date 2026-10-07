@@ -20,10 +20,19 @@ import './screens/tool.js';
 import './screens/profile.js';
 import './screens/settings.js';
 
+import { initAds, renderAd } from './ads.js';
+import { trackPageView } from './analytics.js';
+
 // Initialize
 state.load();
 makePaper();
 router.start();
+trackPageView();
+initAds();
+
+// If on home page, render bottom ad container
+const homeAd = document.getElementById('ad-home-bottom');
+if (homeAd) renderAd(homeAd, 'home-bot');
 
 // Service Worker registration with update listener (Chapter 9.10, 10.1 #14)
 if ('serviceWorker' in navigator) {

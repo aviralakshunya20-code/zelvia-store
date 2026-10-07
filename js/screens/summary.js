@@ -6,12 +6,17 @@ import { TITLES, WORLDS } from '../data.js';
 import { $, $$, icon, scribble } from '../ui.js';
 import { naapu } from '../chars.js';
 import { SFX, haptic, confetti } from '../fx.js';
+import { renderAd } from '../ads.js';
+import { trackSetFinished } from '../analytics.js';
 
 router.on('s-summary', render);
 
 function render(){
   const result = game.finish();
   if (!result) return router.go('#home');
+
+  // Track analytics for completed set
+  trackSetFinished(result.worldId, result.total, result.stars);
 
   const s = state.get(), root = $('#s-summary');
   const charExpr = result.stars === 3 ? 'wow' : (result.stars === 0 ? 'sad' : 'happy');
@@ -57,11 +62,19 @@ function render(){
       </div>
       ${newWorldName ? `<div class="stamp leaf" style="margin-top:12px; font-size:20px; width:100%; display:block;">Naya world khula: ${newWorldName}!</div>` : ''}
     </div>
+    <div class="ad-slot-wrapper spaced-from-buttons" style="margin-top:160px; margin-bottom:24px;">
+      <div class="ad-slot slot-rectangle" id="ad-summary-slot">
+        <span class="small" style="opacity:.5;">Advertisement Space (Inactive)</span>
+      </div>
+    </div>
     <div class="bottom-bar grid-2">
       <button class="btn alt" id="sum-home">Home</button>
       <button class="btn go" id="sum-again">Dobara</button>
     </div>
   `;
+
+  const adSlot = $('#ad-summary-slot', root);
+  if (adSlot) renderAd(adSlot, 'summary');
 
   $('#sum-home', root).onclick = () => { SFX.tap(); router.go('#home'); };
   $('#sum-again', root).onclick = () => { SFX.tap(); game.startSet(result.worldId); router.go('#guess'); };

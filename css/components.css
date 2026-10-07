@@ -234,3 +234,296 @@ input[type=number]::-webkit-outer-spin-button{
 @media (prefers-reduced-motion: reduce){
   .bob-wrap{ animation:none !important; }
 }
+
+/* Site Header (Phase A) */
+.site-header{
+  background:var(--paper2);
+  border-bottom:var(--line) solid var(--ink);
+  padding:8px 16px;
+  position:sticky;
+  top:0;
+  z-index:40;
+}
+.header-inner{
+  max-width:960px;
+  margin:0 auto;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.brand-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:26px;
+  line-height:30px;
+  color:var(--ink);
+  text-decoration:none;
+  user-select:none;
+}
+.brand-title{
+  background:var(--mustard);
+  border:2px solid var(--ink);
+  border-radius:var(--r1);
+  padding:2px 10px;
+  box-shadow:2px 2px 0 var(--ink);
+}
+.brand-sub{
+  font-size:16px;
+  color:var(--ink);
+  opacity:.8;
+}
+.site-nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+.nav-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:48px;
+  min-width:48px;
+  padding:8px 14px;
+  font-size:19px;
+  line-height:22px;
+  color:var(--ink);
+  text-decoration:none;
+  background:var(--card);
+  border:2px solid var(--ink);
+  border-radius:var(--r1);
+  box-shadow:2px 2px 0 var(--ink);
+  user-select:none;
+  transition:transform 80ms var(--ease), box-shadow 80ms var(--ease);
+}
+.nav-link:active{
+  transform:translate(2px, 2px);
+  box-shadow:0 0 0 var(--ink);
+}
+.nav-link.active,
+.nav-link[aria-current="page"]{
+  background:var(--mustard);
+  border-width:var(--line);
+}
+
+/* Site Footer (Phase A & C) */
+.site-footer{
+  background:var(--paper2);
+  border-top:var(--line) solid var(--ink);
+  padding:32px 16px 48px;
+  margin-top:48px;
+}
+.footer-inner{
+  max-width:960px;
+  margin:0 auto;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:24px;
+  margin-bottom:32px;
+}
+.footer-col h3{
+  font-size:22px;
+  margin-bottom:12px;
+  display:inline-block;
+  border-bottom:2px solid var(--ink);
+}
+.footer-col ul{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.footer-col a{
+  color:var(--ink);
+  text-decoration:underline;
+  text-decoration-thickness:2px;
+  text-underline-offset:3px;
+  min-height:36px;
+  display:inline-flex;
+  align-items:center;
+  font-size:18px;
+}
+.footer-col a:hover,
+.footer-col a:focus{
+  background:var(--mustard);
+  text-decoration:none;
+  padding:0 4px;
+  border-radius:4px;
+}
+.footer-bottom{
+  border-top:2px dashed var(--ink);
+  padding-top:16px;
+  font-size:17px;
+  line-height:24px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  gap:12px;
+  opacity:.9;
+}
+
+/* Article / Content Guide Styles (Phase B) */
+.content-page{
+  max-width:820px;
+  margin:0 auto;
+  padding:24px 16px;
+}
+.article-header{
+  margin-bottom:24px;
+}
+.article-header h1{
+  font-size:36px;
+  line-height:42px;
+  margin-bottom:12px;
+}
+.article-meta{
+  font-size:17px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  color:var(--ink);
+  opacity:.85;
+  margin-bottom:16px;
+}
+.article-body{
+  font-size:20px;
+  line-height:28px;
+}
+.article-body h2{
+  font-size:28px;
+  line-height:34px;
+  margin:32px 0 12px;
+  border-bottom:2px solid var(--ink);
+  padding-bottom:4px;
+}
+.article-body h3{
+  font-size:23px;
+  line-height:29px;
+  margin:24px 0 8px;
+}
+.article-body p{
+  margin-bottom:16px;
+}
+.article-body ul, .article-body ol{
+  margin:0 0 20px 24px;
+}
+.article-body li{
+  margin-bottom:8px;
+}
+.table-wrap{
+  overflow-x:auto;
+  margin:24px 0;
+  border:var(--line) solid var(--ink);
+  border-radius:var(--r2);
+  box-shadow:var(--shadow);
+  background:var(--card);
+}
+.data-table{
+  width:100%;
+  border-collapse:collapse;
+  text-align:left;
+  font-size:18px;
+  line-height:24px;
+}
+.data-table th{
+  background:var(--paper2);
+  border-bottom:var(--line) solid var(--ink);
+  padding:12px 14px;
+  font-weight:normal;
+}
+.data-table td{
+  padding:10px 14px;
+  border-bottom:1px solid var(--ink);
+}
+.data-table tr:last-child td{
+  border-bottom:none;
+}
+.data-table tr:nth-child(even) td{
+  background:rgba(237, 227, 200, 0.35);
+}
+.faq-box{
+  margin:36px 0;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.faq-item{
+  background:var(--card);
+  border:var(--line) solid var(--ink);
+  border-radius:var(--r2);
+  padding:16px;
+  box-shadow:var(--shadow);
+}
+.faq-item h3{
+  margin-top:0;
+  margin-bottom:8px;
+  font-size:22px;
+}
+.faq-item p{
+  margin-bottom:0;
+}
+.guide-cta{
+  margin:32px 0;
+  text-align:center;
+  padding:24px;
+  background:var(--card);
+  border:var(--line) solid var(--ink);
+  border-radius:var(--r2);
+  box-shadow:var(--shadow);
+}
+
+/* Ad Placement Slots (Phase D) */
+/* Strict rules: fixed height reservation, never near buttons (min 150px) */
+.ad-slot-wrapper{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  margin:28px 0;
+  position:relative;
+}
+.ad-slot-wrapper.spaced-from-buttons{
+  margin-top:160px;
+  margin-bottom:32px;
+}
+.ad-notice{
+  font-size:14px;
+  line-height:16px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  opacity:.6;
+  margin-bottom:4px;
+}
+.ad-slot{
+  width:100%;
+  background:var(--paper2);
+  border:2px dashed var(--ink);
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.ad-slot.slot-leaderboard{
+  max-width:728px;
+  min-height:90px;
+}
+.ad-slot.slot-rectangle{
+  max-width:300px;
+  min-height:250px;
+}
+.ad-slot.slot-banner{
+  max-width:320px;
+  min-height:100px;
+}
+@media (min-width: 768px){
+  .ad-slot.slot-banner{
+    max-width:728px;
+    min-height:90px;
+  }
+}

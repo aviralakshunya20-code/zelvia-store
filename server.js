@@ -14,20 +14,31 @@ const MIME_TYPES = {
   '.webmanifest': 'application/manifest+json; charset=utf-8',
   '.png': 'image/png',
   '.ttf': 'font/ttf',
-  '.svg': 'image/svg+xml'
+  '.svg': 'image/svg+xml',
+  '.xml': 'application/xml; charset=utf-8',
+  '.txt': 'text/plain; charset=utf-8'
 };
 
 const server = http.createServer((req, res) => {
   let cleanUrl = req.url.split('?')[0].split('#')[0];
   if (cleanUrl === '/') cleanUrl = '/index.html';
 
-  const filePath = path.join(ROOT, cleanUrl);
+  let filePath = path.join(ROOT, cleanUrl);
 
   // Security: prevent directory traversal outside root
   if (!filePath.startsWith(ROOT)) {
     res.writeHead(403);
     res.end('Forbidden');
     return;
+  }
+
+  // If path is a directory or ends with slash, look for index.html
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+    filePath = path.join(filePath, 'index.html');
+  } else if (!path.extname(filePath) && fs.existsSync(filePath + '.html')) {
+    filePath = filePath + '.html';
+  } else if (!path.extname(filePath) && fs.existsSync(path.join(filePath, 'index.html'))) {
+    filePath = path.join(filePath, 'index.html');
   }
 
   fs.stat(filePath, (err, stats) => {

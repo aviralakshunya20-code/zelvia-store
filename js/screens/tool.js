@@ -6,6 +6,7 @@ import { mountRuler } from '../ruler.js';
 import { maxMeasureMm } from '../calib.js';
 import { fromMm } from '../units.js';
 import { SFX } from '../fx.js';
+import { trackRulerUsed } from '../analytics.js';
 
 router.on('s-tool', render);
 let rulerInstance = null;
@@ -90,4 +91,5 @@ function render(){
     onChange: updateReadout
   });
   updateReadout(0);
+  trackRulerUsed(unit);
 }

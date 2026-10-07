@@ -6,6 +6,7 @@ import { WORLDS, ITEMS } from '../data.js';
 import { $, icon, scribble } from '../ui.js';
 import { gajBaba } from '../chars.js';
 import { SFX } from '../fx.js';
+import { trackSetStarted } from '../analytics.js';
 
 router.on('s-world', render);
 
@@ -51,5 +52,10 @@ function render(worldId = 'w1'){
   `;
 
   $('#w-back', root).onclick = () => { SFX.tap(); router.go('#home'); };
-  $('#w-play', root).onclick = () => { SFX.tap(); game.startSet(world.id); router.go('#guess'); };
+  $('#w-play', root).onclick = () => {
+    SFX.tap();
+    trackSetStarted(world.id);
+    game.startSet(world.id);
+    router.go('#guess');
+  };
 }

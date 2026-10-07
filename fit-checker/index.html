@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F6EFDC">
+  <title>Online Fit Checker – 2D Dimension & Clearance Calculator | OnlineMeasurer</title>
+  <meta name="description" content="Calculate whether an item fits inside a box, drawer, or package. Tests 2D clearance margins and 90-degree rotation with an instant visual scale preview.">
+  <link rel="canonical" href="https://onlinemeasurer.com/fit-checker/">
+  <meta property="og:title" content="Online Fit Checker – 2D Dimension & Clearance Calculator">
+  <meta property="og:description" content="Will it fit? Enter container and object dimensions to calculate clearance tolerances and rotation fit instantly.">
+  <meta property="og:url" content="https://onlinemeasurer.com/fit-checker/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://onlinemeasurer.com/assets/icon-512.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/screens.css">
+</head>
+<body>
+  <!-- Header Nav (Phase A) -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand-link" aria-label="Naapu OnlineMeasurer Home">
+        <span class="brand-title">Naapu</span>
+        <span class="brand-sub">OnlineMeasurer</span>
+      </a>
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/play/" class="nav-link">Play</a>
+        <a href="/ruler/" class="nav-link">Ruler</a>
+        <a href="/fit-checker/" class="nav-link active" aria-current="page">Fit Checker</a>
+        <a href="/daily/" class="nav-link">Daily</a>
+        <a href="/guides/calibrate-online-ruler/" class="nav-link">Guides</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="content-page" style="padding-bottom:12px;">
+    <header class="article-header" style="text-align:center; margin:12px 0 20px;">
+      <h1>Online Fit Checker – 2D Dimension & Clearance Calculator</h1>
+      <p style="font-size:20px; line-height:26px; max-width:680px; margin:0 auto;">
+        Determine if an object fits inside a container, envelope, or shelf space. Enter width, height, and safety margin to check fit and test 90&deg; rotation.
+      </p>
+    </header>
+  </div>
+
+  <!-- Interactive Fit Checker Area -->
+  <main style="max-width:540px; margin:0 auto; padding:0 16px;">
+    <section id="s-fit"></section>
+  </main>
+
+  <!-- Detailed Guidance on 2D Clearance Calculations -->
+  <section class="content-page" style="margin-top:28px;">
+    <div class="article-body">
+      <h2>How the 2D Fit Calculator Works</h2>
+      <p>
+        The Fit Checker evaluates whether an item (with given width and height) can be placed entirely inside an outer container (such as a parcel box, drawer, or luggage compartment) while honoring a designated border clearance margin.
+      </p>
+      <h3>Direct Orientation vs Rotated Fit</h3>
+      <p>
+        An object can fit in either its original orientation or rotated by 90 degrees:
+      </p>
+      <ul>
+        <li><strong>Direct Fit:</strong> <code>(item.width + 2 &times; margin &le; box.width)</code> AND <code>(item.height + 2 &times; margin &le; box.height)</code>.</li>
+        <li><strong>Rotated 90&deg; Fit:</strong> <code>(item.height + 2 &times; margin &le; box.width)</code> AND <code>(item.width + 2 &times; margin &le; box.height)</code>.</li>
+      </ul>
+
+      <h3>Why Safety Margin Matters</h3>
+      <p>
+        In the real world, rigid objects cannot slide into containers that match their exact theoretical dimensions. Extra clearance margin is required to account for:
+      </p>
+      <ul>
+        <li><strong>Protective Padding:</strong> Bubble wrap, corrugated cardboard, or protective foam (typically 10 mm to 25 mm).</li>
+        <li><strong>Finger Clearance:</strong> Space to grasp and lift the item out of a deep drawer or box without tilting.</li>
+        <li><strong>Manufacturing Variance:</strong> Slight bends, seams, or corner radii in cardboard and plastic bins.</li>
+        <li>Read our in-depth <a href="/guides/how-to-measure-if-it-fits/">Clearance & Fit Guide</a> for recommended tolerances across everyday storage items.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer Nav (Phase A, C) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>Tools & Game</h3>
+          <ul>
+            <li><a href="/">Home Hub</a></li>
+            <li><a href="/play/">Play Game</a></li>
+            <li><a href="/ruler/">Online Screen Ruler</a></li>
+            <li><a href="/fit-checker/">2D Fit Checker</a></li>
+            <li><a href="/daily/">Daily Hunt Challenge</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Measurement Guides</h3>
+          <ul>
+            <li><a href="/guides/calibrate-online-ruler/">Calibrate Screen Ruler</a></li>
+            <li><a href="/guides/paper-sizes/">Paper Sizes Reference</a></li>
+            <li><a href="/guides/coin-and-note-sizes-india/">Indian Coin & Note Sizes</a></li>
+            <li><a href="/guides/everyday-object-sizes/">Everyday Object Sizes</a></li>
+            <li><a href="/guides/how-to-measure-if-it-fits/">How to Measure If It Fits</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Trust & Legal</h3>
+          <ul>
+            <li><a href="/about/">About Us</a></li>
+            <li><a href="/contact/">Contact Us</a></li>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+            <li><a href="/terms/">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 OnlineMeasurer.com &middot; Naapu Game. Hand-made web tools with zero external dependencies.</p>
+        <p>Accurate after calibration with an ISO/IEC 7810 credit card.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="fx" aria-hidden="true"></div>
+  <div id="live" class="sr-only" aria-live="polite"></div>
+
+  <script type="module" src="../js/main.js"></script>
+</body>
+</html>

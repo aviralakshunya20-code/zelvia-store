@@ -8,6 +8,7 @@ import { $, icon, scribble, toast } from '../ui.js';
 import { mountRuler } from '../ruler.js';
 import { naapu } from '../chars.js';
 import { SFX, haptic, confetti, shake } from '../fx.js';
+import { trackDailyDone } from '../analytics.js';
 
 router.on('s-daily', render);
 let rulerInstance = null;
@@ -91,6 +92,7 @@ function render(){
       applyDailySuccess(s.daily, todayKey, yesterdayKey);
       s.daily.done[todayKey] = { measuredMm: val, ok: true };
       state.save();
+      trackDailyDone(val, s.daily.streak);
       SFX.great(); haptic('great'); confetti(36);
       charWrap.innerHTML = naapu('happy');
       msgEl.textContent = `Mil gaya! Streak: ${s.daily.streak}`;
