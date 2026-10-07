@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="hi-Latn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F6EFDC">
+  <title>Naapu - Style Guide</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/screens.css">
+  <style>
+    .sg-section{ margin-bottom:32px; display:flex; flex-direction:column; gap:16px; }
+    .swatch-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(80px, 1fr)); gap:10px; }
+    .swatch{ height:60px; border:var(--line) solid var(--ink); border-radius:var(--r1); display:flex; align-items:center; justify-content:center; font-size:14px; box-shadow:var(--shadow); }
+    .icons-grid{ display:flex; flex-wrap:wrap; gap:16px; align-items:center; }
+  </style>
+</head>
+<body>
+  <main>
+    <header style="margin-bottom:24px;">
+      <h1 class="display">Naapu Style Guide</h1>
+      <svg class="scribble" width="160" height="8" viewBox="0 0 120 8" aria-hidden="true">
+        <path d="M2 5 Q30 1 60 5 T118 4" fill="none" stroke="#E4572E" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <p class="body">Hand-made design system review. No gradients, no blur, no purple, hard shadows only.</p>
+    </header>
+
+    <!-- Colors -->
+    <section class="sg-section">
+      <h2 class="h2">1. Rang (Palette)</h2>
+      <div class="swatch-grid">
+        <div class="swatch" style="background:#F6EFDC;">paper</div>
+        <div class="swatch" style="background:#EDE3C8;">paper2</div>
+        <div class="swatch" style="background:#FFFBEF;">card</div>
+        <div class="swatch" style="background:#2B2118; color:#F6EFDC;">ink</div>
+        <div class="swatch" style="background:#E4572E;">tomato</div>
+        <div class="swatch" style="background:#F3B73B;">mustard</div>
+        <div class="swatch" style="background:#4C9F70;">leaf</div>
+        <div class="swatch" style="background:#6FB1D6;">sky</div>
+        <div class="swatch" style="background:#F4A58A;">blush</div>
+        <div class="swatch" style="background:#B9783F;">wood</div>
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section class="sg-section">
+      <h2 class="h2">2. Typography</h2>
+      <div class="card">
+        <div class="display">Display: 40px</div>
+        <h1 class="h1">Heading 1: 32px</h1>
+        <h2 class="h2">Heading 2: 26px</h2>
+        <p class="body">Body text: 20px / 26px line height. Thoda kagaz jaisa feel.</p>
+        <p class="small">Small text: 16px hint aur labels ke liye.</p>
+        <div class="bignum">23.5 mm</div>
+        <div class="ruler-label">Ruler label: 14px</div>
+      </div>
+    </section>
+
+    <!-- Buttons -->
+    <section class="sg-section">
+      <h2 class="h2">3. Buttons</h2>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <button class="btn">Normal Button (Mustard)</button>
+        <button class="btn alt">Alt Button (Paper2)</button>
+        <button class="btn go">Go / Success (Leaf)</button>
+        <button class="btn bad">Bad / Danger (Tomato)</button>
+        <button class="btn" disabled>Disabled Button (Dashed)</button>
+      </div>
+    </section>
+
+    <!-- Cards with rotation -->
+    <section class="sg-section">
+      <h2 class="h2">4. Cards (Odd -0.6deg, Even +0.5deg)</h2>
+      <div class="card">
+        <h2 class="h2">Card 1 (Odd)</h2>
+        <p class="body">Har card par 3px solid ink border aur 3px 3px 0 hard shadow hai.</p>
+      </div>
+      <div class="card">
+        <h2 class="h2">Card 2 (Even)</h2>
+        <p class="body">Is card ka ghumav thoda alag hai (+0.5 deg), natural hand-drawn effect.</p>
+      </div>
+    </section>
+
+    <!-- Chips, Stamps & Sliders -->
+    <section class="sg-section">
+      <h2 class="h2">5. Chips, Stamps, Slider</h2>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span class="chip">Default Chip</span>
+        <span class="chip active">Active Chip</span>
+      </div>
+      <div style="display:flex; gap:12px; align-items:center; margin-top:8px;">
+        <span class="stamp">LEVEL UP</span>
+        <span class="stamp leaf">MIL GAYA</span>
+      </div>
+      <div style="margin-top:12px;">
+        <label class="small">Custom Slider:</label>
+        <input type="range" min="0" max="1000" value="450">
+      </div>
+    </section>
+
+    <!-- Icons -->
+    <section class="sg-section">
+      <h2 class="h2">6. SVG Icons (Hand-drawn, round caps)</h2>
+      <div class="card">
+        <div class="icons-grid" id="icons-container"></div>
+      </div>
+    </section>
+
+    <!-- Toast button -->
+    <section class="sg-section">
+      <h2 class="h2">7. Toast & Popups</h2>
+      <button class="btn" id="toast-trigger">Show Toast Notification</button>
+    </section>
+  </main>
+
+  <script type="module">
+    import { icon, toast } from './js/ui.js';
+    import { makePaper } from './js/fx.js';
+
+    makePaper();
+
+    const iconNames = ['back', 'home', 'check', 'cross', 'star', 'lock', 'sound-on', 'sound-off', 'gear', 'ruler'];
+    const container = document.getElementById('icons-container');
+    iconNames.forEach(name => {
+      const d = document.createElement('div');
+      d.style.textAlign = 'center';
+      d.innerHTML = icon(name, { size: 32 }) + '<div class="small">' + name + '</div>';
+      container.appendChild(d);
+    });
+
+    // Star filled demo
+    const starFilled = document.createElement('div');
+    starFilled.style.textAlign = 'center';
+    starFilled.innerHTML = icon('star', { size: 32, filled: true }) + '<div class="small">star (fill)</div>';
+    container.appendChild(starFilled);
+
+    document.getElementById('toast-trigger').addEventListener('click', () => {
+      toast('Ye ek test toast notification hai!');
+    });
+  </script>
+</body>
+</html>

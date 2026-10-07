@@ -1,0 +1,11 @@
+{
+  "name": "naapu",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'Static build OK'",
+    "start": "node server.js",
+    "test": "node run-tests.js"
+  }
+}
