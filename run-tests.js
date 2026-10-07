@@ -16,6 +16,7 @@ import { toMm, fromMm, fmtMm } from './js/units.js';
 import { pxPerMmFromCard, isPlausible, maxMeasureMm } from './js/calib.js';
 import * as state from './js/state.js';
 import { t, getLang, setLang } from './js/strings.js';
+import { ITEMS, WORLDS, TITLES, getItemName, getWorldName, getTitleName } from './js/data.js';
 
 const T = [
  // [naam, kya chalana hai, expected]
@@ -104,6 +105,28 @@ const T = [
    state.reset();
    return [state.get().settings.lang, getLang(), t('back'), localStorage.getItem('naapu_lang')];
  }, ['en', 'en', 'Back', null]],
+
+  ['data english default', () => {
+    state.reset();
+    return [
+      getItemName(ITEMS[0]),
+      getWorldName(WORLDS[0]),
+      getTitleName(1),
+      t('gajBabaWarning')
+    ];
+  }, ['₹1 coin', 'Pocket Coins', 'Estimate Novice', 'These are large measurements, estimate carefully!']],
+
+  ['data hinglish toggle', () => {
+    setLang('hinglish');
+    const res = [
+      getItemName(ITEMS[0]),
+      getWorldName(WORLDS[0]),
+      getTitleName(1),
+      t('gajBabaWarning')
+    ];
+    setLang('en');
+    return res;
+  }, ['₹1 ka sikka', 'Jeb ke Sikke', 'Andaaza Newbie', 'Bade naap hain beta, sambhal kar andaaza lagana!']],
 ];
 
 let fail = 0;

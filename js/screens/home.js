@@ -1,7 +1,7 @@
 // js/screens/home.js - Home World Map & Main Navigation (Chapter 5.4, 6.7, Phase 2)
 import * as state from '../state.js';
 import * as router from '../router.js';
-import { WORLDS } from '../data.js';
+import { WORLDS, getWorldName } from '../data.js';
 import { worldUnlocked } from '../game.js';
 import { $, $$, icon, scribble, toast } from '../ui.js';
 import { naapu } from '../chars.js';
@@ -34,7 +34,7 @@ function render(){
             <span class="chip">W${idx + 1}</span>
             <span class="small">${wData.best > 0 ? wData.best + ' ' + t('pts') : ''}</span>
           </div>
-          <div class="w-name">${w.name}</div>
+          <div class="w-name">${getWorldName(w)}</div>
           <div class="w-stars">${starsHtml}</div>
         </div>
       `;
@@ -45,7 +45,7 @@ function render(){
             <span class="chip">W${idx + 1}</span>
             <span>${icon('lock', { size: 20 })}</span>
           </div>
-          <div class="w-name">${w.name}</div>
+          <div class="w-name">${getWorldName(w)}</div>
           <div class="small">${t('lock')}</div>
         </div>
       `;

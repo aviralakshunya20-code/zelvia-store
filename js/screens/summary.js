@@ -1,7 +1,7 @@
 import * as game from '../game.js';
 import * as state from '../state.js';
 import * as router from '../router.js';
-import { TITLES, WORLDS } from '../data.js';
+import { TITLES, WORLDS, getTitleName, getWorldName } from '../data.js';
 import { $, $$, icon, scribble, toast } from '../ui.js';
 import { naapu } from '../chars.js';
 import { SFX, haptic, confetti } from '../fx.js';
@@ -32,7 +32,7 @@ function render(){
   if (result.stars >= 1 && nextWIdx < WORLDS.length) {
     const nextW = WORLDS[nextWIdx];
     const prevEntry = s.worlds[nextW.id];
-    if (!prevEntry || prevEntry.plays === 0) newWorldName = nextW.name;
+    if (!prevEntry || prevEntry.plays === 0) newWorldName = getWorldName(nextW);
   }
 
   root.innerHTML = `
@@ -54,7 +54,7 @@ function render(){
       </div>
       <div class="xp-level-card">
         <div style="display:flex; justify-content:space-between; margin-bottom:4px;" class="small">
-          <strong>${t('level')} ${result.level}: ${currentTitle[1]}</strong>
+          <strong>${t('level')} ${result.level}: ${getTitleName(result.level)}</strong>
           <span>${s.xp} / ${nextXpNeeded} ${t('xp')}</span>
         </div>
         <div class="bar-track"><div class="bar-fill mustard" style="width:${levelProgress}%;"></div></div>

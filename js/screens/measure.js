@@ -7,6 +7,7 @@ import { mountRuler } from '../ruler.js';
 import { maxMeasureMm } from '../calib.js';
 import { SFX } from '../fx.js';
 import { t, getLang } from '../strings.js';
+import { getItemName } from '../data.js';
 
 router.on('s-measure', render);
 let rulerInstance = null;
@@ -28,9 +29,7 @@ function render(){
   const axisPx = isVertical ? window.innerHeight : Math.min(window.innerWidth, 480);
   const maxMm = Math.min(maxMeasureMm(pxPerMm, axisPx), Math.ceil(item.mm + 20));
 
-  const instructionText = getLang() === 'en'
-    ? `Align the real ${item.name} against the 0 line and drag marker:`
-    : `Asli ${item.name} ko ruler ke 0 se laga kar marker kheencho:`;
+  const instructionText = t('measureInstructionAlign', { name: getItemName(item) });
 
   root.innerHTML = `
     <div class="screen-header">

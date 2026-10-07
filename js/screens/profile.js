@@ -1,7 +1,7 @@
 // js/screens/profile.js - Profile & Lifetime Stats (Chapter 5.12, 8)
 import * as state from '../state.js';
 import * as router from '../router.js';
-import { TITLES } from '../data.js';
+import { TITLES, getTitleName } from '../data.js';
 import { levelFor } from '../score.js';
 import { $, icon, scribble } from '../ui.js';
 import { naapu } from '../chars.js';
@@ -31,7 +31,7 @@ function render(){
     <div class="screen-content">
       <div class="card" style="text-align:center; padding:16px;">
         <div class="bob-wrap" style="margin-bottom:8px;">${naapu('idle')}</div>
-        <h3 class="display" style="font-size:32px;">${t('level')} ${lvl}: ${curT[1]}</h3>
+        <h3 class="display" style="font-size:32px;">${t('level')} ${lvl}: ${getTitleName(lvl)}</h3>
         <div style="margin-top:12px;">
           <div style="display:flex; justify-content:space-between; margin-bottom:4px;" class="small">
             <span>${t('profileProgress')}</span><span>${s.xp} / ${nextXp} ${t('xp')}</span>

@@ -136,7 +136,20 @@ export const STRINGS = {
     settingsResetModal2Title: 'Are you 100% sure?',
     settingsResetModal2Msg: 'This action cannot be undone.',
     settingsResetToast: 'All progress reset.',
-    settingsIosNote: 'On iPhone, mute switch may disable synthesized audio.'
+    settingsIosNote: 'On iPhone, mute switch may disable synthesized audio.',
+
+    // In-screen labels & dialogues
+    calibCardEdgeH: '85.6 mm long &rarr;',
+    calibCardEdgeV: '&darr;<br>85.6 mm<br>long<br>&darr;',
+    calibCurrentPpm: 'Current: {ppm} px per mm',
+    calibImplausible: 'This size does not seem plausible. Please try again.',
+    calibSuccess: 'Screen calibrated successfully!',
+    gajBabaWarning: 'These are large measurements, estimate carefully!',
+    guessQuestion: 'Estimate the {part} of {name}',
+    guessHintBtn: 'Hint (-10)',
+    guessHintTitle: 'Fita Hint:',
+    guessHintToast: 'Hint used: -10 points',
+    measureInstructionAlign: 'Align the real {name} against the 0 line and drag marker:'
   },
 
   hinglish: {
@@ -272,7 +285,20 @@ export const STRINGS = {
     settingsResetModal2Title: 'Pakka?',
     settingsResetModal2Msg: 'Ye wapas nahi aayega. Kya aap 100% sure hain?',
     settingsResetToast: 'Sab kuch reset ho gaya.',
-    settingsIosNote: 'iPhone par silent switch ON hone par sound band ho sakta hai.'
+    settingsIosNote: 'iPhone par silent switch ON hone par sound band ho sakta hai.',
+
+    // In-screen labels & dialogues
+    calibCardEdgeH: '85.6 mm lamba &rarr;',
+    calibCardEdgeV: '&darr;<br>85.6 mm<br>lamba<br>&darr;',
+    calibCurrentPpm: 'Abhi: {ppm} px per mm',
+    calibImplausible: 'Ye size sahi nahi lag raha. Dobara try karo.',
+    calibSuccess: 'Screen calibrate ho gayi!',
+    gajBabaWarning: 'Bade naap hain beta, sambhal kar andaaza lagana!',
+    guessQuestion: '{name} ki {part} kitni hogi?',
+    guessHintBtn: 'Hint (-10)',
+    guessHintTitle: 'Fita Hint:',
+    guessHintToast: 'Hint use hua: -10 points',
+    measureInstructionAlign: 'Asli {name} ko ruler ke 0 se laga kar marker kheencho:'
   }
 };
 

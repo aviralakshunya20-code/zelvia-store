@@ -9,6 +9,7 @@ import { comboMultiplier } from '../score.js';
 import { naapu, fita, startBlinkLoop } from '../chars.js';
 import { SFX, haptic } from '../fx.js';
 import { t, getLang } from '../strings.js';
+import { getItemName, getItemPart, getItemHint } from '../data.js';
 
 router.on('s-guess', render);
 
@@ -33,9 +34,9 @@ function render(){
   const lang = getLang();
   let guessMm = 100, isLocked = false;
 
-  const questionText = lang === 'en'
-    ? `Estimate the ${item.part} of ${item.name}`
-    : `${item.name} ki ${item.part} kitni hogi?`;
+  const itemName = getItemName(item);
+  const itemPart = getItemPart(item);
+  const questionText = t('guessQuestion', { name: itemName, part: itemPart });
 
   root.innerHTML = `
     <div class="screen-header">
@@ -65,7 +66,7 @@ function render(){
       <button class="btn go" id="g-type-done" style="width:100%; margin-top:8px;">OK</button>
     </div>
     <div class="bottom-bar">
-      <button class="btn alt" id="g-hint-btn">Hint (-10)</button>
+      <button class="btn alt" id="g-hint-btn">${t('guessHintBtn')}</button>
       <button class="btn go" id="g-lock-btn" style="min-width:140px;">${t('guessLockBtn')}</button>
     </div>
     <div id="g-offer-box" style="margin-top:12px;"></div>
@@ -131,8 +132,9 @@ function render(){
   btnHint.onclick = () => {
     SFX.tap(); btnHint.disabled = true;
     const h = game.useHint();
-    $('#g-hint-box', root).innerHTML = `<div class="card" style="display:flex; align-items:center; gap:12px; background:var(--paper2);">${fita('think')}<div><div class="h2" style="font-size:20px;">Fita Hint:</div><p class="body">${h}</p></div></div>`;
-    toast('Hint used: -10 points');
+    const hintText = (lang === 'hinglish' && item.hint_hi) ? item.hint_hi : (getItemHint(item) || h);
+    $('#g-hint-box', root).innerHTML = `<div class="card" style="display:flex; align-items:center; gap:12px; background:var(--paper2);">${fita('think')}<div><div class="h2" style="font-size:20px;">${t('guessHintTitle')}</div><p class="body">${hintText}</p></div></div>`;
+    toast(t('guessHintToast'));
   };
 
   btnLock.onclick = () => {

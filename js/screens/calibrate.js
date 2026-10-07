@@ -57,14 +57,14 @@ function render(){
     if (isLandscape){
       outline.style.width = currentL + 'px';
       outline.style.height = shortL + 'px';
-      outline.innerHTML = '<span>85.6 mm lamba &rarr;</span>';
+      outline.innerHTML = `<span>${t('calibCardEdgeH')}</span>`;
     } else {
       outline.style.width = shortL + 'px';
       outline.style.height = currentL + 'px';
-      outline.innerHTML = '<span>&darr;<br>85.6 mm<br>lamba<br>&darr;</span>';
+      outline.innerHTML = `<span>${t('calibCardEdgeV')}</span>`;
     }
     const ppm = currentL / CARD_MM;
-    readout.textContent = `Abhi: ${ppm.toFixed(2)} px per mm`;
+    readout.textContent = t('calibCurrentPpm', { ppm: ppm.toFixed(2) });
   }
 
   slider.oninput = () => updateL(parseInt(slider.value, 10));
@@ -79,7 +79,7 @@ function render(){
     const ppm = currentL / CARD_MM;
     if (!isPlausible(ppm)) {
       SFX.bad();
-      toast('Ye size sahi nahi lag raha. Dobara try karo.');
+      toast(t('calibImplausible'));
       return;
     }
     s.calib = {
@@ -89,7 +89,7 @@ function render(){
     };
     state.save();
     SFX.great();
-    toast('Screen calibrate ho gayi!');
+    toast(t('calibSuccess'));
     router.go('#home');
   };
 

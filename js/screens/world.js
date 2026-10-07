@@ -2,7 +2,7 @@
 import * as game from '../game.js';
 import * as state from '../state.js';
 import * as router from '../router.js';
-import { WORLDS, ITEMS } from '../data.js';
+import { WORLDS, ITEMS, getWorldName, getWorldAbout, getItemName } from '../data.js';
 import { $, icon, scribble } from '../ui.js';
 import { gajBaba } from '../chars.js';
 import { SFX } from '../fx.js';
@@ -20,7 +20,7 @@ function render(worldId = 'w1'){
   let starsHtml = '';
   for (let i = 0; i < 3; i++) starsHtml += icon('star', { size: 22, filled: i < wData.stars });
 
-  let itemsHtml = items.map(it => `<li>${it.name}</li>`).join('');
+  let itemsHtml = items.map(it => `<li>${getItemName(it)}</li>`).join('');
 
   root.innerHTML = `
     <div class="screen-header">
@@ -28,13 +28,13 @@ function render(worldId = 'w1'){
       <div style="width:48px;"></div>
     </div>
     <div style="margin-bottom:12px;">
-      <h2 class="h1">${world.name}</h2>
+      <h2 class="h1">${getWorldName(world)}</h2>
       ${scribble(140)}
-      <p class="small">${world.about}</p>
+      <p class="small">${getWorldAbout(world)}</p>
     </div>
     ${(world.id === 'w7' || world.id === 'w8') ? `
       <div class="card" style="display:flex; align-items:center; gap:12px; margin-bottom:12px; background:var(--paper2);">
-        ${gajBaba()}<div><div class="h2">Gaj Baba:</div><p class="small">"Bade naap hain beta, sambhal kar andaaza lagana!"</p></div>
+        ${gajBaba()}<div><div class="h2">Gaj Baba:</div><p class="small">"${t('gajBabaWarning')}"</p></div>
       </div>
     ` : ''}
     <div class="card" style="margin-bottom:12px;">
