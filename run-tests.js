@@ -1,9 +1,21 @@
-// run-tests.js - Node test runner for Chapter 9.11 tests
+// run-tests.js - Node test runner for Chapter 9.11 tests & system verification
+if (typeof globalThis.localStorage === 'undefined') {
+  const store = new Map();
+  globalThis.localStorage = {
+    getItem: k => store.has(k) ? store.get(k) : null,
+    setItem: (k, v) => store.set(k, String(v)),
+    removeItem: k => store.delete(k),
+    clear: () => store.clear()
+  };
+}
+
 import { guessPoints, measureBonus, comboMultiplier, scoreRound, starsFor, xpGain, levelFor } from './js/score.js';
 import { fitCheck } from './js/fit.js';
 import { dayIndex, dailyTarget, dailyTolerance, dailyOk, dayKey, applyDailySuccess } from './js/daily.js';
 import { toMm, fromMm, fmtMm } from './js/units.js';
 import { pxPerMmFromCard, isPlausible, maxMeasureMm } from './js/calib.js';
+import * as state from './js/state.js';
+import { t, getLang, setLang } from './js/strings.js';
 
 const T = [
  // [naam, kya chalana hai, expected]
@@ -63,6 +75,35 @@ const T = [
  ['calib px', () => Math.round(pxPerMmFromCard(513.6) * 1e6) / 1e6, 6],
  ['plausible', () => [2.4, 2.5, 14, 14.1].map(isPlausible), [false, true, true, false]],
  ['maxMeasure', () => maxMeasureMm(6, 844), 107],
+
+ // Language settings & migration tests (Requirement 4 & 5)
+ ['lang default en', () => {
+   state.reset();
+   return [state.get().settings.lang, getLang(), t('back')];
+ }, ['en', 'en', 'Back']],
+
+ ['lang setLang hinglish', () => {
+   setLang('hinglish');
+   const savedRaw = localStorage.getItem('naapu.v1');
+   const parsed = JSON.parse(savedRaw || '{}');
+   return [state.get().settings.lang, parsed.settings?.lang, getLang(), t('back')];
+ }, ['hinglish', 'hinglish', 'hinglish', 'Peeche']],
+
+ ['lang legacy migration', () => {
+   state.reset();
+   localStorage.setItem('naapu_lang', 'hinglish');
+   state.load();
+   const oldKeyExists = localStorage.getItem('naapu_lang');
+   const savedRaw = localStorage.getItem('naapu.v1');
+   const parsed = JSON.parse(savedRaw || '{}');
+   return [state.get().settings.lang, parsed.settings?.lang, oldKeyExists];
+ }, ['hinglish', 'hinglish', null]],
+
+ ['lang progress reset clears lang', () => {
+   setLang('hinglish');
+   state.reset();
+   return [state.get().settings.lang, getLang(), t('back'), localStorage.getItem('naapu_lang')];
+ }, ['en', 'en', 'Back', null]],
 ];
 
 let fail = 0;

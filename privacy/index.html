@@ -41,6 +41,8 @@
       <div class="article-meta">
         <span>Effective Date: October 7, 2026</span>
         <span>&middot;</span>
+        <span><strong>Last Reviewed: October 7, 2026</strong></span>
+        <span>&middot;</span>
         <span>OnlineMeasurer.com</span>
       </div>
     </header>
@@ -55,27 +57,36 @@
         OnlineMeasurer does not require you to provide a name, email address, password, phone number, or billing information. We do not maintain user databases with personal accounts, and we do not track your activity across unrelated third-party websites.
       </p>
 
-      <h2>2. Client-Side Browser Storage &amp; Data Retention</h2>
+      <h2>2. Data Retention (Browser Local Storage)</h2>
       <p>
-        To deliver offline functionality and save your gameplay achievements without requiring accounts, our tools use standard browser <code>window.localStorage</code>. This data includes:
+        To deliver offline functionality and save your gameplay achievements without requiring server accounts, our tools use standard browser <code>window.localStorage</code>. This data includes:
       </p>
       <ul>
         <li><strong>Display Calibration (<code>naapu_calib</code>):</strong> Your screen's calculated pixels-per-millimeter scale factor so you do not have to recalibrate on every visit.</li>
         <li><strong>Game Progress &amp; Records (<code>naapu_save</code>):</strong> Unlocked worlds, stars, experience points (XP), player rank, and daily hunt streaks.</li>
-        <li><strong>Settings &amp; Preferences:</strong> Sound effects (synthesizer audio), haptic feedback, default measurement units (mm, cm, in), and language selection (English or Hinglish).</li>
+        <li><strong>Settings &amp; Preferences:</strong> Sound effects (synthesizer audio), haptic feedback, default measurement units (mm, cm, in), and language selection (<code>settings.lang</code>).</li>
       </ul>
       <p>
-        <strong>Retention Period:</strong> All client data resides exclusively in your local device storage. <strong>Data is retained in localStorage indefinitely until you explicitly clear your browser cache/site data or click "Reset All Progress" in the in-game Settings menu.</strong> This data is never sent to our servers.
+        <strong>Retention Period:</strong> All client data resides exclusively on your local device. <strong>Data in localStorage remains stored indefinitely until you explicitly clear your browser cookies and site data, or click "Reset All Progress" in the in-game Settings screen.</strong> This data is never transmitted to our web servers.
       </p>
 
-      <h2>3. Privacy-Friendly Analytics Provider</h2>
+      <h2>3. Web Analytics Disclosures</h2>
       <p>
-        OnlineMeasurer uses a lightweight, privacy-focused analytics engine (<strong>OnlineMeasurer Privacy Telemetry</strong>, designed to operate in compliance with modern privacy standards like Cloudflare Web Analytics and Plausible).
+        Our website configuration defines the active analytics provider (<code>CONFIG.ANALYTICS_PROVIDER</code>). Here is exactly how our code behaves:
       </p>
       <ul>
-        <li><strong>What is recorded:</strong> Aggregate, anonymous application events including <code>page_view</code>, <code>set_started</code>, <code>set_finished</code>, <code>ruler_used</code>, <code>fit_used</code>, and <code>daily_done</code>.</li>
-        <li><strong>What is NOT recorded:</strong> No personal data, no IP addresses, no user IDs, no browser fingerprinting, and no cross-site advertising tracking cookies.</li>
-        <li><strong>Purpose:</strong> Aggregate telemetry is used strictly to count feature usage, detect technical performance bottlenecks, and refine educational game balance.</li>
+        <li>
+          <strong>When Provider is "none" (Default Setting):</strong> Zero analytics scripts are loaded, and no analytics data is collected, recorded, or transmitted to any server. In-game action events dispatch only as local browser DOM events (<code>CustomEvent('naapu:analytics')</code>) solely for client-side debugging.
+        </li>
+        <li>
+          <strong>When Provider is "cloudflare":</strong> If enabled with a configured token, we load Cloudflare Web Analytics (provided by Cloudflare, Inc.) after page load. According to Cloudflare's official published documentation:
+          <ul>
+            <li>Cloudflare Web Analytics does not use cookies, local storage, or fingerprinting.</li>
+            <li>It does not track individual visitors across websites and does not collect or log IP addresses or personal data.</li>
+            <li>It collects only high-level aggregate traffic metrics: page views, visits, HTTP referrers, device/browser type, country of origin, and Core Web Vitals performance benchmarks.</li>
+            <li>It records page views only; it does not collect or transmit custom in-game actions, estimation guesses, or player scores.</li>
+          </ul>
+        </li>
       </ul>
 
       <h2>4. Advertising Cookies &amp; Google AdSense</h2>

@@ -129,3 +129,33 @@ content-type: text/html; charset=utf-8
 ## 4. Google Search Console & AdSense Notes
 - In **Google Search Console**, add the **Domain property** `onlinemeasurer.com` via DNS TXT record. This automatically covers all subdomains, protocols (`http://` and `https://`), and `www`.
 - In **Google AdSense**, add the apex domain `onlinemeasurer.com`. AdSense will automatically inspect both apex and `www` when the 301 redirect is active.
+
+---
+
+## 5. Setting Up Cloudflare Web Analytics (Optional)
+
+If you wish to collect anonymous, privacy-friendly page view metrics without cookies or personal data collection:
+
+1. **Log in to Cloudflare Dashboard**:
+   - Go to [dash.cloudflare.com](https://dash.cloudflare.com/).
+   - In the left sidebar, navigate to **Analytics & Logs** &rarr; **Web Analytics**.
+2. **Add Your Site**:
+   - Click **Manage site** (or **Add a site** if you have not set up Web Analytics yet).
+   - Enter your hostname: `onlinemeasurer.com`.
+3. **Obtain the JS Snippet Token**:
+   - Cloudflare will present a code snippet similar to:
+     ```html
+     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_32_CHAR_TOKEN"}'></script>
+     ```
+   - Copy the 32-character hexadecimal token string inside `"token": "..."`.
+4. **Configure in `js/config.js`**:
+   - Open [js/config.js](file:///c:/Users/VICTUS/OneDrive/Desktop/naapu/js/config.js) and update the analytics block:
+     ```javascript
+     ANALYTICS_ENABLED: true,
+     ANALYTICS_PROVIDER: 'cloudflare',
+     ANALYTICS_TOKEN: 'your-32-character-token-here',
+     ```
+5. **Important Note on Analytics Scope**:
+   - **Page Views Only**: Cloudflare Web Analytics operates exclusively via its automated JavaScript beacon to record HTTP page views, referrers, device type, country, and Core Web Vitals.
+   - **No Custom Events**: Cloudflare Web Analytics does **not** track custom in-game events (such as `set_started`, `set_finished`, `ruler_used`, `fit_used`, `daily_done`). These events remain dispatched as local DOM events (`window.dispatchEvent('naapu:analytics')`) for local inspection and debugging only.
+

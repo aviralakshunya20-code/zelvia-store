@@ -14,7 +14,7 @@ function render(){
   root.innerHTML = `
     <div class="screen-header">
       <button class="btn alt" id="st-back" aria-label="${t('back')}">${icon('back')}</button>
-      <h1 class="h1">${t('settingsTitle')}</h1>
+      <h2 class="h1">${t('settingsTitle')}</h2>
       <div style="width:48px;"></div>
     </div>
     ${scribble(100)}

@@ -1,5 +1,6 @@
 // js/strings.js - Multilingual localization engine (Phase 2)
 // Dictionaries: "en" (default) and "hinglish"
+import * as state from './state.js';
 
 export const STRINGS = {
   en: {
@@ -276,19 +277,30 @@ export const STRINGS = {
 };
 
 /**
- * Gets the current active language ('en' or 'hinglish'). Default is 'en'.
+ * Gets the current active language ('en' or 'hinglish') from state.settings.lang. Default is 'en'.
  */
 export function getLang() {
-  if (typeof window === 'undefined') return 'en';
-  return localStorage.getItem('naapu_lang') || 'en';
+  try {
+    const s = state.get();
+    if (s && s.settings && s.settings.lang) {
+      return s.settings.lang;
+    }
+  } catch (_) {}
+  return 'en';
 }
 
 /**
- * Sets the active language and persists to localStorage.
+ * Sets the active language in main state JSON (settings.lang) and saves.
  */
 export function setLang(lang) {
   const chosen = (lang === 'hinglish') ? 'hinglish' : 'en';
-  localStorage.setItem('naapu_lang', chosen);
+  try {
+    const s = state.get();
+    if (s && s.settings) {
+      s.settings.lang = chosen;
+      state.save();
+    }
+  } catch (_) {}
   return chosen;
 }
 

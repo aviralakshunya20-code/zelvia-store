@@ -12,8 +12,12 @@ export const CONFIG = {
     HOME_BOT: '4444444444'
   },
 
-  // Privacy-friendly analytics flag
-  ANALYTICS_ENABLED: true,
+  // Analytics configuration (honesty & privacy)
+  // When 'none', zero analytics scripts load and no data is transmitted.
+  // Set to 'cloudflare' with a real token to enable Cloudflare Web Analytics beacon.
+  ANALYTICS_ENABLED: false,
+  ANALYTICS_PROVIDER: 'none', // 'none' or 'cloudflare'
+  ANALYTICS_TOKEN: 'YOUR_CLOUDFLARE_BEACON_TOKEN',
 
   // Site contact & metadata
   CONTACT_EMAIL: 'contact@onlinemeasurer.com',
