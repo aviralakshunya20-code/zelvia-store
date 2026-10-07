@@ -9,6 +9,7 @@ import { maxMeasureMm } from '../calib.js';
 import { naapu } from '../chars.js';
 import { SFX, haptic, shake } from '../fx.js';
 import { trackFitCheckUsed } from '../analytics.js';
+import { t } from '../strings.js';
 
 router.on('s-fit', render);
 
@@ -18,14 +19,14 @@ function render(){
 
   root.innerHTML = `
     <div class="screen-header">
-      <button class="btn alt" id="ft-back" aria-label="Peeche jao">${icon('back')}</button>
-      <h1 class="h1" style="font-size:26px;">Aayega ya nahi?</h1>
+      <button class="btn alt" id="ft-back" aria-label="${t('back')}">${icon('back')}</button>
+      <h2 class="h1" style="font-size:26px;">${t('fitTitle')}</h2>
       <div style="width:48px;"></div>
     </div>
     ${scribble(140)}
     <div class="screen-content">
       <div class="card fit-group">
-        <h2 class="h2">Cheez (Item: L x W x H)</h2>
+        <h3 class="h2">${t('fitItemHeader')}</h3>
         <div class="fit-inputs-row">
           <input type="number" step="any" placeholder="L" value="300" id="ft-iL">
           <input type="number" step="any" placeholder="W" value="200" id="ft-iW">
@@ -40,7 +41,7 @@ function render(){
         </div>
       </div>
       <div class="card fit-group">
-        <h2 class="h2">Jagah (Space: L x W x H)</h2>
+        <h3 class="h2">${t('fitSpaceHeader')}</h3>
         <div class="fit-inputs-row">
           <input type="number" step="any" placeholder="L" value="350" id="ft-sL">
           <input type="number" step="any" placeholder="W" value="250" id="ft-sW">
@@ -55,15 +56,15 @@ function render(){
         </div>
       </div>
       <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
-        <span class="body">Gap chhodna hai:</span>
+        <span class="body">${t('fitGapLabel')}</span>
         <div style="display:flex; align-items:center; gap:6px;">
           <input type="number" step="any" value="0" id="ft-gap" style="width:90px; text-align:center;">
           <span class="body">mm</span>
         </div>
       </div>
-      <button class="btn go" id="ft-check" style="width:100%; margin-top:8px;">Check karo</button>
+      <button class="btn go" id="ft-check" style="width:100%; margin-top:8px;">${t('fitCheckBtn')}</button>
       <div class="card fit-result-card" id="ft-res" hidden></div>
-      <p class="small" style="text-align:center; margin-top:12px;">Ye seedha rakh kar fit hone ka check hai. Tirchha karke nikalna alag hota hai.</p>
+      <p class="small" style="text-align:center; margin-top:12px;">${t('fitDisclaimer')}</p>
     </div>
   `;
 
@@ -93,33 +94,33 @@ function render(){
     let listHtml = '';
     if (res.fits) {
       SFX.ok(); haptic('tap');
-      listHtml = '<div style="margin-bottom:4px;"><strong>Bacha hua space (spare):</strong></div>' +
-        res.spare.map((v, i) => `<div>Dimension ${i+1}: ${fmtMm(v)} bachta hai</div>`).join('');
+      listHtml = `<div style="margin-bottom:4px;"><strong>${t('fitSpareTitle')}</strong></div>` +
+        res.spare.map((v, i) => `<div>Dimension ${i+1}: ${fmtMm(v)}</div>`).join('');
     } else {
       SFX.bad(); haptic('bad'); shake(resCard);
-      listHtml = '<div style="margin-bottom:4px; color:var(--tomato);"><strong>Kami (short):</strong></div>' +
-        res.short.map((v, i) => v > 0 ? `<div>Dimension ${i+1} mein ${fmtMm(v)} kam hai</div>` : '').join('');
+      listHtml = `<div style="margin-bottom:4px; color:var(--tomato);"><strong>${t('fitDeficitTitle')}</strong></div>` +
+        res.short.map((v, i) => v > 0 ? `<div>Dimension ${i+1}: -${fmtMm(v)}</div>` : '').join('');
     }
 
     resCard.innerHTML = `
       <div class="bob-wrap" style="margin-bottom:8px;">${naapu(res.fits ? 'happy' : 'sad')}</div>
-      <div class="stamp ${res.fits ? 'leaf' : ''}" style="margin-bottom:12px;">${res.fits ? 'AA JAYEGA' : 'NAHI AAYEGA'}</div>
+      <div class="stamp ${res.fits ? 'leaf' : ''}" style="margin-bottom:12px;">${res.fits ? t('fitResultFits') : t('fitResultNoFit')}</div>
       <div class="body" style="text-align:left; font-size:18px;">${listHtml}</div>
     `;
   };
 
   function openRulerModal(targetInput, unit){
-    if (!s.calib.pxPerMm) return toast('Pehle calibrate karo');
+    if (!s.calib.pxPerMm) return toast(t('toolCalibNeededTitle'));
     const overlay = document.createElement('div');
     overlay.className = 'dialog-overlay';
     overlay.innerHTML = `
       <div class="dialog-box" style="max-width:440px;">
-        <h2 class="h2">Ruler se naapo</h2>
+        <h3 class="h2">${t('toolTitle')}</h3>
         <div class="ruler-container" id="ft-modal-ruler" style="min-height:100px;"></div>
         <div class="bignum" id="ft-modal-readout" style="margin:8px 0; font-size:36px;">0 mm</div>
         <div class="bottom-bar grid-2">
-          <button class="btn alt" id="ft-modal-cancel">Cancel</button>
-          <button class="btn go" id="ft-modal-use">Ye bharein</button>
+          <button class="btn alt" id="ft-modal-cancel">${t('cancel')}</button>
+          <button class="btn go" id="ft-modal-use">${t('done')}</button>
         </div>
       </div>
     `;

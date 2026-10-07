@@ -3,6 +3,7 @@ import * as state from '../state.js';
 import * as router from '../router.js';
 import { $, scribble } from '../ui.js';
 import { naapu } from '../chars.js';
+import { t } from '../strings.js';
 
 router.on('s-splash', render);
 let splashTimer = null;
@@ -13,9 +14,9 @@ function render(){
 
   root.innerHTML = `
     <div class="bob-wrap" style="text-align:center;">${naapu('idle')}</div>
-    <h1 class="display" style="margin-top:16px;">Naapu</h1>
+    <div class="display" role="heading" aria-level="2" style="margin-top:16px;">Naapu</div>
     ${scribble(160)}
-    <p class="body" style="margin-top:8px;">Pehle andaaza, phir naap.</p>
+    <p class="body" style="margin-top:8px;">${t('splashTagline')}</p>
   `;
 
   function proceed(){

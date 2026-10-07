@@ -4,6 +4,7 @@ import * as router from '../router.js';
 import { CARD_MM, CARD_SHORT_MM, isPlausible, deviceSig } from '../calib.js';
 import { $, icon, scribble, toast } from '../ui.js';
 import { SFX } from '../fx.js';
+import { t } from '../strings.js';
 
 router.on('s-calib', render);
 
@@ -22,12 +23,12 @@ function render(){
 
   root.innerHTML = `
     <div class="screen-header">
-      <button class="btn alt" id="c-back" aria-label="Peeche jao" style="${isFirstTime ? 'visibility:hidden;' : ''}">${icon('back')}</button>
-      <h1 class="h1">Pehle screen ko samjhao</h1>
+      <button class="btn alt" id="c-back" aria-label="${t('back')}" style="${isFirstTime ? 'visibility:hidden;' : ''}">${icon('back')}</button>
+      <h1 class="h1">${t('calibTitle')}</h1>
       <div style="width:48px;"></div>
     </div>
     ${scribble(140)}
-    <p class="body" style="margin-bottom:12px;">Credit/ATM/Aadhaar PVC card screen par rakho. Slider se outline ko card ke barabar karo.</p>
+    <p class="body" style="margin-bottom:12px;">${t('calibDesc')}</p>
     <div class="card-box-stage"><div class="card-outline" id="c-outline"></div></div>
     <div class="calib-controls">
       <input type="range" min="${minL}" max="${maxL}" step="1" value="${currentL}" id="c-slider">
@@ -40,7 +41,7 @@ function render(){
       <p class="small" id="c-readout" style="text-align:center; margin:8px 0;"></p>
     </div>
     <div class="bottom-bar center">
-      <button class="btn go" id="c-done" style="width:100%;">Ho gaya</button>
+      <button class="btn go" id="c-done" style="width:100%;">${t('calibDoneBtn')}</button>
     </div>
   `;
 

@@ -9,12 +9,11 @@ export const CONFIG = {
     GUIDE_TOP: '1111111111',
     GUIDE_MID: '2222222222',
     GUIDE_BOT: '3333333333',
-    HOME_BOT: '4444444444',
-    SUMMARY_BOT: '5555555555'
+    HOME_BOT: '4444444444'
   },
 
   // Privacy-friendly analytics flag
-  ANALYTICS_ENABLED: false,
+  ANALYTICS_ENABLED: true,
 
   // Site contact & metadata
   CONTACT_EMAIL: 'contact@onlinemeasurer.com',

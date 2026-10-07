@@ -477,15 +477,18 @@ input[type=number]::-webkit-outer-spin-button{
   box-shadow:var(--shadow);
 }
 
-/* Ad Placement Slots (Phase D) */
+/* Ad Placement Slots (Phase D & Phase 1) */
 /* Strict rules: fixed height reservation, never near buttons (min 150px) */
 .ad-slot-wrapper{
-  display:flex;
+  display:none; /* Strictly hidden unless body.ads-active is set via CONFIG.ADS_ENABLED */
   flex-direction:column;
   align-items:center;
   justify-content:center;
   margin:28px 0;
   position:relative;
+}
+body.ads-active .ad-slot-wrapper{
+  display:flex;
 }
 .ad-slot-wrapper.spaced-from-buttons{
   margin-top:160px;
@@ -501,8 +504,6 @@ input[type=number]::-webkit-outer-spin-button{
 }
 .ad-slot{
   width:100%;
-  background:var(--paper2);
-  border:2px dashed var(--ink);
   border-radius:8px;
   display:flex;
   align-items:center;

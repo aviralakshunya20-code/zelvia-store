@@ -1,64 +1,40 @@
-// js/ads.js - Consent & Ad Placement Manager (Phase D & E)
+// js/ads.js - Consent & Ad Placement Manager (Phases 1 & D)
 import { CONFIG } from './config.js';
 
-// Allowed placement types
+// NOTE FOR PUBLISHER: Enable Google's "Privacy & messaging" consent message in your AdSense account
+// (AdSense Dashboard -> Privacy & messaging -> GDPR / CPRA).
+// When enabled, Google's Certified Consent Management Platform (CMP) will automatically provide window.__tcfapi
+// for visitors in the EU/EEA/UK. In other regions where __tcfapi is not injected, ads load normally after interaction.
+
+// Strictly allowed placements: long-text home page bottom and /guides/* pages
 const ALLOWED_PLACEMENTS = new Set([
   'guide-top',
   'guide-mid',
   'guide-bot',
-  'home-bot',
-  'summary'
+  'home-bot'
 ]);
 
-// Forbidden screen IDs / areas where ads MUST NEVER appear
+// Forbidden sections where ads MUST NEVER appear under any circumstances
 const FORBIDDEN_SECTIONS = [
   's-splash',
   's-calib',
   's-guess',
   's-measure',
   's-reveal',
+  's-summary',
   's-tool',
   's-fit'
 ];
 
 let scriptInjected = false;
 let userInteracted = false;
+let tcfListenerRegistered = false;
 
 /**
- * Consent hook: checks if user has given consent for personalized / non-personalized ads.
- * You can connect Google User Messaging Platform (UMP) or Funding Choices here.
+ * Injects the official Google AdSense script tag once consent and interaction criteria are fulfilled
  */
-export function hasUserConsent() {
-  if (typeof window === 'undefined') return false;
-  // If Google CMP (TCF) is present, check __tcfapi status
-  if (window.__tcfapi) {
-    let tcfConsented = false;
-    window.__tcfapi('getTCData', 2, (tcData, success) => {
-      if (success && tcData) tcfConsented = true;
-    });
-    return tcfConsented;
-  }
-  // Otherwise check local consent flag (default to true if non-EEA, or false if strictly pending)
-  const stored = localStorage.getItem('naapu_ad_consent');
-  return stored === 'granted';
-}
-
-/**
- * Hook to record user consent
- */
-export function setUserConsent(granted = true) {
-  localStorage.setItem('naapu_ad_consent', granted ? 'granted' : 'denied');
-  if (granted && CONFIG.ADS_ENABLED && userInteracted) {
-    loadAdSenseScript();
-  }
-}
-
-/**
- * Lazy loads AdSense script only after user interaction & verified consent
- */
-function loadAdSenseScript() {
+export function loadAdSenseScript() {
   if (!CONFIG.ADS_ENABLED || scriptInjected) return;
-  if (!hasUserConsent()) return;
 
   scriptInjected = true;
   const script = document.createElement('script');
@@ -69,21 +45,50 @@ function loadAdSenseScript() {
 }
 
 /**
- * Checks vertical distance from all buttons to enforce the strict >=150px rule
+ * Handles consent check via TCF v2.2 API if available; otherwise loads normally
+ */
+function handleConsentAndLoad() {
+  if (!CONFIG.ADS_ENABLED || scriptInjected) return;
+
+  // If window.__tcfapi exists (e.g., Google Funding Choices / CMP active in EEA/UK)
+  if (typeof window.__tcfapi === 'function') {
+    if (tcfListenerRegistered) return;
+    tcfListenerRegistered = true;
+
+    window.__tcfapi('addEventListener', 2, (tcData, success) => {
+      if (success && tcData) {
+        if (tcData.eventStatus === 'tcloaded' || tcData.eventStatus === 'useractioncomplete') {
+          // If GDPR does not apply or Purpose 1 (storage/access on device) is consented
+          const consentGranted = tcData.gdprApplies === false ||
+            (tcData.purpose && tcData.purpose.consents && tcData.purpose.consents[1]);
+
+          if (consentGranted) {
+            loadAdSenseScript();
+          }
+        }
+      }
+    });
+  } else {
+    // If no CMP is present in this region, load AdSense normally after first interaction
+    loadAdSenseScript();
+  }
+}
+
+/**
+ * Verifies that the ad container is at least 150px away from interactive buttons
  */
 function isFarEnoughFromButtons(slotEl) {
+  if (!slotEl || typeof slotEl.getBoundingClientRect !== 'function') return true;
   const rect = slotEl.getBoundingClientRect();
   const buttons = document.querySelectorAll('button, .btn, [role="button"], a.btn');
   for (const btn of buttons) {
-    if (btn.offsetParent === null) continue; // Hidden button
+    if (btn.offsetParent === null) continue; // Skip hidden elements
     const bRect = btn.getBoundingClientRect();
     const vertDist = Math.min(
       Math.abs(rect.top - bRect.bottom),
       Math.abs(bRect.top - rect.bottom)
     );
-    // If elements overlap or are within 150px vertically
     if (vertDist < 150 && !(rect.bottom < bRect.top - 150 || rect.top > bRect.bottom + 150)) {
-      // Check if button is actually nearby
       return false;
     }
   }
@@ -91,18 +96,21 @@ function isFarEnoughFromButtons(slotEl) {
 }
 
 /**
- * Render an ad into a designated container
+ * Render an ad into an allowed placement container
+ * When CONFIG.ADS_ENABLED is false, this renders absolutely nothing.
  * @param {HTMLElement} container
  * @param {string} placementType
  */
 export function renderAd(container, placementType) {
-  if (!CONFIG.ADS_ENABLED) return;
+  // If ads are disabled in config, render nothing at all
+  if (!CONFIG.ADS_ENABLED || !container) return;
+
   if (!ALLOWED_PLACEMENTS.has(placementType)) {
     console.warn(`Ad placement rejected: "${placementType}" is not an allowed slot.`);
     return;
   }
 
-  // Ensure container is not inside a forbidden section
+  // Ensure container is not inside a forbidden game section
   for (const fid of FORBIDDEN_SECTIONS) {
     if (container.closest('#' + fid)) {
       console.warn(`Ad placement blocked: inside forbidden section #${fid}`);
@@ -110,9 +118,9 @@ export function renderAd(container, placementType) {
     }
   }
 
-  // Enforce 150px spacing rule
+  // Enforce >=150px spacing from buttons
   if (!isFarEnoughFromButtons(container)) {
-    console.warn(`Ad placement blocked: container is closer than 150px to an interactive button.`);
+    console.warn(`Ad placement blocked: container is closer than 150px to a button.`);
     return;
   }
 
@@ -122,10 +130,9 @@ export function renderAd(container, placementType) {
     case 'guide-mid': slotId = CONFIG.AD_SLOTS.GUIDE_MID; break;
     case 'guide-bot': slotId = CONFIG.AD_SLOTS.GUIDE_BOT; break;
     case 'home-bot':  slotId = CONFIG.AD_SLOTS.HOME_BOT; break;
-    case 'summary':   slotId = CONFIG.AD_SLOTS.SUMMARY_BOT; break;
   }
 
-  // Build ins element with fixed height container to prevent CLS
+  // Render ad container with reserved fixed height to prevent CLS
   container.innerHTML = `
     <div class="ad-notice">Advertisement</div>
     <ins class="adsbygoogle"
@@ -141,22 +148,27 @@ export function renderAd(container, placementType) {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     }
   } catch (err) {
-    // Suppress AdSense push errors
+    // Suppress AdSense push exceptions
   }
 }
 
 /**
- * Initialize ads manager and setup lazy-interaction listener
+ * Initializes the ads manager.
+ * If CONFIG.ADS_ENABLED is false, it returns immediately without setting any listeners.
  */
 export function initAds() {
   if (!CONFIG.ADS_ENABLED) return;
 
+  // Mark body as ads-active so CSS reveals reserved slot heights
+  document.body.classList.add('ads-active');
+
   function onFirstInteraction() {
+    if (userInteracted) return;
     userInteracted = true;
     window.removeEventListener('pointerdown', onFirstInteraction);
     window.removeEventListener('scroll', onFirstInteraction);
     window.removeEventListener('keydown', onFirstInteraction);
-    loadAdSenseScript();
+    handleConsentAndLoad();
   }
 
   window.addEventListener('pointerdown', onFirstInteraction, { passive: true });

@@ -1,5 +1,5 @@
 // sw.js - Service Worker for offline caching (Chapter 9.10)
-const V = 'naapu-v2';
+const V = 'naapu-v3';
 const FILES = [
   './',
   './index.html',
@@ -7,10 +7,12 @@ const FILES = [
   './assets/PatrickHand-Regular.ttf',
   './assets/icon-192.png',
   './assets/icon-512.png',
+  './assets/og-image.png',
   './css/base.css',
   './css/components.css',
   './css/screens.css',
   './js/config.js',
+  './js/strings.js',
   './js/ads.js',
   './js/analytics.js',
   './js/guide.js',

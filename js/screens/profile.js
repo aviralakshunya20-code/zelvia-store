@@ -6,6 +6,7 @@ import { levelFor } from '../score.js';
 import { $, icon, scribble } from '../ui.js';
 import { naapu } from '../chars.js';
 import { SFX } from '../fx.js';
+import { t } from '../strings.js';
 
 router.on('s-profile', render);
 
@@ -22,42 +23,42 @@ function render(){
 
   root.innerHTML = `
     <div class="screen-header">
-      <button class="btn alt" id="p-back" aria-label="Peeche jao">${icon('back')}</button>
-      <h1 class="h1">Profile & Stats</h1>
+      <button class="btn alt" id="p-back" aria-label="${t('back')}">${icon('back')}</button>
+      <h2 class="h1">${t('profileTitle')}</h2>
       <div style="width:48px;"></div>
     </div>
     ${scribble(120)}
     <div class="screen-content">
       <div class="card" style="text-align:center; padding:16px;">
         <div class="bob-wrap" style="margin-bottom:8px;">${naapu('idle')}</div>
-        <h2 class="display" style="font-size:32px;">Level ${lvl}: ${curT[1]}</h2>
+        <h3 class="display" style="font-size:32px;">${t('level')} ${lvl}: ${curT[1]}</h3>
         <div style="margin-top:12px;">
           <div style="display:flex; justify-content:space-between; margin-bottom:4px;" class="small">
-            <span>Progress</span><span>${s.xp} / ${nextXp} XP</span>
+            <span>${t('profileProgress')}</span><span>${s.xp} / ${nextXp} ${t('xp')}</span>
           </div>
           <div class="bar-track"><div class="bar-fill mustard" style="width:${pct}%;"></div></div>
         </div>
       </div>
       <div class="card" style="margin-top:12px;">
-        <h2 class="h2" style="margin-bottom:12px;">Aapka Record</h2>
+        <h3 class="h2" style="margin-bottom:12px;">${t('profileRecord')}</h3>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; font-size:18px;">
           <div class="card" style="padding:10px; text-align:center; background:var(--paper2);">
-            <div class="small">Total rounds:</div><div class="bignum" style="font-size:36px; line-height:36px;">${rounds}</div>
+            <div class="small">${t('profileTotalRounds')}</div><div class="bignum" style="font-size:36px; line-height:36px;">${rounds}</div>
           </div>
           <div class="card" style="padding:10px; text-align:center; background:var(--paper2);">
-            <div class="small">Average farq:</div><div class="bignum" style="font-size:36px; line-height:36px;">${avgErr}</div>
+            <div class="small">${t('profileAvgDiff')}</div><div class="bignum" style="font-size:36px; line-height:36px;">${avgErr}</div>
           </div>
           <div class="card" style="padding:10px; text-align:center; background:var(--paper2);">
-            <div class="small">Best round:</div><div class="bignum" style="font-size:36px; line-height:36px;">${s.stats.bestRoundPts || 0}</div>
+            <div class="small">${t('profileBestRound')}</div><div class="bignum" style="font-size:36px; line-height:36px;">${s.stats.bestRoundPts || 0}</div>
           </div>
           <div class="card" style="padding:10px; text-align:center; background:var(--paper2);">
-            <div class="small">Perfect (&ge;98):</div><div class="bignum" style="font-size:36px; line-height:36px;">${s.stats.perfects || 0}</div>
+            <div class="small">${t('profilePerfects')}</div><div class="bignum" style="font-size:36px; line-height:36px;">${s.stats.perfects || 0}</div>
           </div>
           <div class="card" style="padding:10px; text-align:center; background:var(--paper2);">
-            <div class="small">Daily streak:</div><div class="bignum" style="font-size:36px; line-height:36px;">${s.daily.streak || 0}</div>
+            <div class="small">${t('profileDailyStreak')}</div><div class="bignum" style="font-size:36px; line-height:36px;">${s.daily.streak || 0}</div>
           </div>
           <div class="card" style="padding:10px; text-align:center; background:var(--paper2);">
-            <div class="small">Best streak:</div><div class="bignum" style="font-size:36px; line-height:36px;">${s.daily.best || 0}</div>
+            <div class="small">${t('profileBestStreak')}</div><div class="bignum" style="font-size:36px; line-height:36px;">${s.daily.best || 0}</div>
           </div>
         </div>
       </div>

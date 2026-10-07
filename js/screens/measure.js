@@ -1,4 +1,4 @@
-// js/screens/measure.js - Bonus Measure Screen (Chapter 5.7, 6.2)
+// js/screens/measure.js - Bonus Measure Screen (Chapter 5.7, 6.2, Phase 2)
 import * as game from '../game.js';
 import * as state from '../state.js';
 import * as router from '../router.js';
@@ -6,6 +6,7 @@ import { $, scribble, toast, confirmModal } from '../ui.js';
 import { mountRuler } from '../ruler.js';
 import { maxMeasureMm } from '../calib.js';
 import { SFX } from '../fx.js';
+import { t, getLang } from '../strings.js';
 
 router.on('s-measure', render);
 let rulerInstance = null;
@@ -18,7 +19,7 @@ function render(){
 
   const root = $('#s-measure');
   if (window.visualViewport && Math.abs(window.visualViewport.scale - 1) > 0.01) {
-    toast('Zoom badla hai. Dobara calibrate karo.');
+    toast(t('calibZoomChanged'));
   }
 
   const isLandscape = window.innerWidth >= window.innerHeight;
@@ -27,24 +28,28 @@ function render(){
   const axisPx = isVertical ? window.innerHeight : Math.min(window.innerWidth, 480);
   const maxMm = Math.min(maxMeasureMm(pxPerMm, axisPx), Math.ceil(item.mm + 20));
 
+  const instructionText = getLang() === 'en'
+    ? `Align the real ${item.name} against the 0 line and drag marker:`
+    : `Asli ${item.name} ko ruler ke 0 se laga kar marker kheencho:`;
+
   root.innerHTML = `
     <div class="screen-header">
-      <button class="btn alt" id="m-quit" aria-label="Set chhodo">X</button>
-      <h1 class="h1" style="font-size:26px;">Bonus naap</h1>
+      <button class="btn alt" id="m-quit" aria-label="${t('quit')}">X</button>
+      <h1 class="h1" style="font-size:26px;">${t('measureTitle')}</h1>
     </div>
     ${scribble(120)}
-    <p class="body" style="text-align:center; margin-bottom:12px;">Asli ${item.name} ko ruler ke 0 se laga kar marker kheencho:</p>
+    <p class="body" style="text-align:center; margin-bottom:12px;">${instructionText}</p>
     <div class="ruler-container" id="m-ruler-box"></div>
     <div style="text-align:center; margin:12px 0;"><div class="bignum" id="m-readout">0.0 mm</div></div>
     <div class="bottom-bar grid-2">
-      <button class="btn alt" id="m-skip">Rehne do</button>
-      <button class="btn go" id="m-lock">Naap liya</button>
+      <button class="btn alt" id="m-skip">${t('skip')}</button>
+      <button class="btn go" id="m-lock">${t('measureDoneBtn')}</button>
     </div>
   `;
 
   $('#m-quit', root).onclick = () => {
     SFX.tap();
-    confirmModal('Set chhodna hai?', 'Ye set ka score nahi judega.', () => {
+    confirmModal(t('guessQuitConfirmTitle'), t('guessQuitConfirmMsg'), () => {
       game.abandonSet(); router.go('#home');
     });
   };

@@ -1,13 +1,12 @@
-// js/screens/summary.js - Set Summary Screen (Chapter 5.9, 6.6)
 import * as game from '../game.js';
 import * as state from '../state.js';
 import * as router from '../router.js';
 import { TITLES, WORLDS } from '../data.js';
-import { $, $$, icon, scribble } from '../ui.js';
+import { $, $$, icon, scribble, toast } from '../ui.js';
 import { naapu } from '../chars.js';
 import { SFX, haptic, confetti } from '../fx.js';
-import { renderAd } from '../ads.js';
 import { trackSetFinished } from '../analytics.js';
+import { t } from '../strings.js';
 
 router.on('s-summary', render);
 
@@ -38,7 +37,7 @@ function render(){
 
   root.innerHTML = `
     <div style="text-align:center; margin:12px 0 8px 0;">
-      <h1 class="display">Set khatam</h1>
+      <h2 class="display">${t('summaryTitle')}</h2>
       ${scribble(160)}
     </div>
     <div class="summary-stars-row" id="sum-stars">
@@ -49,35 +48,58 @@ function render(){
     <div style="text-align:center; margin:8px 0;"><div class="bob-wrap">${naapu(charExpr)}</div></div>
     <div class="card">
       <div class="summary-stats-box">
-        <div style="display:flex; justify-content:space-between;"><span>Total score:</span> <strong>${result.total} pts</strong></div>
-        <div style="display:flex; justify-content:space-between;"><span>Behtareen round:</span> <strong>${result.bestRoundItemName || '-'}</strong></div>
-        <div style="display:flex; justify-content:space-between;"><span>XP mila:</span> <strong style="color:var(--leaf);">+${result.xp} XP</strong></div>
+        <div style="display:flex; justify-content:space-between;"><span>${t('summaryTotal')}</span> <strong>${result.total} ${t('pts')}</strong></div>
+        <div style="display:flex; justify-content:space-between;"><span>${t('summaryBestRound')}</span> <strong>${result.bestRoundItemName || '-'}</strong></div>
+        <div style="display:flex; justify-content:space-between;"><span>${t('summaryXpGained')}</span> <strong style="color:var(--leaf);">+${result.xp} ${t('xp')}</strong></div>
       </div>
       <div class="xp-level-card">
         <div style="display:flex; justify-content:space-between; margin-bottom:4px;" class="small">
-          <strong>Level ${result.level}: ${currentTitle[1]}</strong>
-          <span>${s.xp} / ${nextXpNeeded} XP</span>
+          <strong>${t('level')} ${result.level}: ${currentTitle[1]}</strong>
+          <span>${s.xp} / ${nextXpNeeded} ${t('xp')}</span>
         </div>
         <div class="bar-track"><div class="bar-fill mustard" style="width:${levelProgress}%;"></div></div>
       </div>
-      ${newWorldName ? `<div class="stamp leaf" style="margin-top:12px; font-size:20px; width:100%; display:block;">Naya world khula: ${newWorldName}!</div>` : ''}
+      ${newWorldName ? `<div class="stamp leaf" style="margin-top:12px; font-size:20px; width:100%; display:block;">${t('summaryWorldUnlocked', { world: newWorldName })}</div>` : ''}
     </div>
-    <div class="ad-slot-wrapper spaced-from-buttons" style="margin-top:160px; margin-bottom:24px;">
-      <div class="ad-slot slot-rectangle" id="ad-summary-slot">
-        <span class="small" style="opacity:.5;">Advertisement Space (Inactive)</span>
-      </div>
+    <div style="margin-top:12px;">
+      <button class="btn" id="sum-share" style="width:100%; display:flex; align-items:center; justify-content:center; gap:8px;">
+        ${icon('star', { size: 20, filled: true })} ${t('summaryShareBtn')}
+      </button>
     </div>
-    <div class="bottom-bar grid-2">
-      <button class="btn alt" id="sum-home">Home</button>
-      <button class="btn go" id="sum-again">Dobara</button>
+    <div class="bottom-bar grid-2" style="margin-top:10px;">
+      <button class="btn alt" id="sum-home">${t('summaryHomeBtn')}</button>
+      <button class="btn go" id="sum-again">${t('summaryAgainBtn')}</button>
     </div>
   `;
 
-  const adSlot = $('#ad-summary-slot', root);
-  if (adSlot) renderAd(adSlot, 'summary');
-
   $('#sum-home', root).onclick = () => { SFX.tap(); router.go('#home'); };
   $('#sum-again', root).onclick = () => { SFX.tap(); game.startSet(result.worldId); router.go('#guess'); };
+
+  const shareBtn = $('#sum-share', root);
+  if (shareBtn) {
+    shareBtn.onclick = async () => {
+      SFX.tap();
+      const shareText = `I scored ${result.total} pts in ${WORLDS[curWIdx]?.name || 'Naapu'}! Can you guess real-world sizes? Play at https://onlinemeasurer.com/`;
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'Online Measurer (Naapu)',
+            text: shareText,
+            url: 'https://onlinemeasurer.com/'
+          });
+        } catch (err) {
+          // User aborted dialog or share error
+        }
+      } else {
+        try {
+          await navigator.clipboard.writeText(shareText);
+          toast(t('summaryCopiedToast'));
+        } catch (err) {
+          toast(t('summaryCopiedToast'));
+        }
+      }
+    };
+  }
 
   const starCards = $$('#sum-stars .card', root);
   for (let i = 0; i < result.stars; i++){

@@ -9,6 +9,7 @@ import { mountRuler } from '../ruler.js';
 import { naapu } from '../chars.js';
 import { SFX, haptic, confetti, shake } from '../fx.js';
 import { trackDailyDone } from '../analytics.js';
+import { t } from '../strings.js';
 
 router.on('s-daily', render);
 let rulerInstance = null;
@@ -16,7 +17,7 @@ let rulerInstance = null;
 function render(){
   const s = state.get(), root = $('#s-daily');
   if (!s.calib.pxPerMm) {
-    toast('Pehle calibrate karo');
+    toast(t('toolCalibNeededTitle'));
     return router.go('#home');
   }
 
@@ -29,16 +30,16 @@ function render(){
   if (s.daily.done[todayKey] && s.daily.done[todayKey].ok) {
     root.innerHTML = `
       <div class="screen-header">
-        <button class="btn alt" id="d-back" aria-label="Peeche jao">${icon('back')}</button>
-        <h1 class="h1" style="font-size:26px;">Aaj ka Hunt</h1>
-        <span class="chip">Streak ${s.daily.streak}</span>
+        <button class="btn alt" id="d-back" aria-label="${t('back')}">${icon('back')}</button>
+        <h2 class="h1" style="font-size:26px;">${t('dailyTitle')}</h2>
+        <span class="chip">${t('streak')} ${s.daily.streak}</span>
       </div>
       ${scribble(120)}
       <div class="card" style="text-align:center; padding:24px 16px;">
         <div class="bob-wrap" style="margin-bottom:12px;">${naapu('happy')}</div>
-        <div class="stamp leaf" style="margin-bottom:16px;">AAJ KA HO GAYA</div>
-        <p class="body">Mil gaya! Aaj ki streak: ${s.daily.streak}</p>
-        <p class="small" style="margin-top:8px;">Kal phir aana!</p>
+        <div class="stamp leaf" style="margin-bottom:16px;">${t('dailyAlreadyDone')}</div>
+        <p class="body">${t('dailyStreakSuccess', { streak: s.daily.streak })}</p>
+        <p class="small" style="margin-top:8px;">${t('dailyComeBackTomorrow')}</p>
       </div>
     `;
     $('#d-back', root).onclick = () => { SFX.tap(); router.go('#home'); };
@@ -53,15 +54,15 @@ function render(){
 
   root.innerHTML = `
     <div class="screen-header">
-      <button class="btn alt" id="d-back" aria-label="Peeche jao">${icon('back')}</button>
-      <h1 class="h1" style="font-size:26px;">Aaj ka Hunt</h1>
-      <span class="chip">Streak ${s.daily.streak}</span>
+      <button class="btn alt" id="d-back" aria-label="${t('back')}">${icon('back')}</button>
+      <h2 class="h1" style="font-size:26px;">${t('dailyTitle')}</h2>
+      <span class="chip">${t('streak')} ${s.daily.streak}</span>
     </div>
     ${scribble(120)}
     <div class="card daily-target-box" id="d-card">
-      <p class="body">Kuch dhoondo jo lagbhag:</p>
+      <p class="body">${t('dailyTargetMsg')}</p>
       <div class="bignum" style="margin:8px 0;">${fmtMm(targetMm)}</div>
-      <p class="small">(&plusmn; ${tolMm.toFixed(2)} mm chalega)</p>
+      <p class="small">(&plusmn; ${tolMm.toFixed(2)} mm)</p>
     </div>
     <div style="text-align:center; margin:8px 0;">
       <div class="bob-wrap" id="d-char">${naapu('idle')}</div>
@@ -70,7 +71,7 @@ function render(){
     <div class="ruler-container" id="d-ruler-box"></div>
     <div style="text-align:center; margin:8px 0;"><div class="bignum" id="d-readout">0.0 mm</div></div>
     <div class="bottom-bar center">
-      <button class="btn go" id="d-submit" style="width:100%;">Naap liya</button>
+      <button class="btn go" id="d-submit" style="width:100%;">${t('dailySubmitBtn')}</button>
     </div>
   `;
 
@@ -95,14 +96,14 @@ function render(){
       trackDailyDone(val, s.daily.streak);
       SFX.great(); haptic('great'); confetti(36);
       charWrap.innerHTML = naapu('happy');
-      msgEl.textContent = `Mil gaya! Streak: ${s.daily.streak}`;
+      msgEl.textContent = t('dailyStreakSuccess', { streak: s.daily.streak });
       msgEl.style.color = 'var(--leaf)';
       setTimeout(render, 1200);
     } else {
       SFX.bad(); haptic('bad'); shake(targetCard);
       charWrap.innerHTML = naapu('sad');
       const diff = Math.abs(val - targetMm);
-      msgEl.textContent = `Door the (${diff.toFixed(1)} mm ka farq). Dobara try karo!`;
+      msgEl.textContent = t('dailyStreakMiss', { diff: diff.toFixed(1) });
       msgEl.style.color = 'var(--tomato)';
     }
   };

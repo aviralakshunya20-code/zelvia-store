@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#F6EFDC">
-  <title>Privacy Policy | Naapu & OnlineMeasurer</title>
-  <meta name="description" content="Privacy Policy for Naapu and OnlineMeasurer. Learn how we use browser localStorage, third-party advertising cookies, and how to opt out of personalized ads.">
+  <title>Privacy Policy | OnlineMeasurer &amp; Naapu</title>
+  <meta name="description" content="Privacy Policy for OnlineMeasurer.com and Naapu. Detailed disclosure of our privacy-friendly analytics, browser localStorage retention, Google AdSense cookies, GDPR rights, and CCPA compliance.">
   <link rel="canonical" href="https://onlinemeasurer.com/privacy/">
-  <meta property="og:title" content="Privacy Policy | Naapu & OnlineMeasurer">
-  <meta property="og:description" content="Transparent privacy policy covering local storage, third-party advertising cookies, and opt-out choices.">
+  <meta property="og:title" content="Privacy Policy | OnlineMeasurer &amp; Naapu">
+  <meta property="og:description" content="Transparent privacy policy covering local storage retention, privacy-first analytics, GDPR &amp; CCPA rights, and advertising consent.">
   <meta property="og:url" content="https://onlinemeasurer.com/privacy/">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://onlinemeasurer.com/assets/icon-512.png">
+  <meta property="og:image" content="https://onlinemeasurer.com/assets/og-image.png">
   <link rel="manifest" href="../manifest.webmanifest">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/components.css">
@@ -47,77 +47,99 @@
 
     <div class="article-body">
       <p>
-        At <strong>OnlineMeasurer.com</strong> (producers of the <strong>Naapu</strong> measurement game and digital ruler tool), your privacy is our top priority. This Privacy Policy discloses what data is generated when you access our website, how we utilize client-side storage technologies, and how third-party advertising vendors utilize cookies.
+        At <strong>OnlineMeasurer.com</strong> (producers of the <strong>Naapu</strong> measurement tool and educational size guessing game), we believe that utility websites should respect human privacy by design. We build tools that do not require account registration, do not collect personal dossiers, and operate client-side whenever possible.
       </p>
 
       <h2>1. Information We Do Not Collect</h2>
       <p>
-        Unlike many web services, OnlineMeasurer does not require you to create an account, log in, or provide your real name, address, or telephone number. We do not maintain a server-side relational database of individual gameplay sessions or personal profiles.
+        OnlineMeasurer does not require you to provide a name, email address, password, phone number, or billing information. We do not maintain user databases with personal accounts, and we do not track your activity across unrelated third-party websites.
       </p>
 
-      <h2>2. Use of Browser LocalStorage</h2>
+      <h2>2. Client-Side Browser Storage &amp; Data Retention</h2>
       <p>
-        To deliver a seamless offline-capable utility without requiring remote server authentication, Naapu stores operational parameters directly inside your browser's private <code>window.localStorage</code>. This data includes:
+        To deliver offline functionality and save your gameplay achievements without requiring accounts, our tools use standard browser <code>window.localStorage</code>. This data includes:
       </p>
       <ul>
-        <li><strong>Screen Calibration (<code>naapu_calib</code>):</strong> Stores your display's calculated pixels-per-millimeter factor (<code>pxPerMm</code>) so you do not have to recalibrate on every visit.</li>
-        <li><strong>Game Progress & Records (<code>naapu_save</code>):</strong> Saves your unlocked worlds, stars earned, experience points (XP), player rank, and daily challenge streak count.</li>
-        <li><strong>Audio & Vibration Preferences:</strong> Remembers whether you have toggled sound synthesizer effects or haptic feedback on or off.</li>
-        <li><strong>Ad Consent Status:</strong> Records whether you have accepted or customized advertising consent where applicable.</li>
+        <li><strong>Display Calibration (<code>naapu_calib</code>):</strong> Your screen's calculated pixels-per-millimeter scale factor so you do not have to recalibrate on every visit.</li>
+        <li><strong>Game Progress &amp; Records (<code>naapu_save</code>):</strong> Unlocked worlds, stars, experience points (XP), player rank, and daily hunt streaks.</li>
+        <li><strong>Settings &amp; Preferences:</strong> Sound effects (synthesizer audio), haptic feedback, default measurement units (mm, cm, in), and language selection (English or Hinglish).</li>
       </ul>
       <p>
-        <strong>Crucial Note:</strong> All <code>localStorage</code> items remain exclusively on your device. They are never transmitted to our web servers, never sold, and can be cleared instantly at any time by clearing your browser cache or site data.
+        <strong>Retention Period:</strong> All client data resides exclusively in your local device storage. <strong>Data is retained in localStorage indefinitely until you explicitly clear your browser cache/site data or click "Reset All Progress" in the in-game Settings menu.</strong> This data is never sent to our servers.
       </p>
 
-      <h2>3. Third-Party Advertising & Google AdSense Cookies</h2>
+      <h2>3. Privacy-Friendly Analytics Provider</h2>
       <p>
-        To keep our tools free for users worldwide, OnlineMeasurer.com works with third-party advertising partners, notably <strong>Google AdSense</strong>.
+        OnlineMeasurer uses a lightweight, privacy-focused analytics engine (<strong>OnlineMeasurer Privacy Telemetry</strong>, designed to operate in compliance with modern privacy standards like Cloudflare Web Analytics and Plausible).
       </p>
       <ul>
-        <li>Google, as a third-party vendor, uses cookies and web beacons to serve advertisements on this website.</li>
-        <li>Google's use of advertising cookies (including the DoubleClick cookie) enables it and its network partners to serve ads to users based on their prior visits to this site and other websites across the Internet.</li>
-        <li>Third-party ad networks or vendors may also use cookies, JavaScript, or web beacons to gauge the effectiveness of their advertisements and to personalize advertising content. OnlineMeasurer does not have direct access to or control over cookies placed by third-party advertisers.</li>
+        <li><strong>What is recorded:</strong> Aggregate, anonymous application events including <code>page_view</code>, <code>set_started</code>, <code>set_finished</code>, <code>ruler_used</code>, <code>fit_used</code>, and <code>daily_done</code>.</li>
+        <li><strong>What is NOT recorded:</strong> No personal data, no IP addresses, no user IDs, no browser fingerprinting, and no cross-site advertising tracking cookies.</li>
+        <li><strong>Purpose:</strong> Aggregate telemetry is used strictly to count feature usage, detect technical performance bottlenecks, and refine educational game balance.</li>
       </ul>
 
-      <h2>4. How to Opt Out of Personalized Advertising</h2>
+      <h2>4. Advertising Cookies &amp; Google AdSense</h2>
       <p>
-        You have the complete freedom to opt out of personalized (interest-based) advertising at any time:
+        To keep our tools free and accessible to everyone, we display advertisements provided by <strong>Google AdSense</strong> on select static articles and guides.
+      </p>
+      <ul>
+        <li><strong>Consent Requirement:</strong> In regions governed by data privacy regulations requiring consent (such as the European Economic Area, United Kingdom, and Switzerland under the IAB Europe TCF v2.2 framework), <strong>advertising cookies and tracking scripts from Google load ONLY AFTER you grant explicit consent</strong> through Google's Certified Consent Management Platform (CMP).</li>
+        <li><strong>Where Ads Appear:</strong> Advertisements appear solely on informational guide articles and the desktop home landing section. No advertisements ever appear inside active game screens, calibration flows, or summary scorecards.</li>
+        <li><strong>Third-Party Cookies:</strong> When consent is granted, Google uses cookies (such as DoubleClick) to serve ads based on visits to this and other websites.</li>
+      </ul>
+
+      <h2>5. How to Opt Out of Personalized Advertising</h2>
+      <p>
+        You have multiple easy avenues to control or disable personalized advertising:
       </p>
       <ul>
         <li>
-          <strong>Google Ads Settings:</strong> You can manage or disable personalized advertising served by Google by visiting the official <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings Page</a>.
+          <strong>Google Ads Settings:</strong> Manage or disable personalized Google ads at <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.
         </li>
         <li>
-          <strong>Network Advertising Initiative & Digital Advertising Alliance:</strong> You can opt out of a wide array of third-party vendor cookies across the web by visiting <a href="http://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">AboutAds.info Choices</a> or <a href="https://www.youronlinechoices.com/" target="_blank" rel="noopener noreferrer">Your Online Choices</a> (for European visitors).
+          <strong>Industry Opt-Out Portals:</strong>
+          Visit the <a href="https://optout.aboutads.info/" target="_blank" rel="noopener noreferrer">Digital Advertising Alliance (DAA) WebChoices</a> or the <a href="https://www.youronlinechoices.eu/" target="_blank" rel="noopener noreferrer">European Interactive Digital Advertising Alliance (EDAA)</a>.
         </li>
         <li>
-          <strong>Browser Cookie Controls:</strong> You can configure your browser to reject all cookies, alert you when a cookie is placed, or clear existing cookies upon browser close. Please refer to your browser's help documentation (Chrome, Safari, Firefox, Edge).
+          <strong>Browser Controls:</strong> You can block third-party cookies or enable "Do Not Track" / Global Privacy Control (GPC) signals in your browser settings.
         </li>
       </ul>
 
-      <h2>5. Web Analytics</h2>
+      <h2>6. European Privacy Rights (GDPR &amp; UK GDPR)</h2>
       <p>
-        If lightweight web analytics are active, they operate in strict privacy-friendly mode: recording aggregate non-identifiable events (such as page views or tool usage milestones) without tracking unique personal identities across domains, without fingerprinting, and without storing cross-site tracking cookies.
+        If you reside in the European Economic Area (EEA) or United Kingdom, the General Data Protection Regulation (GDPR) affords you specific rights regarding your personal data:
+      </p>
+      <ul>
+        <li><strong>Right of Access &amp; Portability:</strong> Because we do not store personal profiles on our servers, your data is stored locally on your device. You can view all saved values directly in your browser's Developer Tools (Application &rarr; Local Storage).</li>
+        <li><strong>Right to Erasure ("Right to be Forgotten"):</strong> You can erase all data instantly by clicking "Reset All Progress" in game Settings or by clearing your browser's site data for onlinemeasurer.com.</li>
+        <li><strong>Right to Withdraw Consent:</strong> You can modify or withdraw your cookie consent at any time via the consent revocation link or by clearing stored cookies in your browser.</li>
+        <li><strong>Right to Lodge a Complaint:</strong> You have the right to lodge a complaint with your local Data Protection Authority (DPA) regarding our processing activities.</li>
+      </ul>
+
+      <h2>7. California Consumer Privacy Act (CCPA &amp; CPRA)</h2>
+      <p>
+        Under the California Consumer Privacy Act as amended by the California Privacy Rights Act (CPRA), California residents have rights regarding their personal information:
+      </p>
+      <ul>
+        <li><strong>Notice of Collection:</strong> We do not collect identifiers, commercial information, biometric information, or geolocation data from visitors.</li>
+        <li><strong>No Sale of Personal Information:</strong> OnlineMeasurer.com <strong>does not sell and will never sell your personal information</strong> to third parties for monetary or other consideration.</li>
+        <li><strong>Right to Delete:</strong> You can delete all locally held game data and ruler calibration at any time via your browser settings or our in-game Reset button.</li>
+        <li><strong>Non-Discrimination:</strong> We will never discriminate against you, deny access, or charge higher fees because you exercised your CCPA rights.</li>
+      </ul>
+
+      <h2>8. Children's Online Privacy Protection Act (COPPA)</h2>
+      <p>
+        OnlineMeasurer is an educational utility suitable for general audiences. We do not knowingly collect personal information from children under the age of 13.
       </p>
 
-      <h2>6. Children's Online Privacy Protection (COPPA)</h2>
+      <h2>9. Contact Us</h2>
       <p>
-        OnlineMeasurer is designed for general audiences and educational measurement practice. We do not knowingly collect or solicit personally identifiable information from children under the age of 13.
-      </p>
-
-      <h2>7. Updates to This Policy</h2>
-      <p>
-        We may update this Privacy Policy from time to time to reflect operational, legal, or regulatory enhancements. Any changes will be posted immediately on this page with an updated Effective Date.
-      </p>
-
-      <h2>8. Contact Us Regarding Privacy</h2>
-      <p>
-        If you have questions or concerns regarding our privacy practices, local storage implementation, or advertising policies, please reach out to us at:
+        If you have any questions about this Privacy Policy, your rights, or data handling practices, please contact us at:
       </p>
       <p style="margin-top:12px;">
         <strong>Email:</strong> <a href="mailto:contact@onlinemeasurer.com">contact@onlinemeasurer.com</a>
         <br>
-        <strong>Website:</strong> <a href="/contact/">OnlineMeasurer Contact Page</a>
+        <strong>Web Form:</strong> <a href="/contact/">OnlineMeasurer Contact Page</a>
       </p>
     </div>
   </main>
@@ -127,11 +149,14 @@
     <div class="footer-inner">
       <div class="footer-grid">
         <div class="footer-col">
-          <h3>Tools & Game</h3>
+          <h3>Tools &amp; Game</h3>
           <ul>
             <li><a href="/">Home Hub</a></li>
             <li><a href="/play/">Play Game</a></li>
             <li><a href="/ruler/">Online Screen Ruler</a></li>
+            <li><a href="/ruler/inches/">Inch Ruler (in)</a></li>
+            <li><a href="/ruler/cm/">Centimeter Ruler (cm)</a></li>
+            <li><a href="/ruler/mm/">Millimeter Ruler (mm)</a></li>
             <li><a href="/fit-checker/">2D Fit Checker</a></li>
             <li><a href="/daily/">Daily Hunt Challenge</a></li>
           </ul>
@@ -140,14 +165,17 @@
           <h3>Measurement Guides</h3>
           <ul>
             <li><a href="/guides/calibrate-online-ruler/">Calibrate Screen Ruler</a></li>
+            <li><a href="/guides/credit-card-size/">Credit Card Dimensions</a></li>
+            <li><a href="/guides/us-coin-sizes/">US Coin Sizes Reference</a></li>
+            <li><a href="/guides/inches-to-cm-chart/">Inches to CM Chart</a></li>
             <li><a href="/guides/paper-sizes/">Paper Sizes Reference</a></li>
-            <li><a href="/guides/coin-and-note-sizes-india/">Indian Coin & Note Sizes</a></li>
+            <li><a href="/guides/coin-and-note-sizes-india/">Indian Coin &amp; Note Sizes</a></li>
             <li><a href="/guides/everyday-object-sizes/">Everyday Object Sizes</a></li>
             <li><a href="/guides/how-to-measure-if-it-fits/">How to Measure If It Fits</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h3>Trust & Legal</h3>
+          <h3>Trust &amp; Legal</h3>
           <ul>
             <li><a href="/about/">About Us</a></li>
             <li><a href="/contact/">Contact Us</a></li>

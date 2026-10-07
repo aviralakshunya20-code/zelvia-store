@@ -7,6 +7,7 @@ import { $, icon, scribble } from '../ui.js';
 import { gajBaba } from '../chars.js';
 import { SFX } from '../fx.js';
 import { trackSetStarted } from '../analytics.js';
+import { t } from '../strings.js';
 
 router.on('s-world', render);
 
@@ -23,11 +24,11 @@ function render(worldId = 'w1'){
 
   root.innerHTML = `
     <div class="screen-header">
-      <button class="btn alt" id="w-back" aria-label="Peeche jao">${icon('back')}</button>
+      <button class="btn alt" id="w-back" aria-label="${t('back')}">${icon('back')}</button>
       <div style="width:48px;"></div>
     </div>
     <div style="margin-bottom:12px;">
-      <h1 class="h1">${world.name}</h1>
+      <h2 class="h1">${world.name}</h2>
       ${scribble(140)}
       <p class="small">${world.about}</p>
     </div>
@@ -38,16 +39,16 @@ function render(worldId = 'w1'){
     ` : ''}
     <div class="card" style="margin-bottom:12px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div class="body">Best: ${wData.best > 0 ? wData.best + ' pts' : 'Nahi khela abhi'}</div>
+        <div class="body">Best: ${wData.best > 0 ? wData.best + ' ' + t('pts') : '-'}</div>
         <div style="display:flex; gap:4px;">${starsHtml}</div>
       </div>
     </div>
     <div class="card">
-      <h2 class="h2" style="margin-bottom:8px;">5 Items is set mein:</h2>
+      <h3 class="h2" style="margin-bottom:8px;">${t('worldItemsInSet')}</h3>
       <ul class="world-items-list">${itemsHtml}</ul>
     </div>
     <div class="bottom-bar center">
-      <button class="btn go" id="w-play" style="width:100%;">Khelo</button>
+      <button class="btn go" id="w-play" style="width:100%;">${t('worldPlayBtn')}</button>
     </div>
   `;
 

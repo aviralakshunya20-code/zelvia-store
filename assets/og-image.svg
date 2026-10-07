@@ -1,0 +1,211 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <!-- Graph Grid Pattern -->
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#2B2118" stroke-width="0.75" stroke-opacity="0.08"/>
+    </pattern>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&amp;family=Fredoka:wght@600;700&amp;display=swap');
+      .font-title { font-family: 'Fredoka', 'Patrick Hand', 'Comic Sans MS', sans-serif; font-weight: 700; }
+      .font-hand { font-family: 'Patrick Hand', cursive, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Background Paper -->
+  <rect width="1200" height="630" fill="#F6EFDC"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Outer Hand-Drawn Card Shadow -->
+  <rect x="46" y="46" width="1116" height="546" rx="8" fill="#2B2118"/>
+  <!-- Outer Card Main -->
+  <rect x="40" y="40" width="1116" height="546" rx="8" fill="#FFFDF8" stroke="#2B2118" stroke-width="4.5"/>
+
+  <!-- Top Badge -->
+  <g transform="translate(80, 75)">
+    <rect x="0" y="0" width="340" height="38" rx="6" fill="#3A7D44" stroke="#2B2118" stroke-width="3"/>
+    <text x="170" y="25" fill="#FFFFFF" text-anchor="middle" font-size="18" font-family="'Fredoka', sans-serif" font-weight="600" letter-spacing="0.5">
+      ★ CALIBRATED SCREEN RULER
+    </text>
+  </g>
+
+  <!-- Brand & Title -->
+  <text x="80" y="165" fill="#2B2118" font-size="64" class="font-title">
+    Online Measurer <tspan fill="#E4572E">(Naapu)</tspan>
+  </text>
+
+  <!-- Scribble underline -->
+  <path d="M 80 185 Q 260 178, 480 186 T 840 183" fill="none" stroke="#E4572E" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Subtitle -->
+  <text x="80" y="228" fill="#2B2118" font-size="28" class="font-hand">
+    Accurate 1:1 screen ruler calibrated with any bank card &amp; size guessing game
+  </text>
+
+  <!-- Ruler Graphic (820px wide, 110px high) -->
+  <g transform="translate(80, 260)">
+    <!-- Ruler Shadow -->
+    <rect x="6" y="6" width="840" height="110" rx="6" fill="#2B2118"/>
+    <!-- Ruler Body -->
+    <rect x="0" y="0" width="840" height="110" rx="6" fill="#FBF5E5" stroke="#2B2118" stroke-width="4"/>
+
+    <!-- Ruler Ticks & Markings (cm: every 50px = 1cm, mm: every 5px) -->
+    <!-- Loop-like ticks -->
+    <!-- 0 to 16 cm -->
+    <!-- cm 0 -->
+    <line x1="20" y1="0" x2="20" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="20" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">0</text>
+
+    <!-- cm 1 -->
+    <line x1="70" y1="0" x2="70" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="70" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">1</text>
+    <line x1="45" y1="0" x2="45" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 2 -->
+    <line x1="120" y1="0" x2="120" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="120" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">2</text>
+    <line x1="95" y1="0" x2="95" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 3 -->
+    <line x1="170" y1="0" x2="170" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="170" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">3</text>
+    <line x1="145" y1="0" x2="145" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 4 -->
+    <line x1="220" y1="0" x2="220" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="220" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">4</text>
+    <line x1="195" y1="0" x2="195" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 5 -->
+    <line x1="270" y1="0" x2="270" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="270" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">5</text>
+    <line x1="245" y1="0" x2="245" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 6 -->
+    <line x1="320" y1="0" x2="320" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="320" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">6</text>
+    <line x1="295" y1="0" x2="295" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 7 -->
+    <line x1="370" y1="0" x2="370" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="370" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">7</text>
+    <line x1="345" y1="0" x2="345" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 8 -->
+    <line x1="420" y1="0" x2="420" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="420" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">8</text>
+    <line x1="395" y1="0" x2="395" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 9 -->
+    <line x1="470" y1="0" x2="470" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="470" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">9</text>
+    <line x1="445" y1="0" x2="445" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 10 -->
+    <line x1="520" y1="0" x2="520" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="520" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">10</text>
+    <line x1="495" y1="0" x2="495" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 11 -->
+    <line x1="570" y1="0" x2="570" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="570" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">11</text>
+    <line x1="545" y1="0" x2="545" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 12 -->
+    <line x1="620" y1="0" x2="620" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="620" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">12</text>
+    <line x1="595" y1="0" x2="595" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 13 -->
+    <line x1="670" y1="0" x2="670" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="670" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">13</text>
+    <line x1="645" y1="0" x2="645" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 14 -->
+    <line x1="720" y1="0" x2="720" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="720" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">14</text>
+    <line x1="695" y1="0" x2="695" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 15 -->
+    <line x1="770" y1="0" x2="770" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="770" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">15</text>
+    <line x1="745" y1="0" x2="745" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- cm 16 -->
+    <line x1="820" y1="0" x2="820" y2="46" stroke="#2B2118" stroke-width="3"/>
+    <text x="820" y="70" text-anchor="middle" font-size="20" class="font-title" fill="#2B2118">16</text>
+    <line x1="795" y1="0" x2="795" y2="30" stroke="#2B2118" stroke-width="2"/>
+
+    <!-- Unit Label -->
+    <text x="420" y="98" text-anchor="middle" font-size="16" class="font-title" fill="#2B2118" opacity="0.6">CENTIMETERS (cm)</text>
+  </g>
+
+  <!-- Naapu Mascot on the Right -->
+  <g transform="translate(970, 240)">
+    <!-- Shadow -->
+    <ellipse cx="65" cy="195" rx="55" ry="12" fill="#2B2118" opacity="0.25"/>
+
+    <!-- Body -->
+    <rect x="15" y="40" width="100" height="130" rx="20" fill="#F3B73B" stroke="#2B2118" stroke-width="4.5"/>
+
+    <!-- Ruler Lines on Body -->
+    <line x1="15" y1="65" x2="45" y2="65" stroke="#2B2118" stroke-width="3"/>
+    <line x1="15" y1="85" x2="35" y2="85" stroke="#2B2118" stroke-width="2.5"/>
+    <line x1="15" y1="105" x2="50" y2="105" stroke="#2B2118" stroke-width="3"/>
+    <line x1="15" y1="125" x2="35" y2="125" stroke="#2B2118" stroke-width="2.5"/>
+    <line x1="15" y1="145" x2="45" y2="145" stroke="#2B2118" stroke-width="3"/>
+
+    <!-- Eyes -->
+    <circle cx="55" cy="80" r="5" fill="#2B2118"/>
+    <circle cx="85" cy="80" r="5" fill="#2B2118"/>
+
+    <!-- Big Happy Smile -->
+    <path d="M 52 105 Q 70 125, 88 105" fill="none" stroke="#2B2118" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Cute Blush -->
+    <ellipse cx="44" cy="98" rx="6" ry="4" fill="#E4572E" opacity="0.4"/>
+    <ellipse cx="96" cy="98" rx="6" ry="4" fill="#E4572E" opacity="0.4"/>
+
+    <!-- Legs -->
+    <line x1="45" y1="170" x2="45" y2="195" stroke="#2B2118" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="85" y1="170" x2="85" y2="195" stroke="#2B2118" stroke-width="4.5" stroke-linecap="round"/>
+
+    <!-- Tiny Feet -->
+    <path d="M 38 195 L 50 195" stroke="#2B2118" stroke-width="5" stroke-linecap="round"/>
+    <path d="M 78 195 L 90 195" stroke="#2B2118" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Feature Pills Bottom -->
+  <g transform="translate(80, 420)">
+    <!-- Pill 1: Inches, CM, MM -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="220" height="48" rx="6" fill="#FFF8E7" stroke="#2B2118" stroke-width="3"/>
+      <text x="110" y="31" text-anchor="middle" class="font-title" font-size="20" fill="#2B2118">📏 Inches • CM • MM</text>
+    </g>
+
+    <!-- Pill 2: 2D Fit Checker -->
+    <g transform="translate(240, 0)">
+      <rect x="0" y="0" width="220" height="48" rx="6" fill="#FFF8E7" stroke="#2B2118" stroke-width="3"/>
+      <text x="110" y="31" text-anchor="middle" class="font-title" font-size="20" fill="#2B2118">📦 2D Fit Checker</text>
+    </g>
+
+    <!-- Pill 3: 8 Size Guess Worlds -->
+    <g transform="translate(480, 0)">
+      <rect x="0" y="0" width="240" height="48" rx="6" fill="#FFF8E7" stroke="#2B2118" stroke-width="3"/>
+      <text x="120" y="31" text-anchor="middle" class="font-title" font-size="20" fill="#2B2118">🎮 8 Guessing Worlds</text>
+    </g>
+
+    <!-- Pill 4: Zero External Libs -->
+    <g transform="translate(740, 0)">
+      <rect x="0" y="0" width="180" height="48" rx="6" fill="#E4572E" stroke="#2B2118" stroke-width="3"/>
+      <text x="90" y="31" text-anchor="middle" class="font-title" font-size="20" fill="#FFFFFF">100% Free</text>
+    </g>
+  </g>
+
+  <!-- Bottom Brand URL -->
+  <text x="80" y="525" class="font-title" font-size="24" fill="#2B2118">
+    onlinemeasurer.com
+  </text>
+  <text x="1110" y="525" text-anchor="end" class="font-hand" font-size="24" fill="#2B2118" opacity="0.75">
+    Hand-made web tools • No app download needed
+  </text>
+</svg>

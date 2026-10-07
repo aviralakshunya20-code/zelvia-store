@@ -7,6 +7,7 @@ import { maxMeasureMm } from '../calib.js';
 import { fromMm } from '../units.js';
 import { SFX } from '../fx.js';
 import { trackRulerUsed } from '../analytics.js';
+import { t } from '../strings.js';
 
 router.on('s-tool', render);
 let rulerInstance = null;
@@ -18,15 +19,15 @@ function render(){
   if (!s.calib.pxPerMm) {
     root.innerHTML = `
       <div class="screen-header">
-        <button class="btn alt" id="t-back" aria-label="Peeche jao">${icon('back')}</button>
-        <h1 class="h1">Ruler Tool</h1><div style="width:48px;"></div>
+        <button class="btn alt" id="t-back" aria-label="${t('back')}">${icon('back')}</button>
+        <h2 class="h1">${t('toolTitle')}</h2><div style="width:48px;"></div>
       </div>
       ${scribble(110)}
       <div class="card" style="text-align:center; padding:24px 16px;">
         <div style="margin-bottom:12px;">${icon('lock', { size: 36 })}</div>
-        <h2 class="h2">Pehle calibrate karo</h2>
-        <p class="body" style="margin:8px 0 16px 0;">Ruler chalane ke liye pehle screen ko credit/ATM card se calibrate karo.</p>
-        <button class="btn go" id="t-go-calib">Calibrate karein</button>
+        <h3 class="h2">${t('toolCalibNeededTitle')}</h3>
+        <p class="body" style="margin:8px 0 16px 0;">${t('toolCalibNeededDesc')}</p>
+        <button class="btn go" id="t-go-calib">${t('toolCalibBtn')}</button>
       </div>
     `;
     $('#t-back', root).onclick = () => { SFX.tap(); router.go('#home'); };
@@ -35,18 +36,22 @@ function render(){
   }
 
   if (window.visualViewport && Math.abs(window.visualViewport.scale - 1) > 0.01) {
-    toast('Zoom badla hai. Dobara calibrate karo.');
+    toast(t('calibZoomChanged'));
   }
 
   let unit = s.settings.units || 'cm';
+  if (window.location.pathname.includes('/ruler/inches')) unit = 'in';
+  else if (window.location.pathname.includes('/ruler/cm')) unit = 'cm';
+  else if (window.location.pathname.includes('/ruler/mm')) unit = 'mm';
+
   const pxPerMm = s.calib.pxPerMm;
   const isLandscape = window.innerWidth >= window.innerHeight;
   let isVertical = !isLandscape;
 
   root.innerHTML = `
     <div class="screen-header">
-      <button class="btn alt" id="t-back" aria-label="Peeche jao">${icon('back')}</button>
-      <h1 class="h1">Ruler Tool</h1><div style="width:48px;"></div>
+      <button class="btn alt" id="t-back" aria-label="${t('back')}">${icon('back')}</button>
+      <h2 class="h1">${t('toolTitle')}</h2><div style="width:48px;"></div>
     </div>
     ${scribble(110)}
     <div class="screen-content">
@@ -61,7 +66,7 @@ function render(){
       <div class="ruler-container" id="t-ruler-box"></div>
       <div style="text-align:center; margin:8px 0;"><div class="bignum" id="t-readout">0 mm</div></div>
       <div class="bottom-bar center">
-        <button class="btn alt" id="t-recalib" style="width:100%;">Dobara calibrate karein</button>
+        <button class="btn alt" id="t-recalib" style="width:100%;">${t('toolRecalibBtn')}</button>
       </div>
     </div>
   `;

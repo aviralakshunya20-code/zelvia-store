@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ad Placement & Consent Verification Tests</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body style="padding:24px; font-family:sans-serif;">
+  <h1>Ad Placement & Consent Unit Tests</h1>
+  <div id="results" style="font-family:monospace; line-height:1.6; white-space:pre-wrap;">Running tests...</div>
+
+  <div id="test-sandbox" style="margin-top:20px;">
+    <div id="valid-guide-container" class="ad-slot slot-leaderboard" style="min-height:90px;"></div>
+    <div style="height:200px;"></div>
+    <div id="s-summary"><div id="forbidden-summary-container"></div></div>
+    <div id="s-guess"><div id="forbidden-guess-container"></div></div>
+    <div id="s-tool"><div id="forbidden-tool-container"></div></div>
+    <div style="height:200px;"></div>
+    <button id="near-btn" class="btn" style="margin-top:10px;">Button</button>
+    <div id="too-close-container" style="margin-top:10px;"></div>
+  </div>
+
+  <script type="module">
+    import { CONFIG } from './js/config.js';
+    import { renderAd, initAds } from './js/ads.js';
+
+    const out = document.getElementById('results');
+    const logs = [];
+    function assert(desc, condition) {
+      if (condition) logs.push('PASS: ' + desc);
+      else logs.push('FAIL: ' + desc);
+    }
+
+    // TEST 1: When ADS_ENABLED is false, renderAd does not modify container
+    const validCont = document.getElementById('valid-guide-container');
+    CONFIG.ADS_ENABLED = false;
+    renderAd(validCont, 'guide-top');
+    assert('When ADS_ENABLED is false, container remains empty', validCont.innerHTML === '');
+
+    // TEST 2: When ADS_ENABLED is false, initAds does not add ads-active to body
+    initAds();
+    assert('When ADS_ENABLED is false, body does NOT have ads-active class', !document.body.classList.contains('ads-active'));
+
+    // TEST 3: Temporary enable to test placement restrictions
+    CONFIG.ADS_ENABLED = true;
+
+    // Forbidden section check: summary screen
+    const summaryCont = document.getElementById('forbidden-summary-container');
+    renderAd(summaryCont, 'guide-top');
+    assert('renderAd blocks placement inside #s-summary', summaryCont.innerHTML === '');
+
+    // Forbidden section check: guess screen
+    const guessCont = document.getElementById('forbidden-guess-container');
+    renderAd(guessCont, 'guide-top');
+    assert('renderAd blocks placement inside #s-guess', guessCont.innerHTML === '');
+
+    // Forbidden section check: tool screen
+    const toolCont = document.getElementById('forbidden-tool-container');
+    renderAd(toolCont, 'guide-top');
+    assert('renderAd blocks placement inside #s-tool', toolCont.innerHTML === '');
+
+    // Disallowed placement type check
+    renderAd(validCont, 'summary');
+    assert('renderAd blocks disallowed slot "summary"', validCont.innerHTML === '');
+
+    // Allowed placement type succeeds
+    renderAd(validCont, 'guide-top');
+    assert('renderAd populates allowed slot "guide-top" with ins tag', validCont.querySelector('ins.adsbygoogle') !== null);
+
+    // Reset CONFIG back to false
+    CONFIG.ADS_ENABLED = false;
+    validCont.innerHTML = '';
+
+    out.textContent = logs.join('\n');
+    console.log(logs.join('\n'));
+  </script>
+</body>
+</html>

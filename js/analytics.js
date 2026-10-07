@@ -37,7 +37,11 @@ export function trackRulerUsed(unit) {
 }
 
 export function trackFitCheckUsed(fits) {
-  trackEvent('fit_check_used', { fits });
+  trackEvent('fit_used', { fits });
+}
+
+export function trackFitUsed(fits) {
+  trackEvent('fit_used', { fits });
 }
 
 export function trackDailyDone(score, streak) {
