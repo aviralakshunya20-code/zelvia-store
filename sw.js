@@ -1,10 +1,15 @@
 // sw.js - Service Worker for offline caching (Chapter 9.10)
-const V = 'naapu-v3';
+const V = 'naapu-v4';
 const FILES = [
   './',
   './index.html',
+  './favicon.ico',
+  './favicon.png',
   './manifest.webmanifest',
   './assets/PatrickHand-Regular.ttf',
+  './assets/favicon-32x32.png',
+  './assets/favicon-16x16.png',
+  './assets/apple-touch-icon.png',
   './assets/icon-192.png',
   './assets/icon-512.png',
   './assets/og-image.png',
