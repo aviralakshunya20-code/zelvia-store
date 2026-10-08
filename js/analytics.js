@@ -49,6 +49,11 @@ export function trackEvent(eventName, properties = {}) {
   if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
     window.dispatchEvent(new CustomEvent('naapu:analytics', { detail: payload }));
   }
+
+  // Forward to Google Analytics 4 if available
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    window.gtag('event', eventName, properties);
+  }
 }
 
 export function trackPageView(path = typeof window !== 'undefined' ? window.location.pathname : '/') {

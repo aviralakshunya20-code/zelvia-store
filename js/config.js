@@ -12,12 +12,10 @@ export const CONFIG = {
     HOME_BOT: '4444444444'
   },
 
-  // Analytics configuration (honesty & privacy)
-  // When 'none', zero analytics scripts load and no data is transmitted.
-  // Set to 'cloudflare' with a real token to enable Cloudflare Web Analytics beacon.
-  ANALYTICS_ENABLED: false,
-  ANALYTICS_PROVIDER: 'none', // 'none' or 'cloudflare'
-  ANALYTICS_TOKEN: 'YOUR_CLOUDFLARE_BEACON_TOKEN',
+  // Analytics configuration (Google Analytics 4)
+  ANALYTICS_ENABLED: true,
+  ANALYTICS_PROVIDER: 'google',
+  GA_MEASUREMENT_ID: 'G-VDYFXXLNMV',
 
   // Site contact & metadata
   CONTACT_EMAIL: 'contact@onlinemeasurer.com',
