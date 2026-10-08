@@ -4,7 +4,7 @@ export const CONFIG = {
   // Advertising configuration (Google AdSense)
   // Hard Rule: ADS_ENABLED must remain false until you approve and configure real IDs
   ADS_ENABLED: false,
-  ADSENSE_CLIENT_ID: 'ca-pub-XXXXXXXXXXXXXXXX',
+  ADSENSE_CLIENT_ID: 'ca-pub-4972530077719727',
   AD_SLOTS: {
     GUIDE_TOP: '1111111111',
     GUIDE_MID: '2222222222',
