@@ -30,7 +30,7 @@
 
   <!-- Brand & Title -->
   <text x="80" y="165" fill="#2B2118" font-size="64" class="font-title">
-    Online Measurer <tspan fill="#E4572E">(Naapu)</tspan>
+    Online Measurer <tspan fill="#E4572E">(Mezur)</tspan>
   </text>
 
   <!-- Scribble underline -->

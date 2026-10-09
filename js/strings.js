@@ -30,7 +30,7 @@ export const STRINGS = {
     calibZoomChanged: 'Zoom changed. Please recalibrate.',
 
     // Home Hub
-    homeBrand: 'Naapu',
+    homeBrand: 'Mezur',
     homeChooseWorld: 'Where to next?',
     homePlayPrev: 'Complete previous world with at least 1 star',
     homeStorageWarn: 'Progress will not save (Private mode)',
@@ -179,7 +179,7 @@ export const STRINGS = {
     calibZoomChanged: 'Zoom badla hai. Dobara calibrate karo.',
 
     // Home Hub
-    homeBrand: 'Naapu',
+    homeBrand: 'Mezur',
     homeChooseWorld: 'Kahan chalein?',
     homePlayPrev: 'Pehle pichla world 1 star se paar karo',
     homeStorageWarn: 'Progress save nahi hoga (Private mode)',

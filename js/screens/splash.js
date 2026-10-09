@@ -14,7 +14,7 @@ function render(){
 
   root.innerHTML = `
     <div class="bob-wrap" style="text-align:center;">${naapu('idle')}</div>
-    <div class="display" role="heading" aria-level="2" style="margin-top:16px;">Naapu</div>
+    <div class="display" role="heading" aria-level="2" style="margin-top:16px;">Mezur</div>
     ${scribble(160)}
     <p class="body" style="margin-top:8px;">${t('splashTagline')}</p>
   `;

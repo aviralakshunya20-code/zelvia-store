@@ -22,7 +22,7 @@ export function naapu(expr = 'idle'){
   let ticks = '';
   for (let i = 0; i < 20; i++) ticks += `<path d="M26 ${18 + i * 6} H${26 + (i % 5 === 0 ? 14 : 8)}"/>`;
 
-  return `<svg viewBox="0 0 120 164" width="120" height="164" role="img" aria-label="Naapu ${expr}" class="char-svg">
+  return `<svg viewBox="0 0 120 164" width="120" height="164" role="img" aria-label="Mezur ${expr}" class="char-svg">
     <g fill="none" stroke="${INK}" stroke-width="4" stroke-linecap="round"><path d="${arms}"/></g>
     <rect x="40" y="144" width="14" height="14" rx="3" fill="${INK}"/>
     <rect x="66" y="144" width="14" height="14" rx="3" fill="${INK}"/>
@@ -88,3 +88,5 @@ export function startBlinkLoop(containerEl){
   scheduleBlink();
   return () => clearTimeout(timerId);
 }
+
+export { naapu as mezur };
