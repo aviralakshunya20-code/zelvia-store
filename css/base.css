@@ -1,121 +1,212 @@
-/* css/base.css - Naapu design tokens & base reset */
-:root{
-  --paper:#F6EFDC; --paper2:#EDE3C8; --card:#FFFBEF; --ink:#2B2118;
-  --tomato:#E4572E; --mustard:#F3B73B; --leaf:#4C9F70; --sky:#6FB1D6; --blush:#F4A58A;
-  --wood:#B9783F; /* Gaj Baba only */
-  --line:3px;
-  --r1:12px 15px 11px 14px;      /* thoda tedha radius: button, input */
-  --r2:16px 12px 15px 11px;      /* card */
-  --shadow:3px 3px 0 var(--ink); /* hard shadow, blur 0 */
-  --font:'Patrick Hand','Segoe Print','Comic Sans MS',cursive;
-  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px;
-  --ease:cubic-bezier(.2,.7,.4,1);
+/* css/base.css - Modern, High-Precision Design System (Color Wheel Harmonized) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap');
+
+:root {
+  /* 1. Harmonious Color Wheel Palette */
+  /* Neutral 60% Canvas (Crisp Slate) */
+  --paper: #F8FAFC;          /* Slate 50 - clean modern background */
+  --paper2: #F1F5F9;         /* Slate 100 - subtle surface / headers */
+  --card: #FFFFFF;           /* Pure white card elevation */
+  --border: #E2E8F0;         /* Slate 200 - crisp delicate border */
+  --border-strong: #CBD5E1;  /* Slate 300 - active borders */
+  --ink: #0F172A;            /* Slate 900 - luxury high-contrast text */
+  --ink-secondary: #334155;  /* Slate 700 - readable body text */
+  --ink-muted: #64748B;      /* Slate 500 - meta & secondary text */
+
+  /* 30% Primary Brand (Deep Royal Indigo) */
+  --primary: #4F46E5;        /* Indigo 600 - core interactive brand */
+  --primary-hover: #4338CA;  /* Indigo 700 */
+  --primary-light: #EEF2FF;  /* Indigo 50 - active pill backgrounds */
+  --primary-glow: rgba(79, 70, 229, 0.22);
+
+  /* 10% Color Wheel Accents (Triadic / Complementary Balance) */
+  --mustard: #F59E0B;        /* Amber 500 - warm caliper & highlight */
+  --mustard-light: #FEF3C7;  /* Amber 100 */
+  --mustard-dark: #D97706;
+
+  --leaf: #10B981;           /* Emerald 500 - verified fit & high score */
+  --leaf-light: #D1FAE5;     /* Emerald 100 */
+  --leaf-dark: #047857;
+
+  --tomato: #EF4444;         /* Rose 500 - deficit & dashed guides */
+  --tomato-light: #FEE2E2;   /* Rose 100 */
+
+  --sky: #0EA5E9;            /* Sky 500 - dimensions info */
+  --sky-light: #E0F2FE;
+
+  --wood: #B45309;           /* Amber 700 */
+
+  /* 2. Shape, Geometry & Elevation Tokens */
+  --line: 1px;
+  --r1: 10px;                /* Buttons, inputs, small chips */
+  --r2: 16px;                /* Standard cards */
+  --r3: 24px;                /* Hero containers, modals */
+
+  /* Layered Ambient Shadows (Clean Modern SaaS Feel) */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.10), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+
+  /* Modern Professional Typography */
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Outfit', 'Inter', -apple-system, sans-serif;
+
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@font-face{
-  font-family:'Patrick Hand';
-  src:url('../assets/PatrickHand-Regular.ttf') format('truetype');
-  font-display:swap;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-weight:normal;
+html {
+  -webkit-text-size-adjust: 100%;
+  min-width: 320px;
+  scroll-behavior: smooth;
 }
 
-html{
-  -webkit-text-size-adjust:100%;
-  min-width:320px;
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
-body{
-  background:var(--paper);
-  color:var(--ink);
-  font:20px/26px var(--font);
-  touch-action:manipulation;
-  -webkit-tap-highlight-color:transparent;
-  min-width:320px;
-  min-height:100vh;
-  min-height:100dvh;
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
-:focus-visible{
-  outline:3px dashed var(--tomato);
-  outline-offset:3px;
+[hidden] {
+  display: none !important;
 }
 
-[hidden]{
-  display:none !important;
+/* Screen reader utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-/* Accessibility screen-reader only */
-.sr-only{
-  position:absolute;
-  width:1px;
-  height:1px;
-  padding:0;
-  margin:-1px;
-  overflow:hidden;
-  clip:rect(0,0,0,0);
-  white-space:nowrap;
-  border:0;
+/* Container constraints & Safe area */
+main {
+  max-width: 520px;
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+  padding: calc(16px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));
 }
 
-/* Mobile responsive constraints (Chapter 10.1 #17) */
-@media (max-width: 340px){
-  body{
-    font:18px/24px var(--font);
+/* Smooth Screen transition */
+main > section {
+  width: 100%;
+}
+
+main > section.enter {
+  animation: enter 220ms var(--ease);
+}
+
+@keyframes enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main > section.enter {
+    animation: none !important;
   }
 }
 
-/* Container constraints & Safe area (Chapter 4.4) */
-main{
-  max-width:480px;
-  margin:0 auto;
-  min-height:100vh;
-  min-height:100dvh;
-  position:relative;
-  padding:calc(12px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) calc(16px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));
+/* Typography Hierarchy */
+.display {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--ink);
 }
 
-/* Screen transition */
-main > section{
-  width:100%;
+h1, .h1 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--ink);
 }
 
-main > section.enter{
-  animation:enter 160ms ease-out;
+h2, .h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
-@keyframes enter{
-  from{ opacity:0; transform:translateX(16px); }
-  to{ opacity:1; transform:translateX(0); }
+h3, .h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
 }
 
-@media (prefers-reduced-motion: reduce){
-  main > section.enter{
-    animation:none !important;
-  }
+p, .body {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-secondary);
 }
 
-/* Typography classes (Chapter 4.3) */
-.display{ font-size:40px; line-height:44px; }
-h1, .h1{ font-size:32px; line-height:36px; }
-h2, .h2{ font-size:26px; line-height:30px; }
-p, .body{ font-size:20px; line-height:26px; }
-.small{ font-size:16px; line-height:20px; }
-.bignum{ font-size:56px; line-height:56px; }
-@media (max-width: 340px){
-  .bignum{ font-size:48px; line-height:48px; }
+.small {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-muted);
 }
-.ruler-label{ font-size:14px; line-height:14px; }
+
+.bignum {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+@media (max-width: 340px) {
+  .bignum { font-size: 42px; }
+}
+
+.ruler-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
 
 /* FX overlay layer */
-#fx{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:40;
+#fx {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
 }

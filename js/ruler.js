@@ -18,17 +18,15 @@ export function drawTicks(canvas, { pxPerMm, vertical, lengthMm }){
 
   const g = canvas.getContext('2d');
   g.scale(dpr, dpr);
-  g.strokeStyle = g.fillStyle = '#2B2118';
-  g.lineCap = 'round';
-  g.font = '14px "Patrick Hand", "Segoe Print", "Comic Sans MS", cursive';
+  g.strokeStyle = g.fillStyle = '#0F172A';
+  g.lineCap = 'butt';
+  g.font = '600 13px "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
   g.textAlign = 'center';
 
-  const rand = rng(7);
   for (let mm = 0; mm <= lengthMm; mm++){
     const p = ZERO + mm * pxPerMm;
-    const base = mm % 10 === 0 ? 24 : mm % 5 === 0 ? 16 : 9;
-    const len = base + (rand() - .5) * 1.2;
-    g.lineWidth = mm % 10 === 0 ? 2.2 : 1.4;
+    const len = mm % 10 === 0 ? 24 : mm % 5 === 0 ? 16 : 9;
+    g.lineWidth = mm % 10 === 0 ? 1.8 : 1.0;
     g.beginPath();
     if (vertical){
       g.moveTo(0, p);

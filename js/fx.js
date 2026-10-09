@@ -1,18 +1,9 @@
 // js/fx.js - Sound, effects, vibrations, paper texture (Chapter 7)
 import * as state from './state.js';
 
-// Paper texture (Chapter 7.6)
+// Paper texture (Modern clean aesthetic)
 export function makePaper(){
-  const c = document.createElement('canvas');
-  c.width = c.height = 128;
-  const g = c.getContext('2d');
-  g.fillStyle = '#F6EFDC';
-  g.fillRect(0, 0, 128, 128);
-  for (let i = 0; i < 260; i++){
-    g.fillStyle = Math.random() < .5 ? 'rgba(43,33,24,.05)' : 'rgba(255,255,255,.35)';
-    g.fillRect((Math.random() * 128) | 0, (Math.random() * 128) | 0, 1 + ((Math.random() * 2) | 0), 1);
-  }
-  document.body.style.backgroundImage = 'url(' + c.toDataURL() + ')';
+  document.body.style.backgroundImage = 'none';
 }
 
 // Sound (Web Audio API - Chapter 7.7)
@@ -91,7 +82,7 @@ export function confetti(n = 36){
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const host = document.getElementById('fx');
   if (!host) return;
-  const colors = ['#E4572E', '#F3B73B', '#4C9F70', '#6FB1D6', '#2B2118'];
+  const colors = ['#4F46E5', '#F59E0B', '#10B981', '#0EA5E9', '#EC4899'];
   for (let i = 0; i < n; i++){
     const s = document.createElement('i');
     s.style.cssText = 'position:absolute;left:50%;top:40%;width:8px;height:5px;background:' + colors[i % 5];
