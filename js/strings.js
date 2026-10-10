@@ -92,6 +92,7 @@ export const STRINGS = {
 
     // Fit Checker
     fitTitle: 'Will It Fit?',
+    fitPresetsTitle: '⚡ Quick Presets (Daily Commerce & Travel):',
     fitItemHeader: 'Item (L x W x H)',
     fitSpaceHeader: 'Space (L x W x H)',
     fitGapLabel: 'Clearance margin:',
@@ -241,6 +242,7 @@ export const STRINGS = {
 
     // Fit Checker
     fitTitle: 'Aayega ya nahi?',
+    fitPresetsTitle: '⚡ Quick Presets (Len-Den & Daily):',
     fitItemHeader: 'Cheez (Item: L x W x H)',
     fitSpaceHeader: 'Jagah (Space: L x W x H)',
     fitGapLabel: 'Gap chhodna hai:',

@@ -25,6 +25,33 @@ function render(){
     </div>
     ${scribble(140)}
     <div class="screen-content">
+      <!-- Quick Commerce & Travel Presets -->
+      <div class="card" style="padding:14px 16px;">
+        <div style="font-weight:600; font-size:14px; margin-bottom:8px; color:var(--ink);">
+          ${t('fitPresetsTitle')}
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+          <button type="button" class="chip ft-preset" data-preset="cabin" style="padding:6px 8px; font-size:12px; justify-content:flex-start; text-align:left;">
+            ✈️ Flight Cabin (55×35×25)
+          </button>
+          <button type="button" class="chip ft-preset" data-preset="courier_s" style="padding:6px 8px; font-size:12px; justify-content:flex-start; text-align:left;">
+            📦 Courier Box S (20×15×10)
+          </button>
+          <button type="button" class="chip ft-preset" data-preset="courier_m" style="padding:6px 8px; font-size:12px; justify-content:flex-start; text-align:left;">
+            📦 Courier Box M (30×20×15)
+          </button>
+          <button type="button" class="chip ft-preset" data-preset="laptop_14" style="padding:6px 8px; font-size:12px; justify-content:flex-start; text-align:left;">
+            💻 14" Laptop (32×22×2)
+          </button>
+          <button type="button" class="chip ft-preset" data-preset="laptop_15" style="padding:6px 8px; font-size:12px; justify-content:flex-start; text-align:left;">
+            💻 15.6" Laptop (36×25×2.5)
+          </button>
+          <button type="button" class="chip ft-preset" data-preset="env_a4" style="padding:6px 8px; font-size:12px; justify-content:flex-start; text-align:left;">
+            ✉️ A4 Envelope (32×23×2)
+          </button>
+        </div>
+      </div>
+
       <div class="card fit-group">
         <h3 class="h2">${t('fitItemHeader')}</h3>
         <div class="fit-inputs-row">
@@ -75,6 +102,40 @@ function render(){
   const gapIn = $('#ft-gap', root), resCard = $('#ft-res', root);
 
   const inpMap = { iL, iW, iH, sL, sW, sH };
+
+  const PRESET_DATA = {
+    cabin: { type: 'space', vals: [55, 35, 25], u: 'cm', gap: 10, label: 'IndiGo / Air India Cabin Bag (55×35×25 cm)' },
+    courier_s: { type: 'space', vals: [20, 15, 10], u: 'cm', gap: 15, label: 'Small Courier Box (20×15×10 cm)' },
+    courier_m: { type: 'space', vals: [30, 20, 15], u: 'cm', gap: 15, label: 'Medium Courier Box (30×20×15 cm)' },
+    laptop_14: { type: 'item', vals: [32, 22, 2], u: 'cm', gap: 10, label: '14" Laptop Body (32×22×2 cm)' },
+    laptop_15: { type: 'item', vals: [36, 25, 2.5], u: 'cm', gap: 15, label: '15.6" Laptop Body (36×25×2.5 cm)' },
+    env_a4: { type: 'space', vals: [32.4, 22.9, 2], u: 'cm', gap: 5, label: 'A4 Document Mailer (32.4×22.9 cm)' }
+  };
+
+  root.querySelectorAll('.ft-preset').forEach(btn => {
+    btn.onclick = () => {
+      SFX.tap();
+      const p = PRESET_DATA[btn.dataset.preset];
+      if (!p) return;
+      root.querySelectorAll('.ft-preset').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (p.type === 'space') {
+        sL.value = p.vals[0];
+        sW.value = p.vals[1];
+        sH.value = p.vals[2];
+        sU.value = p.u;
+      } else {
+        iL.value = p.vals[0];
+        iW.value = p.vals[1];
+        iH.value = p.vals[2];
+        iU.value = p.u;
+      }
+      gapIn.value = p.gap;
+      toast('Preset loaded: ' + p.label);
+    };
+  });
+
   root.querySelectorAll('[data-r]').forEach(btn => {
     btn.onclick = () => {
       const target = inpMap[btn.dataset.r];
