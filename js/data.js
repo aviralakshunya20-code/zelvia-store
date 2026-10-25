@@ -3,9 +3,9 @@ import { getLang } from './strings.js';
 
 export const ITEMS = [
   // World 1: Pocket Coins
-  { id:'w1-1', world:'w1', name:'₹1 coin', part:'diameter', mm:22.0, approx:false, hint:'Smallest among ₹1, ₹2, ₹5, and ₹10 coins.', name_hi:'₹1 ka sikka', part_hi:'diameter', hint_hi:'₹1/2/5/10 mein sabse chhota.' },
-  { id:'w1-2', world:'w1', name:'₹2 coin', part:'diameter', mm:25.0, approx:false, hint:'Larger than the ₹5 coin.', name_hi:'₹2 ka sikka', part_hi:'diameter', hint_hi:'₹5 ke sikke se bhi bada hai.' },
-  { id:'w1-3', world:'w1', name:'₹5 coin', part:'diameter', mm:23.0, approx:false, hint:'Smaller than ₹2, larger than ₹1.', name_hi:'₹5 ka sikka', part_hi:'diameter', hint_hi:'₹2 se chhota, ₹1 se bada.' },
+  { id:'w1-1', world:'w1', name:'₹1 coin', part:'diameter', mm:20.0, approx:false, hint:'Smallest among ₹1, ₹2, ₹5, and ₹10 coins (2019 series).', name_hi:'₹1 ka sikka', part_hi:'diameter', hint_hi:'₹1/2/5/10 mein sabse chhota.' },
+  { id:'w1-2', world:'w1', name:'₹2 coin', part:'diameter', mm:23.0, approx:false, hint:'Larger than ₹1, smaller than ₹5 (2019 series).', name_hi:'₹2 ka sikka', part_hi:'diameter', hint_hi:'₹1 se bada, ₹5 se chhota.' },
+  { id:'w1-3', world:'w1', name:'₹5 coin', part:'diameter', mm:25.0, approx:false, hint:'Larger than ₹2, smaller than ₹10 (2019 series).', name_hi:'₹5 ka sikka', part_hi:'diameter', hint_hi:'₹2 se bada, ₹10 se chhota.' },
   { id:'w1-4', world:'w1', name:'₹10 coin', part:'diameter', mm:27.0, approx:false, hint:'Largest coin among the four.', name_hi:'₹10 ka sikka', part_hi:'diameter', hint_hi:'In chaaron mein sabse bada sikka.' },
   { id:'w1-5', world:'w1', name:'Credit / PVC ID card', part:'long side', mm:85.6, approx:false, hint:'Length of a standard ATM bank card.', name_hi:'Credit / Aadhaar PVC card', part_hi:'lambi side', hint_hi:'ATM card ki lambai jitna.' },
 

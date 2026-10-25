@@ -431,18 +431,6 @@
 }
 
 
-/* ---------------------------------------------------------------
-   Clean, document-like look: square corners everywhere, flat cards
-   --------------------------------------------------------------- */
-*, *::before, *::after {
-  border-radius: 0 !important;
-}
-.card, .site-header, .btn {
-  box-shadow: none !important;
-}
-.card {
-  border: 1px solid var(--border) !important;
-}
 
 /* ---------------------------------------------------------------
    Homepage: ruler-first hero, picture steps, tool grid
@@ -486,12 +474,4 @@
   .how-cap { font-size: 11px; padding: 4px 5px; }
   .how-cap span { display: none; }
   .home-sub { font-size: 16px; line-height: 22px; }
-}
-
-/* Phones: one swipeable menu row instead of three wrapped rows */
-@media (max-width: 720px) {
-  .header-inner { flex-wrap: nowrap; gap: 10px; }
-  .site-nav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; min-width: 0; }
-  .site-nav::-webkit-scrollbar { display: none; }
-  .nav-link { white-space: nowrap; flex: none; }
 }
