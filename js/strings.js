@@ -108,6 +108,8 @@ export const STRINGS = {
     toolCalibNeededTitle: 'Calibration Required',
     toolCalibNeededDesc: 'To use the ruler, calibrate your screen with a credit card first.',
     toolCalibBtn: 'Calibrate Now',
+    toolApproxTitle: 'Approximate scale.',
+    toolApproxDesc: 'Calibrate once with any bank card (takes 10 seconds) for exact 1:1 size.',
     toolRecalibBtn: 'Recalibrate Ruler',
 
     // Profile
@@ -258,6 +260,8 @@ export const STRINGS = {
     toolCalibNeededTitle: 'Pehle calibrate karo',
     toolCalibNeededDesc: 'Ruler chalane ke liye pehle screen ko credit/ATM card se calibrate karo.',
     toolCalibBtn: 'Calibrate karein',
+    toolApproxTitle: 'Andaazan scale.',
+    toolApproxDesc: 'Sahi 1:1 naap ke liye ek baar bank card se calibrate karo (10 second).',
     toolRecalibBtn: 'Dobara calibrate karein',
 
     // Profile

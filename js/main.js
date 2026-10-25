@@ -36,13 +36,13 @@ if (homeAd) renderAd(homeAd, 'home-bot');
 
 // Service Worker registration with update listener (Chapter 9.10, 10.1 #14)
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').then(reg => {
+  navigator.serviceWorker.register('/sw.js').then(reg => {
     reg.addEventListener('updatefound', () => {
       const newWorker = reg.installing;
       if (newWorker) {
         newWorker.addEventListener('statechange', () => {
           if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            toast('Naya version. Refresh karo.');
+            toast('New version available. Refresh the page.');
           }
         });
       }
@@ -58,7 +58,7 @@ window.addEventListener('resize', () => {
     // Check if calibration became invalid due to browser zoom (Chapter 10.1 #2)
     const s = state.get();
     if (s.calib.pxPerMm && !viewOk()) {
-      toast('Zoom badla hai. Dobara calibrate karo.');
+      toast('Zoom changed. Please recalibrate the ruler.');
     }
   }, 300);
 });

@@ -1,6 +1,18 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- Google Consent Mode v2: ad/analytics storage off in EEA/UK/CH until the visitor
+       answers Google's certified consent message (AdSense > Privacy & messaging). -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied',
+      wait_for_update: 500,
+      region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE','GB','CH']
+    });
+    gtag('consent', 'default', { ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted' });
+  </script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VDYFXXLNMV"></script>
   <script>
@@ -15,12 +27,12 @@
   <meta name="theme-color" content="#4F46E5">
   <title>Privacy Policy | OnlineMeasurer &amp; Mezur</title>
   <meta name="description" content="Privacy Policy for OnlineMeasurer.com and Mezur. Detailed disclosure of no analytics tracking, browser localStorage retention, Google AdSense cookies, GDPR rights, and CCPA compliance.">
-  <link rel="canonical" href="https://onlinemeasurer.com/privacy/">
+  <link rel="canonical" href="https://www.onlinemeasurer.com/privacy/">
   <meta property="og:title" content="Privacy Policy | OnlineMeasurer &amp; Mezur">
   <meta property="og:description" content="Transparent privacy policy covering local storage retention, zero analytics tracking, GDPR &amp; CCPA rights, and advertising consent.">
-  <meta property="og:url" content="https://onlinemeasurer.com/privacy/">
+  <meta property="og:url" content="https://www.onlinemeasurer.com/privacy/">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://onlinemeasurer.com/assets/og-image.png">
+  <meta property="og:image" content="https://www.onlinemeasurer.com/assets/og-image.png">
   <link rel="manifest" href="../manifest.webmanifest">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
@@ -55,7 +67,7 @@
       <div class="article-meta">
         <span>Effective Date: October 7, 2026</span>
         <span>&middot;</span>
-        <span><strong>Last Reviewed: October 7, 2026</strong></span>
+        <span><strong>Last Reviewed: October 25, 2026</strong></span>
         <span>&middot;</span>
         <span>OnlineMeasurer.com</span>
       </div>
@@ -76,8 +88,8 @@
         To deliver offline functionality and save your gameplay achievements without requiring server accounts, our tools use standard browser <code>window.localStorage</code>. This data includes:
       </p>
       <ul>
-        <li><strong>Display Calibration (<code>naapu_calib</code>):</strong> Your screen's calculated pixels-per-millimeter scale factor so you do not have to recalibrate on every visit.</li>
-        <li><strong>Game Progress &amp; Records (<code>naapu_save</code>):</strong> Unlocked worlds, stars, experience points (XP), player rank, and daily hunt streaks.</li>
+        <li><strong>Display Calibration (stored in <code>naapu.v1</code>):</strong> Your screen's calculated pixels-per-millimeter scale factor so you do not have to recalibrate on every visit.</li>
+        <li><strong>Game Progress &amp; Records (stored in <code>naapu.v1</code>):</strong> Unlocked worlds, stars, experience points (XP), player rank, and daily hunt streaks.</li>
         <li><strong>Settings &amp; Preferences:</strong> Sound effects (synthesizer audio), haptic feedback, default measurement units (mm, cm, in), and language selection (<code>settings.lang</code>).</li>
       </ul>
       <p>
@@ -95,7 +107,7 @@
       </p>
       <ul>
         <li><strong>Consent Requirement:</strong> In regions governed by data privacy regulations requiring consent (such as the European Economic Area, United Kingdom, and Switzerland under the IAB Europe TCF v2.2 framework), <strong>advertising cookies and tracking scripts from Google load ONLY AFTER you grant explicit consent</strong> through Google's Certified Consent Management Platform (CMP).</li>
-        <li><strong>Where Ads Appear:</strong> Advertisements appear solely on informational guide articles and the desktop home landing section. No advertisements ever appear inside active game screens, calibration flows, or summary scorecards.</li>
+        <li><strong>Where Ads Appear:</strong> Ads are placed by Google on our content pages. We never place ads in a way that imitates our buttons or encourages accidental clicks, and the ruler measuring area stays free of ads.</li>
         <li><strong>Third-Party Cookies:</strong> When consent is granted, Google uses cookies (such as DoubleClick) to serve ads based on visits to this and other websites.</li>
       </ul>
 

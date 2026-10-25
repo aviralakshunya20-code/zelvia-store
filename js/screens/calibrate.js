@@ -73,7 +73,9 @@ function render(){
     b.onclick = () => { SFX.tap(); updateL(currentL + parseInt(b.dataset.d, 10)); };
   });
 
-  $('#c-back', root).onclick = () => { SFX.tap(); router.go('#home'); };
+  // On the ruler page, return to the ruler instead of leaving for the homepage
+  const exitTo = document.getElementById('s-tool') ? '#tool' : '#home';
+  $('#c-back', root).onclick = () => { SFX.tap(); router.go(exitTo); };
 
   $('#c-done', root).onclick = () => {
     const ppm = currentL / CARD_MM;
@@ -90,7 +92,7 @@ function render(){
     state.save();
     SFX.great();
     toast(t('calibSuccess'));
-    router.go('#home');
+    router.go(exitTo);
   };
 
   updateL(currentL);

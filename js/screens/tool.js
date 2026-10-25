@@ -16,24 +16,9 @@ function render(){
   const s = state.get(), root = $('#s-tool');
   if (rulerInstance) { rulerInstance.destroy(); rulerInstance = null; }
 
-  if (!s.calib.pxPerMm) {
-    root.innerHTML = `
-      <div class="screen-header">
-        <button class="btn alt" id="t-back" aria-label="${t('back')}">${icon('back')}</button>
-        <h2 class="h1">${t('toolTitle')}</h2><div style="width:48px;"></div>
-      </div>
-      ${scribble(110)}
-      <div class="card" style="text-align:center; padding:24px 16px;">
-        <div style="margin-bottom:12px;">${icon('lock', { size: 36 })}</div>
-        <h3 class="h2">${t('toolCalibNeededTitle')}</h3>
-        <p class="body" style="margin:8px 0 16px 0;">${t('toolCalibNeededDesc')}</p>
-        <button class="btn go" id="t-go-calib">${t('toolCalibBtn')}</button>
-      </div>
-    `;
-    $('#t-back', root).onclick = () => { SFX.tap(); router.go('#home'); };
-    $('#t-go-calib', root).onclick = () => { SFX.tap(); router.go('#calib'); };
-    return;
-  }
+  // Visitors arriving from search should see a working ruler right away. Until they
+  // calibrate, use an estimated scale and say clearly that it is approximate.
+  const calibrated = Boolean(s.calib.pxPerMm);
 
   if (window.visualViewport && Math.abs(window.visualViewport.scale - 1) > 0.01) {
     toast(t('calibZoomChanged'));
@@ -44,7 +29,7 @@ function render(){
   else if (window.location.pathname.includes('/ruler/cm')) unit = 'cm';
   else if (window.location.pathname.includes('/ruler/mm')) unit = 'mm';
 
-  const pxPerMm = s.calib.pxPerMm;
+  const pxPerMm = calibrated ? s.calib.pxPerMm : estimatePxPerMm();
   const isLandscape = window.innerWidth >= window.innerHeight;
   let isVertical = !isLandscape;
 
@@ -55,6 +40,11 @@ function render(){
     </div>
     ${scribble(110)}
     <div class="screen-content">
+      ${calibrated ? '' : `
+      <div class="card" role="status" style="padding:12px 14px; margin-bottom:10px; display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
+        <p class="body" style="margin:0; flex:1 1 220px;"><strong>${t('toolApproxTitle')}</strong> ${t('toolApproxDesc')}</p>
+        <button class="btn go fine-btn" id="t-go-calib">${t('toolCalibBtn')}</button>
+      </div>`}
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <div style="display:flex; gap:6px;" id="t-chips">
           <button class="chip ${unit==='mm'?'active':''}" data-u="mm">mm</button>
@@ -66,7 +56,7 @@ function render(){
       <div class="ruler-container" id="t-ruler-box"></div>
       <div style="text-align:center; margin:8px 0;"><div class="bignum" id="t-readout">0 mm</div></div>
       <div class="bottom-bar center">
-        <button class="btn alt" id="t-recalib" style="width:100%;">${t('toolRecalibBtn')}</button>
+        <button class="btn alt" id="t-recalib" style="width:100%;">${calibrated ? t('toolRecalibBtn') : t('toolCalibBtn')}</button>
       </div>
     </div>
   `;
@@ -74,6 +64,8 @@ function render(){
   $('#t-back', root).onclick = () => { SFX.tap(); router.go('#home'); };
   $('#t-flip', root).onclick = () => { SFX.tap(); isVertical = !isVertical; render(); };
   $('#t-recalib', root).onclick = () => { SFX.tap(); router.go('#calib'); };
+  const goCalib = $('#t-go-calib', root);
+  if (goCalib) goCalib.onclick = () => { SFX.tap(); router.go('#calib'); };
 
   const readout = $('#t-readout', root);
   const fmtVal = v => unit === 'mm' ? v.toFixed(1) + ' mm' : unit === 'cm' ? (v / 10).toFixed(2) + ' cm' : (fromMm(v, 'in')).toFixed(2) + ' in';
@@ -97,4 +89,14 @@ function render(){
   });
   updateReadout(0);
   trackRulerUsed(unit);
+}
+
+// Rough physical scale for uncalibrated screens. CSS defines 96 px per inch, but
+// phones and tablets render CSS pixels physically larger than desktop monitors.
+function estimatePxPerMm(){
+  const shortSide = Math.min(screen.width, screen.height);
+  const touch = window.matchMedia && matchMedia('(pointer: coarse)').matches;
+  if (touch && shortSide < 600) return 6.2;   // phones (~160 CSS px per inch)
+  if (touch) return 5.0;                      // tablets
+  return 3.9;                                 // laptops and desktop monitors
 }

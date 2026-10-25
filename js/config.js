@@ -19,5 +19,5 @@ export const CONFIG = {
 
   // Site contact & metadata
   CONTACT_EMAIL: 'contact@onlinemeasurer.com',
-  SITE_URL: 'https://onlinemeasurer.com'
+  SITE_URL: 'https://www.onlinemeasurer.com'
 };

@@ -1,0 +1,19 @@
+# Internal files that must not be served publicly
+.git
+.vercel
+node_modules
+*.md
+SPEC.md
+DEPLOY.md
+FLIPPA_LISTING.md
+tests.html
+tests-ads.html
+style-guide.html
+run-tests.js
+server.js
+audit-pages.js
+audit-site.js
+gen-icons.js
+package.json
+scripts
+assets/onlinemeasurer-demo.mp4

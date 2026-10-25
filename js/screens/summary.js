@@ -79,13 +79,13 @@ function render(){
   if (shareBtn) {
     shareBtn.onclick = async () => {
       SFX.tap();
-      const shareText = `I scored ${result.total} pts in ${WORLDS[curWIdx]?.name || 'Naapu'}! Can you guess real-world sizes? Play at https://onlinemeasurer.com/`;
+      const shareText = `I scored ${result.total} pts in ${WORLDS[curWIdx]?.name || 'Naapu'}! Can you guess real-world sizes? Play at https://www.onlinemeasurer.com/`;
       if (navigator.share) {
         try {
           await navigator.share({
             title: 'Online Measurer (Naapu)',
             text: shareText,
-            url: 'https://onlinemeasurer.com/'
+            url: 'https://www.onlinemeasurer.com/'
           });
         } catch (err) {
           // User aborted dialog or share error

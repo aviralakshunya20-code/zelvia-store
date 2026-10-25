@@ -36,7 +36,7 @@ for (const p of pages) {
   const h1Ok = h1Matches.length === 1;
   const titleOk = !!titleMatch && titleMatch[1].trim().length > 0;
   const descOk = !!metaDescMatch && metaDescMatch[1].trim().length > 0;
-  const canOk = !!canonicalMatch && canonicalMatch[1].startsWith('https://onlinemeasurer.com');
+  const canOk = !!canonicalMatch && canonicalMatch[1].startsWith('https://www.onlinemeasurer.com');
   const ogOk = !!ogTitleMatch;
 
   console.log(`Page: ${p.padEnd(45)} H1: ${h1Matches.length} (${h1Ok ? 'OK' : 'ERR'}) | Title: ${titleOk ? 'OK' : 'ERR'} | Desc: ${descOk ? 'OK' : 'ERR'} | Canonical: ${canOk ? 'OK' : 'ERR'} | OG: ${ogOk ? 'OK' : 'ERR'}`);
