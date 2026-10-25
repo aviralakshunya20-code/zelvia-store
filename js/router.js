@@ -29,7 +29,8 @@ export function go(hash){
     window.location.href = '/play/';
     return;
   }
-  if (hash === '#home' && path !== '/' && path !== '/index.html') {
+  // The game hub lives on /play/; elsewhere '#home' means the site homepage
+  if (hash === '#home' && !document.getElementById('s-home')) {
     window.location.href = '/';
     return;
   }

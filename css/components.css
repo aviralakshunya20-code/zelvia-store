@@ -6,7 +6,7 @@
   font-size: 16px;
   font-weight: 600;
   color: #FFFFFF;
-  background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%);
+  background: #4F46E5;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--r1);
   box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -44,7 +44,7 @@
   box-shadow: var(--shadow);
 }
 .btn.go {
-  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  background: #10B981;
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -54,7 +54,7 @@
   box-shadow: 0 6px 20px rgba(16, 185, 129, 0.42);
 }
 .btn.bad {
-  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  background: var(--tomato);
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -297,10 +297,10 @@ input[type=number]::-webkit-outer-spin-button {
   transition: width 350ms var(--ease);
   border: none;
 }
-.bar-fill.leaf { background: linear-gradient(90deg, #34D399, #10B981); }
-.bar-fill.tomato { background: linear-gradient(90deg, #F87171, #EF4444); }
-.bar-fill.mustard { background: linear-gradient(90deg, #FBBF24, #F59E0B); }
-.bar-fill.sky { background: linear-gradient(90deg, #38BDF8, #0EA5E9); }
+.bar-fill.leaf { background: var(--leaf); }
+.bar-fill.tomato { background: var(--tomato); }
+.bar-fill.mustard { background: var(--mustard); }
+.bar-fill.sky { background: var(--primary); }
 
 /* 11. Subtle Character Bob */
 .bob-wrap {
@@ -349,7 +349,7 @@ input[type=number]::-webkit-outer-spin-button {
   user-select: none;
 }
 .brand-title {
-  background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
+  background: #4F46E5;
   color: #FFFFFF;
   border: none;
   border-radius: 8px;

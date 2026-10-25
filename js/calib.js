@@ -17,3 +17,20 @@ export function viewOk(){
   const sigBad = c.sig && c.sig !== deviceSig();
   return !zoomed && !dprMoved && !sigBad;
 }
+
+// Rough physical scale for uncalibrated screens. CSS defines 96 px per inch, but
+// phones and tablets render CSS pixels physically larger than desktop monitors.
+export function estimatePxPerMm(){
+  const shortSide = Math.min(screen.width, screen.height);
+  const touch = window.matchMedia && matchMedia('(pointer: coarse)').matches;
+  if (touch && shortSide < 600) return 6.2;   // phones (~160 CSS px per inch)
+  if (touch) return 5.0;                      // tablets
+  return 3.9;                                 // laptops and desktop monitors
+}
+
+/** Saved calibration if valid for this screen, otherwise an estimate. */
+export function currentScale(){
+  const c = state.get().calib;
+  if (c.pxPerMm && viewOk()) return { pxPerMm: c.pxPerMm, calibrated: true };
+  return { pxPerMm: estimatePxPerMm(), calibrated: false };
+}

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Google Consent Mode v2: ad/analytics storage off in EEA/UK/CH until the visitor
+       answers Google's certified consent message (AdSense > Privacy & messaging). -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied',
+      wait_for_update: 500,
+      region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE','GB','CH']
+    });
+    gtag('consent', 'default', { ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted' });
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VDYFXXLNMV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VDYFXXLNMV');
+  </script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4F46E5">
+  <title>Ring Size Finder – Actual Size Ring Sizer &amp; Chart (US, UK, EU) | OnlineMeasurer</title>
+  <meta name="description" content="Find your ring size on screen: place a ring on the circle and match it. Shows US, UK and EU sizes with inner diameter and circumference in mm.">
+  <link rel="canonical" href="https://www.onlinemeasurer.com/ring-size/">
+  <meta property="og:title" content="Ring Size Finder – Actual Size Ring Sizer &amp; Chart (US, UK, EU) | OnlineMeasurer">
+  <meta property="og:description" content="Find your ring size on screen: place a ring on the circle and match it. Shows US, UK and EU sizes with inner diameter and circumference in mm.">
+  <meta property="og:url" content="https://www.onlinemeasurer.com/ring-size/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.onlinemeasurer.com/assets/icon-512.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/screens.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <meta name="google-adsense-account" content="ca-pub-4972530077719727">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4972530077719727" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I find my ring size at home?", "acceptedAnswer": {"@type": "Answer", "text": "Place a ring that fits on the circle on your screen and adjust it until the circle matches the inside edge of the ring. The page then shows your US, UK and EU size. Calibrate the screen with a bank card first for an exact result."}}, {"@type": "Question", "name": "What is the most common ring size?", "acceptedAnswer": {"@type": "Answer", "text": "For women it is around US 6 to 7 (16.5–17.3 mm inner diameter); for men around US 9 to 10 (18.9–19.8 mm)."}}, {"@type": "Question", "name": "How is ring size measured?", "acceptedAnswer": {"@type": "Answer", "text": "By the inner diameter or inner circumference of the ring. EU (ISO) sizes are simply the inner circumference in millimetres."}}]}
+  </script>
+</head>
+<body>
+  <!-- Header Nav (Phase A) -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand-link" aria-label="Mezur Home">
+        <span class="brand-title">Mezur</span>
+      </a>
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/ruler/" class="nav-link">Ruler</a>
+        <a href="/ring-size/" class="nav-link active" aria-current="page">Ring Size</a>
+        <a href="/actual-size/" class="nav-link">Actual Size</a>
+        <a href="/fit-checker/" class="nav-link">Fit Checker</a>
+        <a href="/play/" class="nav-link">Game</a>
+        <a href="/guides/calibrate-online-ruler/" class="nav-link">Guides</a>
+      </nav>
+    </div>
+  </header>
+  <main class="content-page">
+    <header class="article-header" style="text-align:center; margin:12px 0 16px;">
+      <h1>Ring Size Finder: Match Your Ring on Screen</h1>
+      <p class="home-sub">Lay a ring that fits you on the circle and resize it until the circle touches the inside edge.</p>
+    </header>
+
+    <section id="ring-app" class="tool-panel">
+      <p id="ring-calib-note" class="note-warn" hidden>
+        <b>Approximate scale.</b> For an exact size, <a href="/ruler/?return=/ring-size/#calib">calibrate with a bank card</a> first (10 seconds). You will come straight back here.
+      </p>
+
+      <div class="ring-stage">
+        <div id="ring-circle" class="ring-circle" aria-hidden="true"></div>
+      </div>
+
+      <div class="ring-controls">
+        <button type="button" class="btn alt" data-step="-0.5" aria-label="Smaller by 0.5 mm">−−</button>
+        <button type="button" class="btn alt" data-step="-0.1" aria-label="Smaller by 0.1 mm">−</button>
+        <input id="ring-slider" type="range" min="13.5" max="23.5" step="0.1" value="17.3" aria-label="Inner diameter in millimetres">
+        <button type="button" class="btn alt" data-step="0.1" aria-label="Bigger by 0.1 mm">+</button>
+        <button type="button" class="btn alt" data-step="0.5" aria-label="Bigger by 0.5 mm">++</button>
+      </div>
+
+      <div class="result-grid" aria-live="polite">
+        <div><span>Inner diameter</span><b id="ring-d">17.3 mm</b></div>
+        <div><span>Circumference</span><b id="ring-c">54.4 mm</b></div>
+        <div class="result-main"><span>US / Canada</span><b id="ring-us">7</b></div>
+        <div class="result-main"><span>UK / Australia</span><b id="ring-uk">N½</b></div>
+        <div class="result-main"><span>EU (ISO)</span><b id="ring-eu">54</b></div>
+      </div>
+    </section>
+
+    <h2 class="home-h2">Ring size chart</h2>
+    <p class="small">Tap a row to show that size on screen. Indian jewellers usually go by inner diameter in mm.</p>
+    <div class="table-wrap">
+      <table id="ring-table" class="size-table">
+        <thead><tr><th>US</th><th>UK</th><th>EU</th><th>Inner diameter</th><th>Circumference</th></tr></thead>
+        <tbody>
+            <tr data-us="3"><td>3</td><td>F½</td><td>44</td><td>14.1 mm</td><td>44.2 mm</td></tr>
+            <tr data-us="3.5"><td>3.5</td><td>G½</td><td>45</td><td>14.5 mm</td><td>45.5 mm</td></tr>
+            <tr data-us="4"><td>4</td><td>H½</td><td>47</td><td>14.9 mm</td><td>46.8 mm</td></tr>
+            <tr data-us="4.5"><td>4.5</td><td>I½</td><td>48</td><td>15.3 mm</td><td>48.0 mm</td></tr>
+            <tr data-us="5"><td>5</td><td>J½</td><td>49</td><td>15.7 mm</td><td>49.3 mm</td></tr>
+            <tr data-us="5.5"><td>5.5</td><td>K½</td><td>51</td><td>16.1 mm</td><td>50.6 mm</td></tr>
+            <tr data-us="6"><td>6</td><td>L½</td><td>52</td><td>16.5 mm</td><td>51.9 mm</td></tr>
+            <tr data-us="6.5"><td>6.5</td><td>M½</td><td>53</td><td>16.9 mm</td><td>53.1 mm</td></tr>
+            <tr data-us="7"><td>7</td><td>N½</td><td>54</td><td>17.3 mm</td><td>54.4 mm</td></tr>
+            <tr data-us="7.5"><td>7.5</td><td>O½</td><td>56</td><td>17.7 mm</td><td>55.7 mm</td></tr>
+            <tr data-us="8"><td>8</td><td>P½</td><td>57</td><td>18.1 mm</td><td>57.0 mm</td></tr>
+            <tr data-us="8.5"><td>8.5</td><td>Q½</td><td>58</td><td>18.5 mm</td><td>58.2 mm</td></tr>
+            <tr data-us="9"><td>9</td><td>R½</td><td>60</td><td>18.9 mm</td><td>59.5 mm</td></tr>
+            <tr data-us="9.5"><td>9.5</td><td>S½</td><td>61</td><td>19.4 mm</td><td>60.8 mm</td></tr>
+            <tr data-us="10"><td>10</td><td>T½</td><td>62</td><td>19.8 mm</td><td>62.1 mm</td></tr>
+            <tr data-us="10.5"><td>10.5</td><td>U½</td><td>63</td><td>20.2 mm</td><td>63.3 mm</td></tr>
+            <tr data-us="11"><td>11</td><td>V½</td><td>65</td><td>20.6 mm</td><td>64.6 mm</td></tr>
+            <tr data-us="11.5"><td>11.5</td><td>W½</td><td>66</td><td>21.0 mm</td><td>65.9 mm</td></tr>
+            <tr data-us="12"><td>12</td><td>Y</td><td>67</td><td>21.4 mm</td><td>67.2 mm</td></tr>
+            <tr data-us="12.5"><td>12.5</td><td>Z</td><td>68</td><td>21.8 mm</td><td>68.5 mm</td></tr>
+            <tr data-us="13"><td>13</td><td>Z+1</td><td>70</td><td>22.2 mm</td><td>69.7 mm</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <section class="article-body" style="margin-top:24px;">
+      <h2>Tips for an accurate size</h2>
+      <ul>
+        <li>Use a ring that already fits the finger you are buying for, and measure the <b>inside</b> edge, not the outside.</li>
+        <li>Fingers are slightly bigger in the evening and when warm; measure at the end of the day.</li>
+        <li>For wide bands (over 6 mm), go up half a size.</li>
+        <li>If you are between two sizes, choose the larger one.</li>
+      </ul>
+    </section>
+
+    <section style="margin-top:20px;">
+        <details class="home-more"><summary>How do I find my ring size at home?</summary><div><p>Place a ring that fits on the circle on your screen and adjust it until the circle matches the inside edge of the ring. The page then shows your US, UK and EU size. Calibrate the screen with a bank card first for an exact result.</p></div></details>
+        <details class="home-more"><summary>What is the most common ring size?</summary><div><p>For women it is around US 6 to 7 (16.5–17.3 mm inner diameter); for men around US 9 to 10 (18.9–19.8 mm).</p></div></details>
+        <details class="home-more"><summary>How is ring size measured?</summary><div><p>By the inner diameter or inner circumference of the ring. EU (ISO) sizes are simply the inner circumference in millimetres.</p></div></details>
+    </section>
+  </main>
+
+  <!-- Footer Nav (Phase A, C) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>Tools & Game</h3>
+          <ul>
+            <li><a href="/ruler/">Online Screen Ruler</a></li>
+            <li><a href="/ring-size/">Ring Size Finder</a></li>
+            <li><a href="/actual-size/">Actual Size Objects</a></li>
+            <li><a href="/fit-checker/">Fit Checker</a></li>
+            <li><a href="/play/">Size Guessing Game</a></li>
+            <li><a href="/daily/">Daily Challenge</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Measurement Guides</h3>
+          <ul>
+            <li><a href="/guides/calibrate-online-ruler/">Calibrate Screen Ruler</a></li>
+            <li><a href="/guides/paper-sizes/">Paper Sizes Reference</a></li>
+            <li><a href="/guides/coin-and-note-sizes-india/">Indian Coin & Note Sizes</a></li>
+            <li><a href="/guides/everyday-object-sizes/">Everyday Object Sizes</a></li>
+            <li><a href="/guides/how-to-measure-if-it-fits/">How to Measure If It Fits</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Trust & Legal</h3>
+          <ul>
+            <li><a href="/about/">About Us</a></li>
+            <li><a href="/contact/">Contact Us</a></li>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+            <li><a href="/terms/">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 OnlineMeasurer.com &middot; Mezur Game. Hand-made web tools with zero external dependencies.</p>
+        <p>Accurate after calibration with an ISO/IEC 7810 credit card.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="fx" aria-hidden="true"></div>
+  <div id="live" class="sr-only" aria-live="polite"></div>
+
+  <script type="module" src="../js/ring.js"></script>
+</body>
+</html>

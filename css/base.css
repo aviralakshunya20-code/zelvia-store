@@ -4,8 +4,8 @@
 :root {
   /* 1. Harmonious Color Wheel Palette */
   /* Neutral 60% Canvas (Crisp Slate) */
-  --paper: #F8FAFC;          /* Slate 50 - clean modern background */
-  --paper2: #F1F5F9;         /* Slate 100 - subtle surface / headers */
+  --paper: #FFFFFF;          /* Slate 50 - clean modern background */
+  --paper2: #F8FAFC;         /* Slate 100 - subtle surface / headers */
   --card: #FFFFFF;           /* Pure white card elevation */
   --border: #E2E8F0;         /* Slate 200 - crisp delicate border */
   --border-strong: #CBD5E1;  /* Slate 300 - active borders */
@@ -19,7 +19,8 @@
   --primary-light: #EEF2FF;  /* Indigo 50 - active pill backgrounds */
   --primary-glow: rgba(79, 70, 229, 0.22);
 
-  /* 10% Color Wheel Accents (Triadic / Complementary Balance) */
+  /* Meaningful accents only: green = fits / correct, amber = doesn't fit / warning.
+     sky and tomato are aliased onto the brand and warning colours. */
   --mustard: #F59E0B;        /* Amber 500 - warm caliper & highlight */
   --mustard-light: #FEF3C7;  /* Amber 100 */
   --mustard-dark: #D97706;
@@ -28,19 +29,19 @@
   --leaf-light: #D1FAE5;     /* Emerald 100 */
   --leaf-dark: #047857;
 
-  --tomato: #EF4444;         /* Rose 500 - deficit & dashed guides */
-  --tomato-light: #FEE2E2;   /* Rose 100 */
+  --tomato: #D97706;         /* Rose 500 - deficit & dashed guides */
+  --tomato-light: #FEF3C7;   /* Rose 100 */
 
-  --sky: #0EA5E9;            /* Sky 500 - dimensions info */
-  --sky-light: #E0F2FE;
+  --sky: #4F46E5;            /* Sky 500 - dimensions info */
+  --sky-light: #EEF2FF;
 
   --wood: #B45309;           /* Amber 700 */
 
   /* 2. Shape, Geometry & Elevation Tokens */
   --line: 1px;
-  --r1: 10px;                /* Buttons, inputs, small chips */
-  --r2: 16px;                /* Standard cards */
-  --r3: 24px;                /* Hero containers, modals */
+  --r1: 0;                /* Buttons, inputs, small chips */
+  --r2: 0;                /* Standard cards */
+  --r3: 0;                /* Hero containers, modals */
 
   /* Layered Ambient Shadows (Clean Modern SaaS Feel) */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);

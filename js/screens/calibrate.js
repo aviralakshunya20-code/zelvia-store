@@ -92,6 +92,9 @@ function render(){
     state.save();
     SFX.great();
     toast(t('calibSuccess'));
+    // Pages like the ring sizer send people here with ?return=/ring-size/ so they land back where they started
+    const back = new URLSearchParams(location.search).get('return');
+    if (back && back.startsWith('/') && !back.startsWith('//')) { setTimeout(() => { location.href = back; }, 600); return; }
     router.go(exitTo);
   };
 

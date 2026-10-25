@@ -3,7 +3,7 @@ import * as state from '../state.js';
 import * as router from '../router.js';
 import { $, icon, scribble, toast } from '../ui.js';
 import { mountRuler } from '../ruler.js';
-import { maxMeasureMm } from '../calib.js';
+import { maxMeasureMm, estimatePxPerMm } from '../calib.js';
 import { fromMm } from '../units.js';
 import { SFX } from '../fx.js';
 import { trackRulerUsed } from '../analytics.js';
@@ -91,12 +91,3 @@ function render(){
   trackRulerUsed(unit);
 }
 
-// Rough physical scale for uncalibrated screens. CSS defines 96 px per inch, but
-// phones and tablets render CSS pixels physically larger than desktop monitors.
-function estimatePxPerMm(){
-  const shortSide = Math.min(screen.width, screen.height);
-  const touch = window.matchMedia && matchMedia('(pointer: coarse)').matches;
-  if (touch && shortSide < 600) return 6.2;   // phones (~160 CSS px per inch)
-  if (touch) return 5.0;                      // tablets
-  return 3.9;                                 // laptops and desktop monitors
-}
