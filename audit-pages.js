@@ -12,6 +12,7 @@ const pages = [
   'guides/coin-and-note-sizes-india/index.html',
   'guides/everyday-object-sizes/index.html',
   'guides/how-to-measure-if-it-fits/index.html',
+  'guides/best-measuring-tools/index.html',
   'about/index.html',
   'contact/index.html',
   'privacy/index.html',
