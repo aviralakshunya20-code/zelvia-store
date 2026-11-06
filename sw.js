@@ -1,5 +1,5 @@
 // sw.js - Service Worker for offline caching (Chapter 9.10)
-const V = 'naapu-v7';
+const V = 'naapu-v8';
 const FILES = [
   './',
   './index.html',
