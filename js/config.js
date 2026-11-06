@@ -18,6 +18,6 @@ export const CONFIG = {
   GA_MEASUREMENT_ID: 'G-VDYFXXLNMV',
 
   // Site contact & metadata
-  CONTACT_EMAIL: 'contact@onlinemeasurer.com',
+  CONTACT_EMAIL: 'contact@crlagecalculator.com',
   SITE_URL: 'https://www.onlinemeasurer.com'
 };
